@@ -73,7 +73,17 @@ class specieRepository {
   }
 
   // D of CRUD
-  async destroy(id: number) {}
+  async destroy(id: number) {
+    const [result] = await databaseClient.execute<Result>(
+      `
+      DELETE FROM specie
+      WHERE id = ?
+      `,
+      [id],
+    );
+
+    return result.affectedRows;
+  }
 }
 
 export default new specieRepository();
