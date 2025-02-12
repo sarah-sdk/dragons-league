@@ -28,13 +28,12 @@ class dragonTrainingRepository {
         `
         UPDATE dragon
         SET strength = strength + ?, speed = speed + ?, stamina = stamina + ?
-        WHERE user_id = ? AND id = ?
+        WHERE id = ?
         `,
         [
           dragonTraining.strength_earned,
           dragonTraining.speed_earned,
           dragonTraining.stamina_earned,
-          dragonTraining.user_id,
           dragonTraining.dragon_id,
         ],
       );
@@ -46,56 +45,36 @@ class dragonTrainingRepository {
       return dragonTrainingId;
     } catch (error) {
       await connection.rollback();
-      throw error;
     } finally {
       connection.release();
     }
   }
 
   // R of CRUD
-  async readAll({ userId, dragonId }: { userId: number; dragonId: number }) {
+  async readAll(dragonId: number) {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT
-        dragon_training.id,
-        dragon_training.dragon_id,
-        training.training_type AS training_type,
-        dragon_training.strength_earned,
-        dragon_training.speed_earned,
-        dragon_training.stamina_earned,
-        dragon_training.doing_at
+      SELECT id, dragon_id, training_id, strength_earned, speed_earned, stamina_earned, doing_at
       FROM dragon_training
-      INNER JOIN training ON training.id = dragon_training.training_id
-      INNER JOIN dragon ON dragon.id = dragon_training.dragon_id
-      WHERE dragon.user_id = ? AND dragon_training.dragon_id = ?
+      WHERE dragon_id = ?
       `,
-      [userId, dragonId],
+      [dragonId],
     );
 
     return rows;
   }
 
   async read({
-    userId,
     dragonId,
     trainingId,
-  }: { userId: number; dragonId: number; trainingId: number }) {
+  }: { dragonId: number; trainingId: number }) {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT
-        dragon_training.id,
-        dragon_training.dragon_id,
-        training.training_type AS training_type,
-        dragon_training.strength_earned,
-        dragon_training.speed_earned,
-        dragon_training.stamina_earned,
-        dragon_training.doing_at
+      SELECT id, dragon_id, training_id, strength_earned, speed_earned, stamina_earned, doing_at
       FROM dragon_training
-      INNER JOIN training ON training.id = dragon_training.training_id
-      INNER JOIN dragon ON dragon.id = dragon_training.dragon_id
-      WHERE dragon.user_id = ? AND dragon_training.dragon_id = ? AND dragon_training.id = ?
+      WHERE dragon_id = ? AND id = ?
       `,
-      [userId, dragonId, trainingId],
+      [dragonId, trainingId],
     );
 
     return rows[0];
@@ -112,19 +91,18 @@ class dragonTrainingRepository {
         `
         SELECT strength, speed, stamina
         FROM dragon
-        WHERE user_id = ? AND id = ?
+        WHERE id = ?
         `,
-        [dragonTraining.user_id, dragonTraining.dragon_id],
+        [dragonTraining.dragon_id],
       );
 
       const [previousStats] = await connection.query<Rows>(
         `
-        SELECT dragon_training.strength_earned, dragon_training.speed_earned, dragon_training.stamina_earned
+        SELECT strength_earned, speed_earned, stamina_earned
         FROM dragon_training
-        INNER JOIN dragon ON dragon.id = dragon_training.dragon_id
-        WHERE dragon_training.id = ? AND dragon_training.dragon_id = ? AND dragon.user_id = ?
+        WHERE id = ? AND dragon_id = ?
         `,
-        [dragonTraining.id, dragonTraining.dragon_id, dragonTraining.user_id],
+        [dragonTraining.id, dragonTraining.dragon_id],
       );
 
       const newStrength =
@@ -143,9 +121,8 @@ class dragonTrainingRepository {
       await connection.execute(
         `
         UPDATE dragon_training
-        INNER JOIN dragon ON dragon.id = dragon_training.dragon_id
         SET strength_earned = ?, speed_earned = ?, stamina_earned = ?
-        WHERE dragon_training.id = ? AND dragon_training.dragon_id = ? AND dragon.user_id = ?
+        WHERE id = ? AND dragon_id = ?
         `,
         [
           dragonTraining.strength_earned,
@@ -153,7 +130,6 @@ class dragonTrainingRepository {
           dragonTraining.stamina_earned,
           dragonTraining.id,
           dragonTraining.dragon_id,
-          dragonTraining.user_id,
         ],
       );
 
@@ -161,22 +137,16 @@ class dragonTrainingRepository {
         `
         UPDATE dragon
         SET strength = ?, speed = ?, stamina = ?
-        WHERE id = ? AND user_id = ?
+        WHERE id = ?
         `,
-        [
-          newStrength,
-          newSpeed,
-          newStamina,
-          dragonTraining.dragon_id,
-          dragonTraining.user_id,
-        ],
+        [newStrength, newSpeed, newStamina, dragonTraining.dragon_id],
       );
 
       await connection.commit();
 
       return true;
     } catch (error) {
-      await connection.rollback();
+      await connection.rollback;
       throw error;
     } finally {
       connection.release();
@@ -185,66 +155,18 @@ class dragonTrainingRepository {
 
   // D of CRUD
   async destroy({
-    userId,
     dragonId,
     trainingId,
-  }: { userId: number; dragonId: number; trainingId: number }) {
-    const connection = await databaseClient.getConnection();
+  }: { dragonId: number; trainingId: number }) {
+    const [result] = await databaseClient.execute<Result>(
+      `
+      DELETE FROM dragon_training
+      WHERE id = ? AND dragon_id = ?
+      `,
+      [trainingId, dragonId],
+    );
 
-    try {
-      await connection.beginTransaction();
-
-      const [dragon] = await connection.query<Rows>(
-        `
-        SELECT strength, speed, stamina
-        FROM dragon
-        WHERE user_id = ? AND id = ?
-        `,
-        [userId, dragonId],
-      );
-
-      const [previousStats] = await connection.query<Rows>(
-        `
-        SELECT strength_earned, speed_earned, stamina_earned
-        FROM dragon_training
-        INNER JOIN dragon ON dragon_training.dragon_id = dragon.id
-        WHERE dragon_training.id = ? AND dragon_training.dragon_id = ? AND dragon.user_id = ?
-        `,
-        [trainingId, dragonId, userId],
-      );
-
-      const newStrength = dragon[0].strength - previousStats[0].strength_earned;
-      const newSpeed = dragon[0].speed - previousStats[0].speed_earned;
-      const newStamina = dragon[0].stamina - previousStats[0].stamina_earned;
-
-      await connection.execute(
-        `
-        UPDATE dragon
-        SET strength = ?, speed = ?, stamina = ?
-        WHERE id = ? AND user_id = ?
-        `,
-        [newStrength, newSpeed, newStamina, dragonId, userId],
-      );
-
-      await connection.execute(
-        `
-        DELETE dragon_training
-        FROM dragon_training
-        INNER JOIN dragon ON dragon_training.dragon_id = dragon.id
-        WHERE dragon_training.id = ? AND dragon_training.dragon_id = ? AND dragon.user_id = ?
-        `,
-        [trainingId, dragonId, userId],
-      );
-
-      await connection.commit();
-
-      return true;
-    } catch (error) {
-      await connection.rollback();
-      throw error;
-    } finally {
-      connection.release();
-    }
+    return result.affectedRows;
   }
 }
 
