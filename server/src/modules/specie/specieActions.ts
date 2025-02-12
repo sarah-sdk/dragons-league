@@ -17,7 +17,21 @@ const browse: RequestHandler = async (req, res, next) => {
 };
 
 // R of BREAD
-const read: RequestHandler = async (req, res, next) => {};
+const read: RequestHandler = async (req, res, next) => {
+  const specieId = Number(req.params.id);
+
+  try {
+    const specie = await specieRepository.read(specieId);
+
+    if (!specie) {
+      res.sendStatus(404);
+    }
+
+    res.json(specie);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // E of BREAD
 const edit: RequestHandler = async (req, res, next) => {};

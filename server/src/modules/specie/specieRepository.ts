@@ -18,7 +18,18 @@ class specieRepository {
     return rows;
   }
 
-  async read(id: number) {}
+  async read(id: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      `
+      SELECT id, specie, base_strength, base_speed, base_stamina, url_baby, url_adult
+      FROM specie
+      WHERE id = ?
+      `,
+      [id],
+    );
+
+    return rows[0];
+  }
 
   // U of CRUD
   async update(specie: Specie) {}

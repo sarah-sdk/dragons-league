@@ -21,6 +21,7 @@ router.delete("/api/users/:id", userActions.destroy);
 
 import specieActions from "./modules/specie/specieActions";
 router.get("/api/species", specieActions.browse);
+router.get("/api/species/:id", specieActions.read);
 
 /* ************************************************************************* */
 
