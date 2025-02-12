@@ -8,9 +8,9 @@ export type User = {
 export type Specie = {
   id: number;
   specie: string;
-  strength: number;
-  speed: number;
-  stamina: number;
+  base_strength: number;
+  base_speed: number;
+  base_stamina: number;
   url_baby: string;
   url_adult: string;
 };
