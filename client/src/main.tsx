@@ -1,7 +1,11 @@
 // Import necessary modules from React and React Router
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 
 /* ************************************************************************* */
 
@@ -10,6 +14,11 @@ import App from "./App";
 import AdoptDragon from "./pages/AdoptDragon/AdoptDragon";
 import AllDragons from "./pages/AllDragons/AllDragons";
 import DragonDetails from "./pages/DragonDetails/DragonDetails";
+import {
+  loadAllDragons,
+  loadDragonDetails,
+  loadSpecies,
+} from "./services/loader";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -26,14 +35,17 @@ const router = createBrowserRouter([
     path: "/", // The root path
     element: <App />, // Renders the App component for the home page
     children: [
-      { path: "adopt-dragon", element: <AdoptDragon /> },
+      { path: "/", element: <Navigate to="my-dragons" /> },
+      { path: "adopt-dragon", element: <AdoptDragon />, loader: loadSpecies },
       {
         path: "dragon-details/:name",
         element: <DragonDetails />,
+        loader: loadDragonDetails,
       },
       {
         path: "/my-dragons",
         element: <AllDragons />,
+        loader: loadAllDragons,
       },
     ],
   },
