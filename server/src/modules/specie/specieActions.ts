@@ -35,7 +35,31 @@ const read: RequestHandler = async (req, res, next) => {
 };
 
 // E of BREAD
-const edit: RequestHandler = async (req, res, next) => {};
+const edit: RequestHandler = async (req, res, next) => {
+  const specieId = Number(req.params.id);
+
+  try {
+    const specie: Specie = {
+      specie: req.body.specie,
+      base_strength: req.body.base_strength,
+      base_speed: req.body.base_speed,
+      base_stamina: req.body.base_stamina,
+      url_baby: req.body.url_baby,
+      url_adult: req.body.url_adult,
+      id: specieId,
+    };
+
+    const updateSpecie = await specieRepository.update(specie);
+
+    if (!updateSpecie) {
+      res.sendStatus(404);
+    }
+
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // A of BREAD
 const add: RequestHandler = async (req, res, next) => {

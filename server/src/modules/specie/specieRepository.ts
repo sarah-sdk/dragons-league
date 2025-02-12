@@ -51,7 +51,26 @@ class specieRepository {
   }
 
   // U of CRUD
-  async update(specie: Specie) {}
+  async update(specie: Specie) {
+    const [result] = await databaseClient.execute<Result>(
+      `
+      UPDATE specie
+      SET specie = ?, base_strength = ?, base_speed = ?, base_stamina = ?, url_baby = ?, url_adult = ?
+      WHERE id = ?
+      `,
+      [
+        specie.specie,
+        specie.base_strength,
+        specie.base_speed,
+        specie.base_stamina,
+        specie.url_baby,
+        specie.url_adult,
+        specie.id,
+      ],
+    );
+
+    return result.affectedRows > 0;
+  }
 
   // D of CRUD
   async destroy(id: number) {}

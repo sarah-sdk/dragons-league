@@ -22,6 +22,7 @@ router.delete("/api/users/:id", userActions.destroy);
 import specieActions from "./modules/specie/specieActions";
 router.get("/api/species", specieActions.browse);
 router.get("/api/species/:id", specieActions.read);
+router.put("/api/species/:id", specieActions.edit);
 router.post("/api/species", specieActions.add);
 
 /* ************************************************************************* */
