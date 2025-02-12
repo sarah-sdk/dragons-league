@@ -45,3 +45,6 @@ CREATE TABLE dragon_training (
   foreign key(dragon_id) references dragon(id),
   foreign key(training_id) references training(id)
 );
+
+INSERT INTO user (id, username, email, password, created_at)
+VALUES (1, 'Demo User', 'demo@dragonsleague.com', 'password123', NOW());
