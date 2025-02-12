@@ -21,7 +21,7 @@ export default function DragonDetails() {
         {dragon.stamina}
       </p>
       <img
-        src={`${import.meta.env.VITE_URL_API}/${dragon.url_baby}`}
+        src={`${import.meta.env.VITE_API_URL}/${dragon.url_baby}`}
         alt={dragon.name}
       />
     </article>
