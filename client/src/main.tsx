@@ -38,7 +38,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Navigate to="my-dragons" /> },
       { path: "adopt-dragon", element: <AdoptDragon />, loader: loadSpecies },
       {
-        path: "dragon-details/:name",
+        path: "my-dragons/:id",
         element: <DragonDetails />,
         loader: loadDragonDetails,
       },

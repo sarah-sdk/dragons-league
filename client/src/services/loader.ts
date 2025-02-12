@@ -11,27 +11,16 @@ export const loadAllDragons = async () => {
 };
 
 export const loadDragonDetails = async ({ params }: { params: Params }) => {
-  const { name } = params;
+  const { id } = params;
 
   const userId = 1;
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/users/${userId}/dragons?name=${name}`,
+    `${import.meta.env.VITE_API_URL}/api/users/${userId}/dragons/${id}`,
   );
-  const dragons = await response.json();
 
-  if (dragons.length === 0) {
-    throw new Error("Dragon not found");
-  }
+  const dragon = response.json();
 
-  const dragon = dragons[0];
-  const dragonId = dragon.id;
-
-  const dragonDetailsResponse = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/users/${userId}/dragons/${dragonId}`,
-  );
-  const dragonDetails = await dragonDetailsResponse.json();
-
-  return { dragon: dragonDetails };
+  return { dragon };
 };
 
 export const loadSpecies = async () => {
