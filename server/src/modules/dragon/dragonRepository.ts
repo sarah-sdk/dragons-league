@@ -78,8 +78,19 @@ class dragonRepository {
   async read({ userId, dragonId }: { userId: number; dragonId: number }) {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT user_id, dragon.id as dragon_id, specie_id, name, adopted_at, strength, speed, stamina
+      SELECT
+        dragon.id as dragon_id,
+        dragon.user_id,
+        specie_specie AS specie,
+        dragon.name,
+        dragon.adopted_at,
+        dragon.strength,
+        dragon.speed,
+        dragon.stamina,
+        specie.url_baby,
+        specie.url_adult
       FROM dragon
+      INNER JOIN specie ON specie.id = dragon.specie_id
       WHERE user_id = ? AND dragon.id = ?
       `,
       [userId, dragonId],
