@@ -26,9 +26,9 @@ const router = createBrowserRouter([
     path: "/", // The root path
     element: <App />, // Renders the App component for the home page
     children: [
-      { path: "/adopt-dragon", element: <AdoptDragon /> },
+      { path: "adopt-dragon", element: <AdoptDragon /> },
       {
-        path: "/dragon-details",
+        path: "dragon-details/:name",
         element: <DragonDetails />,
       },
       {
