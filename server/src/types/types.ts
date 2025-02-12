@@ -19,3 +19,13 @@ export type Training = {
   id: number;
   training_type: string;
 };
+
+export type Dragon = {
+  id: number;
+  name: string;
+  strength: number;
+  speed: number;
+  stamina: number;
+  specie_id: number;
+  user_id: number;
+};
