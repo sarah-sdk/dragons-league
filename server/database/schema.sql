@@ -36,7 +36,9 @@ CREATE TABLE training (
 
 CREATE TABLE dragon_training (
   id INT unsigned primary key auto_increment not null,
-  xp_earned INT unsigned not null,
+  strength_earned INT unsigned not null,
+  speed_earned INT unsigned not null,
+  stamina_earned INT unsigned not null,
   doing_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,
   dragon_id INT unsigned not null,
   training_id INT unsigned not null,
