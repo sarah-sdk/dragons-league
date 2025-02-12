@@ -76,5 +76,20 @@ const add: RequestHandler = async (req, res, next) => {
 };
 
 // D of BREAD
+const destroy: RequestHandler = async (req, res, next) => {
+  const userId = Number(req.params.id);
 
-export default { browse, read, edit, add };
+  try {
+    const affectedRows = await userRepository.destroy(userId);
+
+    if (affectedRows === 0) {
+      res.sendStatus(404);
+    }
+
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default { browse, read, edit, add, destroy };

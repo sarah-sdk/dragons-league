@@ -58,6 +58,17 @@ class userRepository {
   }
 
   // D of CRUD
+  async destroy(id: number) {
+    const [result] = await databaseClient.execute<Result>(
+      `
+      DELETE FROM user
+      WHERE id = ?
+      `,
+      [id],
+    );
+
+    return result.affectedRows;
+  }
 }
 
 export default new userRepository();
