@@ -18,8 +18,8 @@ export const loadDragonDetails = async ({ params }: { params: Params }) => {
     `${import.meta.env.VITE_API_URL}/api/users/${userId}/dragons/${id}`,
   );
 
-  const dragon = response.json();
-
+  const dragon = await response.json();
+  console.info(dragon);
   return { dragon };
 };
 
