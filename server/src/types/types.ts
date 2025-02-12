@@ -4,3 +4,13 @@ export type User = {
   email: string;
   password: string;
 };
+
+export type Specie = {
+  id: number;
+  specie: string;
+  base_strength: number;
+  base_speed: number;
+  base_stamina: number;
+  url_baby: string;
+  url_adult: string;
+};
