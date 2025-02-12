@@ -26,6 +26,13 @@ router.put("/api/species/:id", specieActions.edit);
 router.post("/api/species", specieActions.add);
 router.delete("/api/species/:id", specieActions.destroy);
 
+import trainingActions from "./modules/training/trainingActions";
+router.get("/api/trainings", trainingActions.browse);
+router.get("/api/trainings/:id", trainingActions.read);
+router.put("/api/trainings/:id", trainingActions.edit);
+router.post("/api/trainings", trainingActions.add);
+router.delete("/api/trainings/:id", trainingActions.destroy);
+
 /* ************************************************************************* */
 
 export default router;

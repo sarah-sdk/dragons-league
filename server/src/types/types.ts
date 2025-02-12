@@ -14,3 +14,8 @@ export type Specie = {
   url_baby: string;
   url_adult: string;
 };
+
+export type Training = {
+  id: number;
+  training_type: string;
+};
