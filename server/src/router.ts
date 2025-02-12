@@ -19,6 +19,9 @@ router.put("/api/users/:id", userActions.edit);
 router.post("/api/users", userActions.add);
 router.delete("/api/users/:id", userActions.destroy);
 
+import specieActions from "./modules/specie/specieActions";
+router.get("/api/species", specieActions.browse);
+
 /* ************************************************************************* */
 
 export default router;
