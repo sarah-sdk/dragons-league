@@ -37,18 +37,24 @@ router.post("/api/users/:userId/dragons/", dragonActions.add);
 router.delete("/api/users/:userId/dragons/:dragonId", dragonActions.destroy);
 
 import dragonTrainingActions from "./modules/dragonTraining/dragonTrainingActions";
-router.get("/api/dragons/:dragonId/trainings", dragonTrainingActions.browse);
 router.get(
-  "/api/dragons/:dragonId/trainings/:trainingId",
+  "/api/users/:userId/dragons/:dragonId/trainings",
+  dragonTrainingActions.browse,
+);
+router.get(
+  "/api/users/:userId/dragons/:dragonId/trainings/:trainingId",
   dragonTrainingActions.read,
 );
 router.put(
-  "/api/dragons/:dragonId/trainings/:trainingId",
+  "/api/users/:userId/dragons/:dragonId/trainings/:trainingId",
   dragonTrainingActions.edit,
 );
-router.post("/api/dragons/:dragonId/trainings/", dragonTrainingActions.add);
+router.post(
+  "/api/users/:userId/dragons/:dragonId/trainings/",
+  dragonTrainingActions.add,
+);
 router.delete(
-  "/api/dragons/:dragonId/trainings/:trainingId",
+  "/api/users/:userId/dragons/:dragonId/trainings/:trainingId",
   dragonTrainingActions.destroy,
 );
 
