@@ -3,6 +3,19 @@ import type { User } from "../../types/types";
 import userRepository from "./userRepository";
 
 // B of BREAD
+const browse: RequestHandler = async (req, res, next) => {
+  try {
+    const users = await userRepository.readAll();
+
+    if (!users) {
+      res.sendStatus(404);
+    }
+
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // R of BREAD
 
@@ -27,4 +40,4 @@ const add: RequestHandler = async (req, res, next) => {
 
 // D of BREAD
 
-export default { add };
+export default { browse, add };

@@ -13,6 +13,7 @@ router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
 import userActions from "./modules/user/userActions";
+router.get("/api/users", userActions.browse);
 router.post("/api/users", userActions.add);
 
 /* ************************************************************************* */

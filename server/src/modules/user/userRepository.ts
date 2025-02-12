@@ -1,5 +1,5 @@
 import databaseClient from "../../../database/client";
-import type { Result } from "../../../database/client";
+import type { Result, Rows } from "../../../database/client";
 import type { User } from "../../types/types";
 
 class userRepository {
@@ -19,6 +19,16 @@ class userRepository {
   }
 
   // R of CRUD
+  async readAll() {
+    const [rows] = await databaseClient.query<Rows>(
+      `
+      SELECT id, username, email, created_at
+      FROM user
+      `,
+    );
+
+    return rows;
+  }
 
   // U of CRUD
 
