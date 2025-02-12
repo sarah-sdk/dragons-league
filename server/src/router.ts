@@ -33,6 +33,14 @@ router.put("/api/trainings/:id", trainingActions.edit);
 router.post("/api/trainings", trainingActions.add);
 router.delete("/api/trainings/:id", trainingActions.destroy);
 
+import dragonActions from "./modules/dragon/dragonActions";
+router.get("/api/dragons", dragonActions.browse);
+router.get("/api/users/:id/dragons", dragonActions.browseByUser);
+router.get("/api/dragons/:id", dragonActions.read);
+router.put("/api/dragons/:id", dragonActions.edit);
+router.post("/api/dragons", dragonActions.add);
+router.delete("/api/dragons/:id", dragonActions.destroy);
+
 /* ************************************************************************* */
 
 export default router;
