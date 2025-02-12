@@ -35,7 +35,7 @@ class dragonRepository {
       SELECT
         dragon.id as dragon_id,
         dragon.user_id,
-        specie_specie AS specie,
+        specie.specie,
         dragon.name,
         dragon.adopted_at,
         dragon.strength,
@@ -57,7 +57,7 @@ class dragonRepository {
       SELECT
         dragon.id as dragon_id,
         dragon.user_id,
-        specie_specie AS specie,
+        specie.specie,
         dragon.name,
         dragon.adopted_at,
         dragon.strength,
@@ -81,7 +81,7 @@ class dragonRepository {
       SELECT
         dragon.id as dragon_id,
         dragon.user_id,
-        specie_specie AS specie,
+        specie.specie,
         dragon.name,
         dragon.adopted_at,
         dragon.strength,
