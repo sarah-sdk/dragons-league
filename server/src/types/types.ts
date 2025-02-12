@@ -29,3 +29,12 @@ export type Dragon = {
   specie_id: number;
   user_id: number;
 };
+
+export type DragonTraining = {
+  id: number;
+  dragon_id: number;
+  training_id: number;
+  strength_earned: number;
+  speed_earned: number;
+  stamina_earned: number;
+};
