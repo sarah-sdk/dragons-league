@@ -32,6 +32,7 @@ export type Dragon = {
 
 export type DragonTraining = {
   id: number;
+  user_id: number;
   dragon_id: number;
   training_id: number;
   strength_earned: number;

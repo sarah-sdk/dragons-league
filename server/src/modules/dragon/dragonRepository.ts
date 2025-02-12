@@ -53,41 +53,48 @@ class dragonRepository {
     return rows;
   }
 
-  async read(dragonId: number) {
+  async read({ userId, dragonId }: { userId: number; dragonId: number }) {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT dragon.id as dragon_id, user_id, specie_id, name, adopted_at, strength, speed, stamina
+      SELECT user_id, dragon.id as dragon_id, specie_id, name, adopted_at, strength, speed, stamina
       FROM dragon
-      WHERE dragon.id = ?
+      WHERE user_id = ? AND dragon.id = ?
       `,
-      [dragonId],
+      [userId, dragonId],
     );
 
     return rows[0];
   }
 
   // U of CRUD
-  async update(dragon: Omit<Dragon, "specie_id" | "user_id">) {
+  async update(dragon: Omit<Dragon, "specie_id">) {
     const [result] = await databaseClient.execute<Result>(
       `
       UPDATE dragon
       SET name = ?, strength = ?, speed = ?, stamina = ?
-      WHERE id = ?
+      WHERE user_id = ? AND id = ?
       `,
-      [dragon.name, dragon.strength, dragon.speed, dragon.stamina, dragon.id],
+      [
+        dragon.name,
+        dragon.strength,
+        dragon.speed,
+        dragon.stamina,
+        dragon.user_id,
+        dragon.id,
+      ],
     );
 
     return result.affectedRows > 0;
   }
 
   // D of CRUD
-  async destroy(dragonId: number) {
+  async destroy({ userId, dragonId }: { userId: number; dragonId: number }) {
     const [result] = await databaseClient.execute<Result>(
       `
       DELETE FROM dragon
-      WHERE id = ?
+      WHERE user_id = ? AND id = ?
       `,
-      [dragonId],
+      [userId, dragonId],
     );
 
     return result.affectedRows;
