@@ -32,8 +32,19 @@ class dragonRepository {
   async readAll() {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT dragon.id as dragon_id, user_id, specie_id, name, adopted_at, strength, speed, stamina
+      SELECT
+        dragon.id as dragon_id,
+        dragon.user_id,
+        specie_specie AS specie,
+        dragon.name,
+        dragon.adopted_at,
+        dragon.strength,
+        dragon.speed,
+        dragon.stamina,
+        specie.url_baby,
+        specie.url_adult
       FROM dragon
+      INNER JOIN specie ON specie.id = dragon.specie_id
       `,
     );
 
@@ -43,9 +54,20 @@ class dragonRepository {
   async readAllByUser(userId: number) {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT dragon.id as dragon_id, user_id, specie_id, name, adopted_at, strength, speed, stamina
+      SELECT
+        dragon.id as dragon_id,
+        dragon.user_id,
+        specie_specie AS specie,
+        dragon.name,
+        dragon.adopted_at,
+        dragon.strength,
+        dragon.speed,
+        dragon.stamina,
+        specie.url_baby,
+        specie.url_adult
       FROM dragon
-      WHERE user_id = ?
+      INNER JOIN specie ON specie.id = dragon.specie_id
+      WHERE dragon.user_id = ?
       `,
       [userId],
     );
