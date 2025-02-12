@@ -19,8 +19,9 @@ const browse: RequestHandler = async (req, res, next) => {
 
 // R of BREAD
 const read: RequestHandler = async (req, res, next) => {
+  const userId = Number(req.params.id);
+
   try {
-    const userId = Number(req.params.id);
     const user = await userRepository.read(userId);
 
     if (!user) {
@@ -34,6 +35,28 @@ const read: RequestHandler = async (req, res, next) => {
 };
 
 // E of BREAD
+const edit: RequestHandler = async (req, res, next) => {
+  const userId = Number(req.params.id);
+
+  try {
+    const user: User = {
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      id: userId,
+    };
+
+    const updateUser = await userRepository.update(user);
+
+    if (!updateUser) {
+      res.sendStatus(404);
+    }
+
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // A of BREAD
 const add: RequestHandler = async (req, res, next) => {
@@ -54,4 +77,4 @@ const add: RequestHandler = async (req, res, next) => {
 
 // D of BREAD
 
-export default { browse, read, add };
+export default { browse, read, edit, add };

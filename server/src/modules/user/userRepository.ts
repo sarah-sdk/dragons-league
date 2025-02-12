@@ -44,6 +44,18 @@ class userRepository {
   }
 
   // U of CRUD
+  async update(user: User) {
+    const [result] = await databaseClient.execute<Result>(
+      `
+      UPDATE user
+      SET username = ?, email = ?, password = ?
+      WHERE id = ?
+      `,
+      [user.username, user.email, user.password, user.id],
+    );
+
+    return result.affectedRows > 0;
+  }
 
   // D of CRUD
 }
