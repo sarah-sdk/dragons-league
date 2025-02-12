@@ -30,6 +30,19 @@ class userRepository {
     return rows;
   }
 
+  async read(id: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      `
+      SELECT id, username, email, created_at
+      FROM user
+      WHERE id = ?
+      `,
+      [id],
+    );
+
+    return rows[0];
+  }
+
   // U of CRUD
 
   // D of CRUD

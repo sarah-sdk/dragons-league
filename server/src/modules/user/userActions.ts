@@ -18,6 +18,20 @@ const browse: RequestHandler = async (req, res, next) => {
 };
 
 // R of BREAD
+const read: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.params.id);
+    const user = await userRepository.read(userId);
+
+    if (!user) {
+      res.sendStatus(404);
+    }
+
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // E of BREAD
 
@@ -40,4 +54,4 @@ const add: RequestHandler = async (req, res, next) => {
 
 // D of BREAD
 
-export default { browse, add };
+export default { browse, read, add };
