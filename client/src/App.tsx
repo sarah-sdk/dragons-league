@@ -1,13 +1,14 @@
 import "@picocss/pico/css/pico.min.css";
 import "./App.css";
+import { Outlet } from "react-router-dom";
+import NavBar from "./components/NavBar/NavBar";
 
 function App() {
   return (
-    <main className="container">
-      <h1>Bienvenue dans Dragons League 🐉</h1>
-      <p>Entraîne ton dragon et deviens le meilleur dresseur !</p>
-      <button type="button">Commencer l'aventure</button>
-    </main>
+    <>
+      <NavBar />
+      <Outlet />
+    </>
   );
 }
 

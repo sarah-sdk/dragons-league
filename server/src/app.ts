@@ -5,6 +5,8 @@ import express from "express";
 const app = express();
 app.use(express.json());
 
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+
 // Configure it
 
 /* ************************************************************************* */
