@@ -1,8 +1,7 @@
 CREATE TABLE user (
   id int unsigned primary key auto_increment not null,
   username varchar(255) not null,
-  email varchar(255) not null unique,
-  password varchar(255) not null,
+  url_avatar varchar(255) not null,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null
 );
 
