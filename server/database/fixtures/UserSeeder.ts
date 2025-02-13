@@ -9,13 +9,11 @@ class UserSeeder extends AbstractSeeder {
     const users = [
       {
         username: "saratruche",
-        email: "sarah@dragonsleague.com",
-        password: "password123",
+        url_avatar: "assets/images/avatars/avatar1.png",
       },
       {
         username: "demo_user",
-        email: "demo@dragonsleague.com",
-        password: "password123",
+        url_avatar: "assets/images/avatars/avatar2.png",
       },
     ];
 

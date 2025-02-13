@@ -1,8 +1,7 @@
 export type User = {
   id: number;
   username: string;
-  email: string;
-  password: string;
+  url_avatar: string;
 };
 
 export type Specie = {
