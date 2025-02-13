@@ -1,16 +1,15 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import avatar1 from "/avatar1.webp";
-import avatar2 from "/avatar2.jpg";
 import "./SelectUser.css";
 
-type Users = {
+type User = {
   id: number;
   username: string;
+  url_avatar: string;
 };
 
 export default function SelectUser() {
   const navigate = useNavigate();
-  const { users } = useLoaderData() as { users: Users[] };
+  const { users } = useLoaderData() as { users: User[] };
 
   const handleUserSelect = (userId: number) => {
     localStorage.setItem("userId", userId.toString());
@@ -33,7 +32,7 @@ export default function SelectUser() {
           onClick={() => handleUserSelect(user.id)}
         >
           <img
-            src={+user.id === 1 ? avatar1 : avatar2}
+            src={`${import.meta.env.VITE_API_URL}/${user.url_avatar}`}
             alt={`avatar-${user.username}`}
             className="avatar"
           />
