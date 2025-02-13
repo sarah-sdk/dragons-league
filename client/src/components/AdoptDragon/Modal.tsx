@@ -39,7 +39,6 @@ export default function Modal({
 
   const handleAdoptClick = () => {
     onAdopt(dragonName, specieId);
-    console.info(dragonName, specieId);
   };
 
   return (
