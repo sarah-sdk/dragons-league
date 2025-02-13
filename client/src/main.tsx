@@ -14,10 +14,12 @@ import App from "./App";
 import AdoptDragon from "./pages/AdoptDragon/AdoptDragon";
 import AllDragons from "./pages/AllDragons/AllDragons";
 import DragonDetails from "./pages/DragonDetails/DragonDetails";
+import SelectUser from "./pages/SelectUser/SelectUser";
 import {
   loadAllDragons,
   loadDragonDetails,
   loadSpecies,
+  loadUsers,
 } from "./services/loader";
 
 // Import additional components for new routes
@@ -38,7 +40,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Navigate to="mes-dragons" /> },
       { path: "adopter-dragon", element: <AdoptDragon />, loader: loadSpecies },
       {
-        path: "mes-dragons/:id",
+        path: "mes-dragons/:dragonId",
         element: <DragonDetails />,
         loader: loadDragonDetails,
       },
@@ -48,6 +50,11 @@ const router = createBrowserRouter([
         loader: loadAllDragons,
       },
     ],
+  },
+  {
+    path: "/profils",
+    element: <SelectUser />,
+    loader: loadUsers,
   },
   // Try adding a new route! For example, "/about" with an About component
 ]);

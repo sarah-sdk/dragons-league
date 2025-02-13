@@ -1,0 +1,38 @@
+.navbar {
+  height: 5rem;
+  padding: 1rem;
+}
+
+.navbar nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar nav div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar button {
+  height: 2rem;
+  padding: 1rem;
+  margin: 0;
+
+  display: flex;
+  justify-items: center;
+  align-items: center;
+
+  background-color: transparent;
+  color: var(--pico-primary);
+}
+
+.navbar img {
+  height: 2.5rem;
+  width: 2.5rem;
+
+  margin: 0;
+  padding: 0;
+}
