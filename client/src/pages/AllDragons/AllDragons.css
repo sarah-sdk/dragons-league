@@ -1,3 +1,7 @@
+.dragonsList {
+  text-align: center;
+}
+
 .dragonCard {
   position: relative;
   width: 15rem;
@@ -7,6 +11,7 @@
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease;
+  margin: 1rem auto;
 }
 
 .dragonImageBtn {
@@ -29,12 +34,17 @@
 
 .dragonInfo {
   position: absolute;
+  height: 10rem;
   bottom: .25rem;
   left: .25rem;
   right: .25rem;
   opacity: 0;
   transition: opacity 0.3s ease;
-  background-color: none;
+  background-color: transparent;
+  border: none;
+
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .dragonInfo h2 {
@@ -45,6 +55,13 @@
   display: flex;
   flex-direction: column;
   text-align: start;
+
+  font-size: .5rem;
+  color: var(--pico-h2-color);
+}
+
+.dragonCard.statCircles {
+  height: 1rem;
 }
 
 .dragonCard:hover {
@@ -57,4 +74,35 @@
 
 .dragonCard:hover .dragonInfo {
   opacity: 1;
+}
+
+.dragonInfo,
+.dragonCard.adoptCard,
+.dragonCard.adoptCard h2 {
+  margin-bottom: 0;
+}
+
+.dragonCard.adoptCard {
+  background-color: transparent;
+}
+
+.dragonCard.adoptCard p {
+  font-size: 5rem;
+  color: var(--pico-h2-color);
+}
+
+@media screen and (min-width: 600px) {
+  .dragonsList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .dragonsList h1 {
+    grid-area: 1 / 1 / 2 / 4;
+  }
+
+  .dragonCard {
+    width: 10rem;
+    height: 10rem;
+  }
 }

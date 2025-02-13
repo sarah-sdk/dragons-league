@@ -1,12 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 import "./StatCircles.css";
 
-export default function StatCircles({ value }: { value: number }) {
+export default function StatCircles({
+  value,
+  size,
+}: { value: number; size: string }) {
   const totalCircles = 10;
   const circles = Array.from({ length: totalCircles }, (_, i) => i < value);
 
   return (
-    <div>
+    <div className="statCircles">
       {circles.map((filled) => (
         <span
           key={uuidv4()}
@@ -15,8 +18,8 @@ export default function StatCircles({ value }: { value: number }) {
           {filled ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width={size}
+              height={size}
               fill="currentColor"
               className="bi bi-circle-fill"
               viewBox="0 0 16 16"
@@ -27,8 +30,8 @@ export default function StatCircles({ value }: { value: number }) {
           ) : (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width={size}
+              height={size}
               fill="currentColor"
               className="bi bi-circle"
               viewBox="0 0 16 16"
