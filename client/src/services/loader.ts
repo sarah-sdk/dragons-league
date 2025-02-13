@@ -30,6 +30,10 @@ export const loadSpecies = async () => {
 export const loadAllDragons = async () => {
   const userId = localStorage.getItem("userId");
 
+  if (!userId) {
+    throw new Error("User not found");
+  }
+
   const response = await fetch(
     `${import.meta.env.VITE_API_URL}/api/users/${userId}/dragons`,
   );
