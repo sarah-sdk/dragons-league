@@ -6,7 +6,6 @@ export const loadAllDragons = async () => {
     `${import.meta.env.VITE_API_URL}/api/users/${userId}/dragons`,
   );
   const dragons = await response.json();
-  console.info(dragons);
   return { dragons };
 };
 
@@ -19,13 +18,11 @@ export const loadDragonDetails = async ({ params }: { params: Params }) => {
   );
 
   const dragon = await response.json();
-  console.info(dragon);
   return { dragon };
 };
 
 export const loadSpecies = async () => {
   const response = await fetch(`${import.meta.env.VITE_API_URL}/api/species`);
   const species = await response.json();
-  console.info(species);
   return { species };
 };
