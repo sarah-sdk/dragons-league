@@ -1,29 +1,18 @@
 import { useLoaderData } from "react-router-dom";
+import AdoptedAt from "../../components/DragonDetails/AdoptedAt";
+import NameAndPhoto from "../../components/DragonDetails/NameAndPhoto";
+import StatDetails from "../../components/DragonDetails/StatDetails";
 import type { Dragon } from "../../types/types";
+import "./DragonDetails.css";
 
 export default function DragonDetails() {
   const { dragon } = useLoaderData() as { dragon: Dragon };
+
   return (
-    <article>
-      <h1>Mon dragon</h1>
-      <h2>{dragon.name}</h2>
-      <p>{dragon.specie}</p>
-      <p>
-        {"Force : "}
-        {dragon.strength}
-      </p>
-      <p>
-        {"Vitesse : "}
-        {dragon.speed}
-      </p>
-      <p>
-        {"Endurance : "}
-        {dragon.stamina}
-      </p>
-      <img
-        src={`${import.meta.env.VITE_API_URL}/${dragon.url_baby}`}
-        alt={dragon.name}
-      />
+    <article className="dragonDetails">
+      <NameAndPhoto dragon={dragon} />
+      <StatDetails dragon={dragon} />
+      <AdoptedAt dragon={dragon} />
     </article>
   );
 }

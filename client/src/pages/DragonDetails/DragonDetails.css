@@ -1,0 +1,16 @@
+.dragonDetails img {
+  height: 15rem;
+  display: block;
+  margin: 1.5rem auto;
+
+  border-radius: 10px;
+}
+
+.dragonDetails h1 {
+  text-align: center;
+}
+
+.dragonDetails ul li {
+  display: flex;
+  flex-direction: column;
+}

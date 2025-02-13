@@ -1,27 +1,33 @@
+@import url("./variables.css");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* 🌑 Fond sombre */
-:root {
-  --pico-background-color: #181818;
-  --pico-color: #eaeaea;
-  --pico-primary: #f4a261;
-  --pico-secondary: #264653;
-  --pico-contrast: #d62828;
+html {
+  background-color: var(--pico-background-color);
 }
 
-/* 🖋️ Polices */
+body {
+  color: var(--pico-color);
+}
+
 h1,
-h2,
+h2 {
+  font-family: var(--title-font);
+  color: var(--pico-color);
+}
+
 h3 {
-  font-family: "Pirata One", cursive;
+  font-family: var(--text-font);
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 body,
 p,
 button {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--text-font);
 }

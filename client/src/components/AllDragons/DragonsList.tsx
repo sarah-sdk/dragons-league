@@ -10,6 +10,9 @@ export default function DragonsList() {
       {dragons.map((dragon) => (
         <DragonCard key={dragon.name} dragon={dragon} />
       ))}
+      <article className="adoptCard">
+        <h2>+</h2>
+      </article>
     </section>
   );
 }

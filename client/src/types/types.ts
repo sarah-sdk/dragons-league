@@ -6,4 +6,5 @@ export type Dragon = {
   speed: number;
   url_baby: string;
   url_adult: string;
+  adopted_at: string;
 };
