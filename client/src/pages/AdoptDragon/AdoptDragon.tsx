@@ -3,7 +3,7 @@ import AdoptionCard from "../../components/AdoptDragon/AdoptionCard";
 import type { Specie } from "../../types/types";
 import "./AdoptDragon.css";
 import { useState } from "react";
-import Modal from "../../components/AdoptDragon/Modal";
+import Modal from "../../components/AdoptDragon/AdoptModal";
 
 export default function AdoptDragon() {
   const { species } = useLoaderData() as { species: Specie[] };

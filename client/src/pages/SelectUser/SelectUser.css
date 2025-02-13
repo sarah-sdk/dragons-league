@@ -1,6 +1,7 @@
 .user-selection {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
 
 .avatar {
@@ -14,7 +15,7 @@
 .user-selection button {
   background-color: transparent;
   border: none;
-  margin-bottom: 0;
+  margin: 0 auto;
   padding: 0;
 }
 
@@ -22,7 +23,7 @@
   margin-bottom: 0;
 }
 
-.user-selection button:last-of-type {
+.user-card:last-of-type {
   border: 1px solid var(--pico-primary);
   border-radius: 50%;
   height: 8rem;
@@ -41,7 +42,7 @@
   transform: scale(1.05);
 }
 
-.user-selection button:last-of-type p {
+.user-card:last-of-type p {
   color: var(--pico-primary);
   font-size: 3rem;
   margin-bottom: 0;
@@ -60,7 +61,7 @@
     width: 100%;
   }
 
-  .user-selection button:last-of-type {
+  .user-card:last-of-type {
     margin-bottom: 2rem;
   }
 }
