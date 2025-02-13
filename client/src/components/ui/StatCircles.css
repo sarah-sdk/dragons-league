@@ -1,0 +1,5 @@
+@import url("../../variables.css");
+
+.circle.filled {
+  color: var(--pico-primary);
+}
