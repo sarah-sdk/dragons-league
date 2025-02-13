@@ -1,6 +1,7 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import avatar1 from "../../../public/avatar1.webp";
 import avatar2 from "../../../public/avatar2.jpg";
+import "./SelectUser.css";
 
 type Users = {
   id: number;
