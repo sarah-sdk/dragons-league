@@ -1,5 +1,6 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import "./SelectUser.css";
+import UserCard from "../../components/SelectUser/UserCard";
 import type { User } from "../../types/types";
 
 export default function SelectUser() {
@@ -20,20 +21,15 @@ export default function SelectUser() {
     <section className="user-selection">
       <h1>Choissisez un utilisateur</h1>
       {users.map((user) => (
-        <button
-          key={user.id}
-          type="button"
-          className="user-card"
+        <UserCard
+          key={user.username}
+          user={user}
           onClick={() => handleUserSelect(+user.id)}
-        >
-          <img
-            src={`${import.meta.env.VITE_API_URL}/${user.url_avatar}`}
-            alt={`avatar-${user.username}`}
-            className="avatar"
-          />
-          <h2>{user.username}</h2>
-        </button>
+        />
       ))}
+      <button type="button">
+        <p>+</p>
+      </button>
     </section>
   );
 }
