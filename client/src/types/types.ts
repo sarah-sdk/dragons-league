@@ -1,6 +1,7 @@
 export type User = {
   id: string;
   username: string;
+  url_avatar: string;
 };
 
 export type Dragon = {

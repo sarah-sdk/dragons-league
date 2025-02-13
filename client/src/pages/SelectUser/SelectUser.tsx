@@ -1,11 +1,6 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import "./SelectUser.css";
-
-type User = {
-  id: number;
-  username: string;
-  url_avatar: string;
-};
+import type { User } from "../../types/types";
 
 export default function SelectUser() {
   const navigate = useNavigate();
@@ -29,7 +24,7 @@ export default function SelectUser() {
           key={user.id}
           type="button"
           className="user-card"
-          onClick={() => handleUserSelect(user.id)}
+          onClick={() => handleUserSelect(+user.id)}
         >
           <img
             src={`${import.meta.env.VITE_API_URL}/${user.url_avatar}`}
