@@ -1,3 +1,8 @@
+export type User = {
+  id: string;
+  username: string;
+};
+
 export type Dragon = {
   name: string;
   specie: string;
