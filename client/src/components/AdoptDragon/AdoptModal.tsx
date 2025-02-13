@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import SpecieDisplay from "../../services/SpecieDisplay";
 import type { ModalProps } from "../../types/types";
-import "./Modal.css";
+import "./AdoptModal.css";
 
 export default function Modal({
   isOpen,

@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import avatar1 from "/avatar1.webp";
-import avatar2 from "/avatar2.jpg";
 import type { User } from "../../types/types";
 import "./NavBar.css";
 
@@ -40,7 +38,7 @@ export default function NavBar() {
         </button>
         <div>
           <img
-            src={+user.id === 1 ? avatar1 : avatar2}
+            src={`${import.meta.env.VITE_API_URL}/${user.url_avatar}`}
             alt={user.username}
             className="avatar"
           />

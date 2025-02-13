@@ -41,8 +41,7 @@ const edit: RequestHandler = async (req, res, next) => {
   try {
     const user: User = {
       username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
+      url_avatar: req.body.url_avatar,
       id: userId,
     };
 
@@ -63,8 +62,7 @@ const add: RequestHandler = async (req, res, next) => {
   try {
     const user: Omit<User, "id"> = {
       username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
+      url_avatar: req.body.url_avatar,
     };
 
     const insertId = await userRepository.create(user);
