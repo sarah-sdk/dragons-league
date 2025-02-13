@@ -33,6 +33,14 @@
   align-items: center;
 }
 
+.user-card {
+  transition: transform 0.3s ease;
+}
+
+.user-card:hover {
+  transform: scale(1.05);
+}
+
 .user-selection button:last-of-type p {
   color: var(--pico-primary);
   font-size: 3rem;

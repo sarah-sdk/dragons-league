@@ -5,7 +5,7 @@ export default function UserCard({
   onClick,
 }: { user: User; onClick: () => void }) {
   return (
-    <button key={user.id} type="button" onClick={onClick}>
+    <button key={user.id} type="button" className="user-card" onClick={onClick}>
       <img
         src={`${import.meta.env.VITE_API_URL}/${user.url_avatar}`}
         alt={`avatar-${user.username}`}

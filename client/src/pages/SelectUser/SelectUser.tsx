@@ -27,7 +27,7 @@ export default function SelectUser() {
           onClick={() => handleUserSelect(+user.id)}
         />
       ))}
-      <button type="button">
+      <button type="button" className="user-card">
         <p>+</p>
       </button>
     </section>
