@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import SpecieDisplay from "../../services/SpecieDisplay";
 import type { ModalProps } from "../../types/types";
+import "./Modal.css";
 
 export default function Modal({
   isOpen,
@@ -13,6 +14,20 @@ export default function Modal({
   onAdopt,
 }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && dialogRef.current) {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [onClose]);
 
   useEffect(() => {
     if (isOpen && dialogRef.current) {
@@ -29,13 +44,13 @@ export default function Modal({
 
   return (
     <dialog ref={dialogRef} className="modal-dialog">
-      <h2>
-        <SpecieDisplay specie={specieName} />
-      </h2>
       <img
         src={`${import.meta.env.VITE_API_URL}/${specieImage}`}
         alt={specieName}
       />
+      <h2>
+        <SpecieDisplay specie={specieName} />
+      </h2>
       <input
         type="text"
         placeholder="Nom du dragon"
@@ -46,7 +61,7 @@ export default function Modal({
         Adopter votre dragon
       </button>
       <button type="button" onClick={onClose}>
-        X
+        ❌
       </button>
     </dialog>
   );
