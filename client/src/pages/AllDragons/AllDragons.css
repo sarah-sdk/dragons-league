@@ -1,0 +1,60 @@
+.dragonCard {
+  position: relative;
+  width: 15rem;
+  height: 15rem;
+  border: 1px solid var(--pico-primary);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.dragonImageBtn {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dragonImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.dragonInfo {
+  position: absolute;
+  bottom: .25rem;
+  left: .25rem;
+  right: .25rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background-color: none;
+}
+
+.dragonInfo h2 {
+  font-size: 1rem;
+}
+
+.dragonInfo ul li {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+}
+
+.dragonCard:hover {
+  transform: scale(1.05);
+}
+
+.dragonCard:hover .dragonImage {
+  filter: blur(5px) brightness(0.6);
+}
+
+.dragonCard:hover .dragonInfo {
+  opacity: 1;
+}

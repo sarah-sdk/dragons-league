@@ -11,7 +11,9 @@ export default function DragonDetails() {
   return (
     <article className="dragonDetails">
       <NameAndPhoto dragon={dragon} />
-      <StatDetails dragon={dragon} />
+      <ul>
+        <StatDetails dragon={dragon} />
+      </ul>
       <AdoptedAt dragon={dragon} />
     </article>
   );

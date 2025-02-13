@@ -1,9 +1,5 @@
-.dragonDetails img {
-  height: 15rem;
-  display: block;
-  margin: 1.5rem auto;
-
-  border-radius: 10px;
+.dragonsDetails {
+  margin: 0 auto;
 }
 
 .dragonDetails h1 {
@@ -13,4 +9,26 @@
 .dragonDetails ul li {
   display: flex;
   flex-direction: column;
+}
+
+@media screen and (min-width: 600px) {
+  .dragonDetails {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dragonDetails h1 {
+    grid-area: 1 / 1 / 2 / 3;
+  }
+
+  .dragonDetails img {
+    grid-area: 2 / 1 / 6 / 2;
+  }
+
+  .dragonDetails h2,
+  .dragonDetails h3,
+  .dragonDetails li,
+  .dragonDetails p {
+    margin-left: 1rem;
+  }
 }

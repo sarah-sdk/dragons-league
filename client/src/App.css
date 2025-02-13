@@ -31,3 +31,11 @@ p,
 button {
   font-family: var(--text-font);
 }
+
+img {
+  height: 18rem;
+  display: block;
+  margin: 1.5rem auto;
+
+  border-radius: 10px;
+}

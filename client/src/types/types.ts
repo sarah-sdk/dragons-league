@@ -7,4 +7,5 @@ export type Dragon = {
   url_baby: string;
   url_adult: string;
   adopted_at: string;
+  dragon_id: string;
 };
