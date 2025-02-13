@@ -26,7 +26,12 @@ export default function DragonCard({ dragon }: { dragon: Dragon }) {
       </button>
       <button type="button" onClick={handleCardClick} className="dragonInfo">
         <h2>{dragon.name}</h2>
-        <StatDetails dragon={dragon} size="10" />
+        <StatDetails
+          strength={+dragon.strength}
+          speed={+dragon.speed}
+          stamina={+dragon.stamina}
+          size="10"
+        />
       </button>
     </figure>
   );

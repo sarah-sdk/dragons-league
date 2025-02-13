@@ -12,7 +12,12 @@ export default function DragonDetails() {
     <article className="dragonDetails">
       <NameAndPhoto dragon={dragon} />
       <ul>
-        <StatDetails dragon={dragon} size="16" />
+        <StatDetails
+          strength={dragon.strength}
+          speed={dragon.speed}
+          stamina={dragon.stamina}
+          size="16"
+        />
       </ul>
       <AdoptedAt dragon={dragon} />
     </article>

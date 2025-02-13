@@ -1,23 +1,24 @@
-import type { Dragon } from "../../types/types";
 import StatCircles from "../ui/StatCircles";
 
 export default function StatDetails({
-  dragon,
+  strength,
+  speed,
+  stamina,
   size,
-}: { dragon: Dragon; size: string }) {
+}: { strength: number; speed: number; stamina: number; size: string }) {
   return (
     <ul>
       <li>
         {"Force"}
-        <StatCircles value={+dragon.strength} size={size} />
+        <StatCircles value={strength} size={size} />
       </li>
       <li>
         {"Vitesse"}
-        <StatCircles value={+dragon.speed} size={size} />
+        <StatCircles value={speed} size={size} />
       </li>
       <li>
         {"Endurance"}
-        <StatCircles value={+dragon.stamina} size={size} />
+        <StatCircles value={stamina} size={size} />
       </li>
     </ul>
   );

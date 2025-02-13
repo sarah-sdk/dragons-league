@@ -35,15 +35,15 @@ const router = createBrowserRouter([
     path: "/", // The root path
     element: <App />, // Renders the App component for the home page
     children: [
-      { path: "/", element: <Navigate to="my-dragons" /> },
-      { path: "adopt-dragon", element: <AdoptDragon />, loader: loadSpecies },
+      { path: "/", element: <Navigate to="mes-dragons" /> },
+      { path: "adopter-dragon", element: <AdoptDragon />, loader: loadSpecies },
       {
-        path: "my-dragons/:id",
+        path: "mes-dragons/:id",
         element: <DragonDetails />,
         loader: loadDragonDetails,
       },
       {
-        path: "/my-dragons",
+        path: "/mes-dragons",
         element: <AllDragons />,
         loader: loadAllDragons,
       },

@@ -1,0 +1,120 @@
+.adoptionList {
+  text-align: center;
+}
+
+.adoptionCard {
+  position: relative;
+  width: 15rem;
+  height: 15rem;
+  border: 1px solid var(--pico-primary);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  margin: 1rem auto;
+}
+
+.adoptionImageBtn {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adoptionImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+
+.adoptionImageBtn h2 {
+  position: absolute;
+  bottom: 1px;
+  left: 10px;
+  right: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  transition: opacity 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.adoptionInfo {
+  position: absolute;
+  height: 10rem;
+  bottom: .25rem;
+  left: .25rem;
+  right: .25rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background-color: transparent;
+  border: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.adoptionInfo h2 {
+  font-size: 1rem;
+}
+
+.adoptionInfo ul li {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  font-size: .5rem;
+  color: var(--pico-h2-color);
+}
+
+.adoptionCard.statCircles {
+  height: 1rem;
+}
+
+.adoptionCard:hover {
+  transform: scale(1.05);
+}
+
+.adoptionCard:hover .adoptionImage {
+  filter: blur(5px) brightness(0.6);
+}
+
+.adoptionCard:hover .adoptionInfo {
+  opacity: 1;
+}
+
+.adoptionInfo,
+.adoptionCard.nextCard,
+.adoptionCard.nextCard h2 {
+  margin-bottom: 0;
+}
+
+.adoptionCard.nextCard {
+  background-color: transparent;
+}
+
+.adoptionCard.nextCard p {
+  font-size: .75rem;
+  width: 18ch;
+  text-align: start;
+  color: var(--pico-h2-color);
+}
+
+@media screen and (min-width: 600px) {
+  .adoptionList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .adoptionList h1 {
+    grid-area: 1 / 1 / 2 / 4;
+  }
+
+  .adoptionCard {
+    width: 10rem;
+    height: 10rem;
+  }
+}
