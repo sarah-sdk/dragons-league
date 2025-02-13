@@ -1,3 +1,8 @@
+.user-selection {
+  display: flex;
+  flex-direction: column;
+}
+
 .avatar {
   border-radius: 50%;
   height: 8rem;
@@ -8,4 +13,18 @@
 .user-selection button {
   background-color: transparent;
   border: none;
+}
+
+@media screen and (min-width: 600px) {
+  .user-selection {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .user-selection h1 {
+    width: 100%;
+  }
 }
