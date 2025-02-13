@@ -31,7 +31,7 @@ export const loadAllDragons = async () => {
   const userId = localStorage.getItem("userId");
 
   if (!userId) {
-    throw new Error("Utilisateur non trouvable");
+    throw new Error("User not found");
   }
 
   const response = await fetch(
