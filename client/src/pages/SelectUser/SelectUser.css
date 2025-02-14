@@ -50,8 +50,8 @@
 
 @media screen and (min-width: 600px) {
   .user-selection {
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     align-items: center;
     gap: 2.5rem;
@@ -59,6 +59,7 @@
 
   .user-selection h1 {
     width: 100%;
+    grid-column: span 3;
   }
 
   .user-card:last-of-type {
