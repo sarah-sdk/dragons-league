@@ -1,21 +1,21 @@
 import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
-import type { User } from "../../types/types";
+import type { Profile } from "../../types/types";
 
-class userRepository {
+class profileRepository {
   // C of CRUD
-  async create(user: Omit<User, "id">) {
+  async create(profile: Omit<Profile, "id">) {
     const [result] = await databaseClient.execute<Result>(
       `
-      INSERT INTO user (username, url_avatar)
+      INSERT INTO profile (username, url_avatar)
       VALUES (?, ?)
       `,
-      [user.username, user.url_avatar],
+      [profile.username, profile.url_avatar],
     );
 
-    const userId = result.insertId;
+    const profileId = result.insertId;
 
-    return userId;
+    return profileId;
   }
 
   // R of CRUD
@@ -23,7 +23,7 @@ class userRepository {
     const [rows] = await databaseClient.query<Rows>(
       `
       SELECT id, username, url_avatar, created_at
-      FROM user
+      FROM profile
       `,
     );
 
@@ -34,7 +34,7 @@ class userRepository {
     const [rows] = await databaseClient.query<Rows>(
       `
       SELECT id, username, url_avatar, created_at
-      FROM user
+      FROM profile
       WHERE id = ?
       `,
       [id],
@@ -44,14 +44,14 @@ class userRepository {
   }
 
   // U of CRUD
-  async update(user: User) {
+  async update(profile: Profile) {
     const [result] = await databaseClient.execute<Result>(
       `
-      UPDATE user
+      UPDATE profile
       SET username = ?, url_avtar = ?
       WHERE id = ?
       `,
-      [user.username, user.url_avatar, user.id],
+      [profile.username, profile.url_avatar, profile.id],
     );
 
     return result.affectedRows > 0;
@@ -61,7 +61,7 @@ class userRepository {
   async destroy(id: number) {
     const [result] = await databaseClient.execute<Result>(
       `
-      DELETE FROM user
+      DELETE FROM profile
       WHERE id = ?
       `,
       [id],
@@ -71,4 +71,4 @@ class userRepository {
   }
 }
 
-export default new userRepository();
+export default new profileRepository();

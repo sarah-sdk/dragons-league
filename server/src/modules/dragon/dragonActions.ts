@@ -17,11 +17,11 @@ const browse: RequestHandler = async (req, res, next) => {
   }
 };
 
-const browseByUser: RequestHandler = async (req, res, next) => {
-  const userId = Number(req.params.userId);
+const browseByProfile: RequestHandler = async (req, res, next) => {
+  const profileId = Number(req.params.profileId);
 
   try {
-    const dragons = await dragonRepository.readAllByUser(userId);
+    const dragons = await dragonRepository.readAllByProfile(profileId);
 
     if (!dragons) {
       res.sendStatus(404);
@@ -35,11 +35,11 @@ const browseByUser: RequestHandler = async (req, res, next) => {
 
 // R of BREAD
 const read: RequestHandler = async (req, res, next) => {
-  const userId = Number(req.params.userId);
+  const profileId = Number(req.params.profileId);
   const dragonId = Number(req.params.dragonId);
 
   try {
-    const dragon = await dragonRepository.read({ userId, dragonId });
+    const dragon = await dragonRepository.read({ profileId, dragonId });
 
     if (!dragon) {
       res.sendStatus(404);
@@ -53,7 +53,7 @@ const read: RequestHandler = async (req, res, next) => {
 
 // E of BREAD
 const edit: RequestHandler = async (req, res, next) => {
-  const userId = Number(req.params.userId);
+  const profileId = Number(req.params.profileId);
   const dragonId = Number(req.params.dragonId);
 
   try {
@@ -62,7 +62,7 @@ const edit: RequestHandler = async (req, res, next) => {
       strength: req.body.strength,
       speed: req.body.speed,
       stamina: req.body.stamina,
-      user_id: userId,
+      profile_id: profileId,
       id: dragonId,
     };
 
@@ -80,13 +80,13 @@ const edit: RequestHandler = async (req, res, next) => {
 
 // A of BREAD
 const add: RequestHandler = async (req, res, next) => {
-  const userId = Number(req.params.userId);
+  const profileId = Number(req.params.profileId);
 
   try {
     const dragon: Omit<Dragon, "id" | "strength" | "speed" | "stamina"> = {
       name: req.body.name,
       specie_id: req.body.specie_id,
-      user_id: userId,
+      profile_id: profileId,
     };
 
     const insertId = await dragonRepository.create(dragon);
@@ -99,11 +99,14 @@ const add: RequestHandler = async (req, res, next) => {
 
 // D of BREAD
 const destroy: RequestHandler = async (req, res, next) => {
-  const userId = Number(req.params.userId);
+  const profileId = Number(req.params.profileId);
   const dragonId = Number(req.params.dragonId);
 
   try {
-    const affectedRows = await dragonRepository.destroy({ userId, dragonId });
+    const affectedRows = await dragonRepository.destroy({
+      profileId,
+      dragonId,
+    });
 
     if (affectedRows === 0) {
       res.sendStatus(404);
@@ -115,4 +118,4 @@ const destroy: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, browseByUser, read, edit, add, destroy };
+export default { browse, browseByProfile, read, edit, add, destroy };

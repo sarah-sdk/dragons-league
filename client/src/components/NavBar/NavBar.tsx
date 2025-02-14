@@ -5,19 +5,19 @@ import "./NavBar.css";
 
 export default function NavBar() {
   const [user, setUser] = useState<User | null>(null);
-  const userId = localStorage.getItem("userId");
+  const profileId = localStorage.getItem("profileId");
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userId) {
-      fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}`)
+    if (profileId) {
+      fetch(`${import.meta.env.VITE_API_URL}/api/users/${profileId}`)
         .then((response) => response.json())
         .then((data) => setUser(data))
         .catch((error) =>
           console.error("Erreur de récupération du user", error),
         );
     }
-  }, [userId]);
+  }, [profileId]);
 
   if (!user) return <div>Chargement</div>;
 
@@ -26,7 +26,7 @@ export default function NavBar() {
   };
 
   const handleLogOut = () => {
-    localStorage.removeItem("userId");
+    localStorage.removeItem("profileId");
     navigate("/profils");
   };
 

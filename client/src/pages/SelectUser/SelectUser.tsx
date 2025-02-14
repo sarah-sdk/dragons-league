@@ -11,8 +11,8 @@ export default function SelectUser() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleUserSelect = (userId: number) => {
-    localStorage.setItem("userId", userId.toString());
+  const handleUserSelect = (profileId: number) => {
+    localStorage.setItem("profileId", profileId.toString());
 
     navigate("/");
   };
@@ -42,7 +42,7 @@ export default function SelectUser() {
 
         if (response.ok) {
           const { insertId } = await response.json();
-          localStorage.setItem("userId", insertId.toString());
+          localStorage.setItem("profileId", insertId.toString());
 
           setIsModalOpen(false);
           navigate("/mes-dragons");

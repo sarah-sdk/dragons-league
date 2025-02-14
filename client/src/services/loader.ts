@@ -7,14 +7,14 @@ export const loadUsers = async () => {
 };
 
 export const loadUser = async () => {
-  const userId = localStorage.getItem("userId");
+  const profileId = localStorage.getItem("profileId");
 
-  if (!userId) {
+  if (!profileId) {
     throw new Error("Utilisateur non trouvable");
   }
 
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/users/${userId}`,
+    `${import.meta.env.VITE_API_URL}/api/users/${profileId}`,
   );
   const user = await response.json();
 
@@ -28,14 +28,14 @@ export const loadSpecies = async () => {
 };
 
 export const loadAllDragons = async () => {
-  const userId = localStorage.getItem("userId");
+  const profileId = localStorage.getItem("profileId");
 
-  if (!userId) {
+  if (!profileId) {
     throw new Error("User not found");
   }
 
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/users/${userId}/dragons`,
+    `${import.meta.env.VITE_API_URL}/api/users/${profileId}/dragons`,
   );
   const dragons = await response.json();
   return { dragons };
@@ -44,13 +44,13 @@ export const loadAllDragons = async () => {
 export const loadDragonDetails = async ({ params }: { params: Params }) => {
   const { dragonId } = params;
 
-  const userId = localStorage.getItem("userId");
+  const profileId = localStorage.getItem("profileId");
 
-  if (!userId) {
+  if (!profileId) {
     throw new Error("Utilisateur non trouvable");
   }
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/users/${userId}/dragons/${dragonId}`,
+    `${import.meta.env.VITE_API_URL}/api/users/${profileId}/dragons/${dragonId}`,
   );
 
   const dragon = await response.json();

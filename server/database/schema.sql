@@ -1,4 +1,4 @@
-CREATE TABLE user (
+CREATE TABLE profile (
   id int unsigned primary key auto_increment not null,
   username varchar(255) not null,
   url_avatar varchar(255) not null,
@@ -23,9 +23,9 @@ CREATE TABLE dragon (
   speed INT unsigned not null,
   stamina INT unsigned not null,
   specie_id INT unsigned not null,
-  user_id INT unsigned not null,
+  profile_id INT unsigned not null,
   foreign key(specie_id) references specie(id),
-  foreign key(user_id) references user(id)
+  foreign key(profile_id) references profile(id)
 );
 
 CREATE TABLE training (

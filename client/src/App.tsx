@@ -7,9 +7,9 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
+    const profileId = localStorage.getItem("profileId");
 
-    if (!userId) {
+    if (!profileId) {
       navigate("/profils");
     }
   }, [navigate]);

@@ -1,17 +1,17 @@
 import type { RequestHandler } from "express";
-import type { User } from "../../types/types";
-import userRepository from "./userRepository";
+import type { Profile } from "../../types/types";
+import profileRepository from "./profileRepository";
 
 // B of BREAD
 const browse: RequestHandler = async (req, res, next) => {
   try {
-    const users = await userRepository.readAll();
+    const profiles = await profileRepository.readAll();
 
-    if (!users) {
+    if (!profiles) {
       res.sendStatus(404);
     }
 
-    res.json(users);
+    res.json(profiles);
   } catch (error) {
     next(error);
   }
@@ -19,16 +19,16 @@ const browse: RequestHandler = async (req, res, next) => {
 
 // R of BREAD
 const read: RequestHandler = async (req, res, next) => {
-  const userId = Number(req.params.id);
+  const profileId = Number(req.params.id);
 
   try {
-    const user = await userRepository.read(userId);
+    const profile = await profileRepository.read(profileId);
 
-    if (!user) {
+    if (!profile) {
       res.sendStatus(404);
     }
 
-    res.json(user);
+    res.json(profile);
   } catch (error) {
     next(error);
   }
@@ -36,16 +36,16 @@ const read: RequestHandler = async (req, res, next) => {
 
 // E of BREAD
 const edit: RequestHandler = async (req, res, next) => {
-  const userId = Number(req.params.id);
+  const profileId = Number(req.params.id);
 
   try {
-    const user: User = {
+    const profile: Profile = {
       username: req.body.username,
       url_avatar: req.body.url_avatar,
-      id: userId,
+      id: profileId,
     };
 
-    const updateUser = await userRepository.update(user);
+    const updateUser = await profileRepository.update(profile);
 
     if (!updateUser) {
       res.sendStatus(404);
@@ -60,12 +60,12 @@ const edit: RequestHandler = async (req, res, next) => {
 // A of BREAD
 const add: RequestHandler = async (req, res, next) => {
   try {
-    const user: Omit<User, "id"> = {
+    const profile: Omit<Profile, "id"> = {
       username: req.body.username,
       url_avatar: req.body.url_avatar,
     };
 
-    const insertId = await userRepository.create(user);
+    const insertId = await profileRepository.create(profile);
 
     res.status(201).json({ insertId });
   } catch (error) {
@@ -75,10 +75,10 @@ const add: RequestHandler = async (req, res, next) => {
 
 // D of BREAD
 const destroy: RequestHandler = async (req, res, next) => {
-  const userId = Number(req.params.id);
+  const profileId = Number(req.params.id);
 
   try {
-    const affectedRows = await userRepository.destroy(userId);
+    const affectedRows = await profileRepository.destroy(profileId);
 
     if (affectedRows === 0) {
       res.sendStatus(404);

@@ -1,4 +1,4 @@
-export type User = {
+export type Profile = {
   id: number;
   username: string;
   url_avatar: string;
@@ -26,12 +26,12 @@ export type Dragon = {
   speed: number;
   stamina: number;
   specie_id: number;
-  user_id: number;
+  profile_id: number;
 };
 
 export type DragonTraining = {
   id: number;
-  user_id: number;
+  profile_id: number;
   dragon_id: number;
   training_id: number;
   strength_earned: number;

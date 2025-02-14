@@ -7,12 +7,12 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Define item-related routes
-import userActions from "./modules/user/userActions";
-router.get("/api/users", userActions.browse);
-router.get("/api/users/:id", userActions.read);
-router.put("/api/users/:id", userActions.edit);
-router.post("/api/users", userActions.add);
-router.delete("/api/users/:id", userActions.destroy);
+import profileActions from "./modules/profile/profileActions";
+router.get("/api/profiles", profileActions.browse);
+router.get("/api/profiles/:id", profileActions.read);
+router.put("/api/profiles/:id", profileActions.edit);
+router.post("/api/profiles", profileActions.add);
+router.delete("/api/profiles/:id", profileActions.destroy);
 
 import specieActions from "./modules/specie/specieActions";
 router.get("/api/species", specieActions.browse);
@@ -30,31 +30,34 @@ router.delete("/api/trainings/:id", trainingActions.destroy);
 
 import dragonActions from "./modules/dragon/dragonActions";
 router.get("/api/dragons", dragonActions.browse);
-router.get("/api/users/:userId/dragons", dragonActions.browseByUser);
-router.get("/api/users/:userId/dragons/:dragonId", dragonActions.read);
-router.put("/api/users/:userId/dragons/:dragonId", dragonActions.edit);
-router.post("/api/users/:userId/dragons/", dragonActions.add);
-router.delete("/api/users/:userId/dragons/:dragonId", dragonActions.destroy);
+router.get("/api/profiles/:profileId/dragons", dragonActions.browseByProfile);
+router.get("/api/profiles/:profileId/dragons/:dragonId", dragonActions.read);
+router.put("/api/profiles/:profileId/dragons/:dragonId", dragonActions.edit);
+router.post("/api/profiles/:profileId/dragons/", dragonActions.add);
+router.delete(
+  "/api/profiles/:profileId/dragons/:dragonId",
+  dragonActions.destroy,
+);
 
 import dragonTrainingActions from "./modules/dragonTraining/dragonTrainingActions";
 router.get(
-  "/api/users/:userId/dragons/:dragonId/trainings",
+  "/api/profiles/:profileId/dragons/:dragonId/trainings",
   dragonTrainingActions.browse,
 );
 router.get(
-  "/api/users/:userId/dragons/:dragonId/trainings/:trainingId",
+  "/api/profiles/:profileId/dragons/:dragonId/trainings/:trainingId",
   dragonTrainingActions.read,
 );
 router.put(
-  "/api/users/:userId/dragons/:dragonId/trainings/:trainingId",
+  "/api/profiles/:profileId/dragons/:dragonId/trainings/:trainingId",
   dragonTrainingActions.edit,
 );
 router.post(
-  "/api/users/:userId/dragons/:dragonId/trainings/",
+  "/api/profiles/:profileId/dragons/:dragonId/trainings/",
   dragonTrainingActions.add,
 );
 router.delete(
-  "/api/users/:userId/dragons/:dragonId/trainings/:trainingId",
+  "/api/profiles/:profileId/dragons/:dragonId/trainings/:trainingId",
   dragonTrainingActions.destroy,
 );
 
