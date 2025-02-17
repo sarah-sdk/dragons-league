@@ -14,3 +14,14 @@ export const hashPassword = async (password: string) => {
     throw Error("Erreur lors du hashage du mot de passe");
   }
 };
+
+export const comparePassword = async (
+  password: string,
+  hashedPassword: string,
+) => {
+  try {
+    return await argon2.verify(hashedPassword, password);
+  } catch (error) {
+    throw Error("Erreur lors de la comparaison des mots de passe");
+  }
+};

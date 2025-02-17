@@ -7,6 +7,10 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Define item-related routes
+import authActions from "./modules/auth/authActions";
+router.post("/api/auth/register", authActions.register);
+router.post("/api/auth/login", authActions.login);
+
 import userActions from "./modules/user/userActions";
 router.get("/api/users", userActions.browse);
 router.get("/api/users/:userId", userActions.read);
