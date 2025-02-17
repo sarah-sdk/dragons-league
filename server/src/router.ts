@@ -15,11 +15,11 @@ router.post("/api/users", userActions.add);
 router.delete("/api/users/:userId", userActions.destroy);
 
 import profileActions from "./modules/profile/profileActions";
-router.get("/api/profiles", profileActions.browse);
-router.get("/api/profiles/:id", profileActions.read);
-router.put("/api/profiles/:id", profileActions.edit);
-router.post("/api/profiles", profileActions.add);
-router.delete("/api/profiles/:id", profileActions.destroy);
+router.get("/api/users/:userId/profiles", profileActions.browse);
+router.get("/api/users/:userId/profiles/:profileId", profileActions.read);
+router.put("/api/users/:userId/profiles/:profileId", profileActions.edit);
+router.post("/api/users/:userId/profiles", profileActions.add);
+router.delete("/api/users/:userId/profiles/:profileId", profileActions.destroy);
 
 import specieActions from "./modules/specie/specieActions";
 router.get("/api/species", specieActions.browse);

@@ -7,10 +7,10 @@ class profileRepository {
   async create(profile: Omit<Profile, "id">) {
     const [result] = await databaseClient.execute<Result>(
       `
-      INSERT INTO profile (username, url_avatar)
-      VALUES (?, ?)
+      INSERT INTO profile (user_id, username, url_avatar)
+      VALUES (?, ?, ?)
       `,
-      [profile.username, profile.url_avatar],
+      [profile.user_id, profile.username, profile.url_avatar],
     );
 
     const profileId = result.insertId;
@@ -19,25 +19,27 @@ class profileRepository {
   }
 
   // R of CRUD
-  async readAll() {
+  async readAll(userId: number) {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT id, username, url_avatar, created_at
+      SELECT user_id, id, username, url_avatar, created_at
       FROM profile
+      WHERE user_id = ?
       `,
+      [userId],
     );
 
     return rows;
   }
 
-  async read(id: number) {
+  async read({ userId, profileId }: { userId: number; profileId: number }) {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT id, username, url_avatar, created_at
+      SELECT user_id, id, username, url_avatar, created_at
       FROM profile
-      WHERE id = ?
+      WHERE user_id = ? AND id = ?
       `,
-      [id],
+      [userId, profileId],
     );
 
     return rows[0];
@@ -48,23 +50,23 @@ class profileRepository {
     const [result] = await databaseClient.execute<Result>(
       `
       UPDATE profile
-      SET username = ?, url_avtar = ?
-      WHERE id = ?
+      SET username = ?, url_avatar = ?
+      WHERE user_id = ? AND id = ?
       `,
-      [profile.username, profile.url_avatar, profile.id],
+      [profile.username, profile.url_avatar, profile.user_id, profile.id],
     );
 
     return result.affectedRows > 0;
   }
 
   // D of CRUD
-  async destroy(id: number) {
+  async destroy({ userId, profileId }: { userId: number; profileId: number }) {
     const [result] = await databaseClient.execute<Result>(
       `
       DELETE FROM profile
-      WHERE id = ?
+      WHERE user_id = ? AND id = ?
       `,
-      [id],
+      [userId, profileId],
     );
 
     return result.affectedRows;

@@ -4,12 +4,12 @@ import profileRepository from "./profileRepository";
 
 // B of BREAD
 const browse: RequestHandler = async (req, res, next) => {
-  try {
-    const profiles = await profileRepository.readAll();
+  const userId = Number(req.params.userId);
 
-    if (!profiles) {
-      res.sendStatus(404);
-    }
+  try {
+    const profiles = await profileRepository.readAll(userId);
+
+    if (!profiles) res.sendStatus(404);
 
     res.json(profiles);
   } catch (error) {
@@ -19,14 +19,13 @@ const browse: RequestHandler = async (req, res, next) => {
 
 // R of BREAD
 const read: RequestHandler = async (req, res, next) => {
-  const profileId = Number(req.params.id);
+  const userId = Number(req.params.userId);
+  const profileId = Number(req.params.profileId);
 
   try {
-    const profile = await profileRepository.read(profileId);
+    const profile = await profileRepository.read({ userId, profileId });
 
-    if (!profile) {
-      res.sendStatus(404);
-    }
+    if (!profile) res.sendStatus(404);
 
     res.json(profile);
   } catch (error) {
@@ -36,20 +35,20 @@ const read: RequestHandler = async (req, res, next) => {
 
 // E of BREAD
 const edit: RequestHandler = async (req, res, next) => {
-  const profileId = Number(req.params.id);
+  const userId = Number(req.params.userId);
+  const profileId = Number(req.params.profileId);
 
   try {
     const profile: Profile = {
+      user_id: userId,
+      id: profileId,
       username: req.body.username,
       url_avatar: req.body.url_avatar,
-      id: profileId,
     };
 
     const updateUser = await profileRepository.update(profile);
 
-    if (!updateUser) {
-      res.sendStatus(404);
-    }
+    if (!updateUser) res.sendStatus(404);
 
     res.sendStatus(204);
   } catch (error) {
@@ -59,8 +58,11 @@ const edit: RequestHandler = async (req, res, next) => {
 
 // A of BREAD
 const add: RequestHandler = async (req, res, next) => {
+  const userId = Number(req.params.userId);
+
   try {
     const profile: Omit<Profile, "id"> = {
+      user_id: userId,
       username: req.body.username,
       url_avatar: req.body.url_avatar,
     };
@@ -75,10 +77,11 @@ const add: RequestHandler = async (req, res, next) => {
 
 // D of BREAD
 const destroy: RequestHandler = async (req, res, next) => {
-  const profileId = Number(req.params.id);
+  const userId = Number(req.params.userId);
+  const profileId = Number(req.params.profileId);
 
   try {
-    const affectedRows = await profileRepository.destroy(profileId);
+    const affectedRows = await profileRepository.destroy({ userId, profileId });
 
     if (affectedRows === 0) {
       res.sendStatus(404);
