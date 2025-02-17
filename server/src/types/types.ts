@@ -1,4 +1,12 @@
+export type User = {
+  id: number;
+  email: string;
+  password: string;
+  isAdmin: boolean;
+};
+
 export type Profile = {
+  user_id: number;
   id: number;
   username: string;
   url_avatar: string;
