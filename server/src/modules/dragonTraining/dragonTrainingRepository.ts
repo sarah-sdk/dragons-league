@@ -7,6 +7,30 @@ class dragonTrainingRepository {
   async create(dragonTraining: Omit<DragonTraining, "id">) {
     const connection = await databaseClient.getConnection();
 
+    const [profileCheck] = await connection.query<Rows>(
+      `
+      SELECT id
+      FROM profile
+      WHERE user_id = ? AND id = ?
+      `,
+      [dragonTraining.user_id, dragonTraining.profile_id],
+    );
+
+    if (profileCheck.length === 0)
+      throw new Error("Profil non lié à cet utilisateur.");
+
+    const [dragonCheck] = await connection.query<Rows>(
+      `
+      SELECT id
+      FROM dragon
+      WHERE profile_id = ? AND id = ?
+      `,
+      [dragonTraining.profile_id, dragonTraining.dragon_id],
+    );
+
+    if (dragonCheck.length === 0)
+      throw new Error("Dragon non lié à ce profil.");
+
     try {
       await connection.beginTransaction();
 
@@ -54,9 +78,34 @@ class dragonTrainingRepository {
 
   // R of CRUD
   async readAll({
+    userId,
     profileId,
     dragonId,
-  }: { profileId: number; dragonId: number }) {
+  }: { userId: number; profileId: number; dragonId: number }) {
+    const [profileCheck] = await databaseClient.query<Rows>(
+      `
+      SELECT id
+      FROM profile
+      WHERE user_id = ? AND id = ?
+      `,
+      [userId, profileId],
+    );
+
+    if (profileCheck.length === 0)
+      throw new Error("Profil non lié à cet utilisateur.");
+
+    const [dragonCheck] = await databaseClient.query<Rows>(
+      `
+      SELECT id
+      FROM dragon
+      WHERE profile_id = ? AND id = ?
+      `,
+      [profileId, dragonId],
+    );
+
+    if (dragonCheck.length === 0)
+      throw new Error("Dragon non lié à ce profil.");
+
     const [rows] = await databaseClient.query<Rows>(
       `
       SELECT
@@ -79,10 +128,40 @@ class dragonTrainingRepository {
   }
 
   async read({
+    userId,
     profileId,
     dragonId,
     trainingId,
-  }: { profileId: number; dragonId: number; trainingId: number }) {
+  }: {
+    userId: number;
+    profileId: number;
+    dragonId: number;
+    trainingId: number;
+  }) {
+    const [profileCheck] = await databaseClient.query<Rows>(
+      `
+      SELECT id
+      FROM profile
+      WHERE user_id = ? AND id = ?
+      `,
+      [userId, profileId],
+    );
+
+    if (profileCheck.length === 0)
+      throw new Error("Profil non lié à cet utilisateur.");
+
+    const [dragonCheck] = await databaseClient.query<Rows>(
+      `
+      SELECT id
+      FROM dragon
+      WHERE profile_id = ? AND id = ?
+      `,
+      [profileId, dragonId],
+    );
+
+    if (dragonCheck.length === 0)
+      throw new Error("Dragon non lié à ce profil.");
+
     const [rows] = await databaseClient.query<Rows>(
       `
       SELECT
@@ -107,6 +186,30 @@ class dragonTrainingRepository {
   // U of CRUD
   async update(dragonTraining: Omit<DragonTraining, "training_id">) {
     const connection = await databaseClient.getConnection();
+
+    const [profileCheck] = await connection.query<Rows>(
+      `
+      SELECT id
+      FROM profile
+      WHERE user_id = ? AND id = ?
+      `,
+      [dragonTraining.user_id, dragonTraining.profile_id],
+    );
+
+    if (profileCheck.length === 0)
+      throw new Error("Profil non lié à cet utilisateur.");
+
+    const [dragonCheck] = await connection.query<Rows>(
+      `
+      SELECT id
+      FROM dragon
+      WHERE profile_id = ? AND id = ?
+      `,
+      [dragonTraining.profile_id, dragonTraining.dragon_id],
+    );
+
+    if (dragonCheck.length === 0)
+      throw new Error("Dragon non lié à ce profil.");
 
     try {
       await connection.beginTransaction();
@@ -192,11 +295,41 @@ class dragonTrainingRepository {
 
   // D of CRUD
   async destroy({
+    userId,
     profileId,
     dragonId,
     trainingId,
-  }: { profileId: number; dragonId: number; trainingId: number }) {
+  }: {
+    userId: number;
+    profileId: number;
+    dragonId: number;
+    trainingId: number;
+  }) {
     const connection = await databaseClient.getConnection();
+
+    const [profileCheck] = await connection.query<Rows>(
+      `
+      SELECT id
+      FROM profile
+      WHERE user_id = ? AND id = ?
+      `,
+      [userId, profileId],
+    );
+
+    if (profileCheck.length === 0)
+      throw new Error("Profil non lié à cet utilisateur.");
+
+    const [dragonCheck] = await connection.query<Rows>(
+      `
+      SELECT id
+      FROM dragon
+      WHERE profile_id = ? AND id = ?
+      `,
+      [profileId, dragonId],
+    );
+
+    if (dragonCheck.length === 0)
+      throw new Error("Dragon non lié à ce profil.");
 
     try {
       await connection.beginTransaction();

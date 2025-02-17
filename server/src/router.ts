@@ -59,23 +59,23 @@ router.delete(
 
 import dragonTrainingActions from "./modules/dragonTraining/dragonTrainingActions";
 router.get(
-  "/api/profiles/:profileId/dragons/:dragonId/trainings",
+  "/api/users/:userId/profiles/:profileId/dragons/:dragonId/trainings",
   dragonTrainingActions.browse,
 );
 router.get(
-  "/api/profiles/:profileId/dragons/:dragonId/trainings/:trainingId",
+  "/api/users/:userId/profiles/:profileId/dragons/:dragonId/trainings/:trainingId",
   dragonTrainingActions.read,
 );
 router.put(
-  "/api/profiles/:profileId/dragons/:dragonId/trainings/:trainingId",
+  "/api/users/:userId/profiles/:profileId/dragons/:dragonId/trainings/:trainingId",
   dragonTrainingActions.edit,
 );
 router.post(
-  "/api/profiles/:profileId/dragons/:dragonId/trainings/",
+  "/api/users/:userId/profiles/:profileId/dragons/:dragonId/trainings/",
   dragonTrainingActions.add,
 );
 router.delete(
-  "/api/profiles/:profileId/dragons/:dragonId/trainings/:trainingId",
+  "/api/users/:userId/profiles/:profileId/dragons/:dragonId/trainings/:trainingId",
   dragonTrainingActions.destroy,
 );
 
