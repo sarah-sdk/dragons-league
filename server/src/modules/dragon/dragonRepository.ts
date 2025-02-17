@@ -5,6 +5,18 @@ import type { Dragon } from "../../types/types";
 class dragonRepository {
   // C of CRUD
   async create(dragon: Omit<Dragon, "id" | "strength" | "speed" | "stamina">) {
+    const [profileCheck] = await databaseClient.query<Rows>(
+      `
+      SELECT id
+      FROM profile
+      WHERE user_id = ? AND id = ?
+      `,
+      [dragon.user_id, dragon.profile_id],
+    );
+
+    if (profileCheck.length === 0)
+      throw new Error("Profil non lié à cet utilisateur.");
+
     const [result] = await databaseClient.execute<Result>(
       `
       INSERT INTO dragon (name, specie_id, profile_id, strength, speed, stamina)
@@ -29,29 +41,19 @@ class dragonRepository {
   }
 
   // R of CRUD
-  async readAll() {
-    const [rows] = await databaseClient.query<Rows>(
+  async readAll({ userId, profileId }: { userId: number; profileId: number }) {
+    const [profileCheck] = await databaseClient.query<Rows>(
       `
-      SELECT
-        dragon.id as dragon_id,
-        dragon.profile_id,
-        specie.specie,
-        dragon.name,
-        dragon.adopted_at,
-        dragon.strength,
-        dragon.speed,
-        dragon.stamina,
-        specie.url_baby,
-        specie.url_adult
-      FROM dragon
-      INNER JOIN specie ON specie.id = dragon.specie_id
+      SELECT id
+      FROM profile
+      WHERE user_id = ? AND id = ?
       `,
+      [userId, profileId],
     );
 
-    return rows;
-  }
+    if (profileCheck.length === 0)
+      throw new Error("Profil non lié à cet utilisateur.");
 
-  async readAllByProfile(profileId: number) {
     const [rows] = await databaseClient.query<Rows>(
       `
       SELECT
@@ -67,7 +69,7 @@ class dragonRepository {
         specie.url_adult
       FROM dragon
       INNER JOIN specie ON specie.id = dragon.specie_id
-      WHERE dragon.profile_id = ?
+      WHERE profile_id = ?
       `,
       [profileId],
     );
@@ -75,7 +77,23 @@ class dragonRepository {
     return rows;
   }
 
-  async read({ profileId, dragonId }: { profileId: number; dragonId: number }) {
+  async read({
+    userId,
+    profileId,
+    dragonId,
+  }: { userId: number; profileId: number; dragonId: number }) {
+    const [profileCheck] = await databaseClient.query<Rows>(
+      `
+      SELECT id
+      FROM profile
+      WHERE user_id = ? AND id = ?
+      `,
+      [userId, profileId],
+    );
+
+    if (profileCheck.length === 0)
+      throw new Error("Profil non lié à cet utilisateur.");
+
     const [rows] = await databaseClient.query<Rows>(
       `
       SELECT
@@ -101,6 +119,18 @@ class dragonRepository {
 
   // U of CRUD
   async update(dragon: Omit<Dragon, "specie_id">) {
+    const [profileCheck] = await databaseClient.query<Rows>(
+      `
+      SELECT id
+      FROM profile
+      WHERE user_id = ? AND id = ?
+      `,
+      [dragon.user_id, dragon.profile_id],
+    );
+
+    if (profileCheck.length === 0)
+      throw new Error("Profil non lié à cet utilisateur.");
+
     const [result] = await databaseClient.execute<Result>(
       `
       UPDATE dragon
@@ -122,9 +152,22 @@ class dragonRepository {
 
   // D of CRUD
   async destroy({
+    userId,
     profileId,
     dragonId,
-  }: { profileId: number; dragonId: number }) {
+  }: { userId: number; profileId: number; dragonId: number }) {
+    const [profileCheck] = await databaseClient.query<Rows>(
+      `
+      SELECT id
+      FROM profile
+      WHERE user_id = ? AND id = ?
+      `,
+      [userId, profileId],
+    );
+
+    if (profileCheck.length === 0)
+      throw new Error("Profil non lié à cet utilisateur.");
+
     const [result] = await databaseClient.execute<Result>(
       `
       DELETE FROM dragon

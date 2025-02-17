@@ -35,6 +35,7 @@ export type Dragon = {
   stamina: number;
   specie_id: number;
   profile_id: number;
+  user_id: number;
 };
 
 export type DragonTraining = {
