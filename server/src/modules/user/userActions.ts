@@ -1,4 +1,5 @@
 import type { RequestHandler } from "express";
+import { hashPassword } from "../../services/passwordServices";
 import type { User } from "../../types/types";
 import userRepository from "./userRepository";
 
@@ -35,10 +36,12 @@ const edit: RequestHandler = async (req, res, next) => {
   const userId = Number(req.params.userId);
 
   try {
+    const hashedPassword = await hashPassword(req.body.password);
+
     const user: Omit<User, "isAdmin"> = {
       id: userId,
       email: req.body.email,
-      password: req.body.password,
+      password: hashedPassword,
     };
 
     const updateUser = await userRepository.update(user);
@@ -54,9 +57,11 @@ const edit: RequestHandler = async (req, res, next) => {
 // A of BREAD
 const add: RequestHandler = async (req, res, next) => {
   try {
+    const hashedPassword = await hashPassword(req.body.password);
+
     const user: Omit<User, "id"> = {
       email: req.body.email,
-      password: req.body.password,
+      password: hashedPassword,
       isAdmin: req.body.isAdmin,
     };
 
