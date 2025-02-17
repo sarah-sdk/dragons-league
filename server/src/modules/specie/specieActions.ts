@@ -19,7 +19,7 @@ const browse: RequestHandler = async (req, res, next) => {
 
 // R of BREAD
 const read: RequestHandler = async (req, res, next) => {
-  const specieId = Number(req.params.id);
+  const specieId = Number(req.params.specieId);
 
   try {
     const specie = await specieRepository.read(specieId);
@@ -36,7 +36,7 @@ const read: RequestHandler = async (req, res, next) => {
 
 // E of BREAD
 const edit: RequestHandler = async (req, res, next) => {
-  const specieId = Number(req.params.id);
+  const specieId = Number(req.params.specieId);
 
   try {
     const specie: Specie = {
@@ -83,7 +83,7 @@ const add: RequestHandler = async (req, res, next) => {
 
 // D of BREAD
 const destroy: RequestHandler = async (req, res, next) => {
-  const specieId = Number(req.params.id);
+  const specieId = Number(req.params.specieId);
 
   try {
     const affectedRows = await specieRepository.destroy(specieId);

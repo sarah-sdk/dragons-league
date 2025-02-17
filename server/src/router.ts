@@ -23,17 +23,17 @@ router.delete("/api/users/:userId/profiles/:profileId", profileActions.destroy);
 
 import specieActions from "./modules/specie/specieActions";
 router.get("/api/species", specieActions.browse);
-router.get("/api/species/:id", specieActions.read);
-router.put("/api/species/:id", specieActions.edit);
+router.get("/api/species/:specieId", specieActions.read);
+router.put("/api/species/:specieId", specieActions.edit);
 router.post("/api/species", specieActions.add);
-router.delete("/api/species/:id", specieActions.destroy);
+router.delete("/api/species/:specieId", specieActions.destroy);
 
 import trainingActions from "./modules/training/trainingActions";
 router.get("/api/trainings", trainingActions.browse);
-router.get("/api/trainings/:id", trainingActions.read);
-router.put("/api/trainings/:id", trainingActions.edit);
+router.get("/api/trainings/:trainingId", trainingActions.read);
+router.put("/api/trainings/:trainingId", trainingActions.edit);
 router.post("/api/trainings", trainingActions.add);
-router.delete("/api/trainings/:id", trainingActions.destroy);
+router.delete("/api/trainings/:trainingId", trainingActions.destroy);
 
 import dragonActions from "./modules/dragon/dragonActions";
 router.get(

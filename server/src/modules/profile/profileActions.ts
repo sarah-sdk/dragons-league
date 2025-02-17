@@ -46,9 +46,9 @@ const edit: RequestHandler = async (req, res, next) => {
       url_avatar: req.body.url_avatar,
     };
 
-    const updateUser = await profileRepository.update(profile);
+    const updateProfile = await profileRepository.update(profile);
 
-    if (!updateUser) res.sendStatus(404);
+    if (!updateProfile) res.sendStatus(404);
 
     res.sendStatus(204);
   } catch (error) {
