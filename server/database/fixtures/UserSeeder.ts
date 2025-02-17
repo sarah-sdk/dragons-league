@@ -8,12 +8,14 @@ class UserSeeder extends AbstractSeeder {
   run() {
     const users = [
       {
-        username: "saratruche",
-        url_avatar: "assets/images/avatars/avatar1.png",
+        email: "sarah.smandack@outlook.fr",
+        password: "hashpasswor123",
+        isAdmin: true,
       },
       {
-        username: "demo_user",
-        url_avatar: "assets/images/avatars/avatar2.png",
+        email: "demo@dragonsleague.com",
+        password: "hashpassword123",
+        isAdmin: false,
       },
     ];
 

@@ -1,8 +1,18 @@
+CREATE TABLE user (
+  id int unsigned primary key auto_increment not null,
+  email varchar(255) not null unique,
+  password varchar(255) not null,
+  isAdmin BOOLEAN not null default false,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null
+);
+
 CREATE TABLE profile (
   id int unsigned primary key auto_increment not null,
   username varchar(255) not null,
   url_avatar varchar(255) not null,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,
+  user_id int unsigned not null,
+  foreign key(user_id) references user(id)
 );
 
 CREATE TABLE specie (
