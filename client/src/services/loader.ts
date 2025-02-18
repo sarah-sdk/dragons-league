@@ -1,24 +1,29 @@
 import type { Params } from "react-router-dom";
 
-export const loadUsers = async () => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users`);
-  const users = await response.json();
-  return { users };
+export const loadProfiles = async () => {
+  const userId = 1;
+
+  const response = await fetch(
+    `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles`,
+  );
+  const profiles = await response.json();
+  return { profiles };
 };
 
-export const loadUser = async () => {
+export const loadProfile = async () => {
   const profileId = localStorage.getItem("profileId");
+  const userId = 1;
 
   if (!profileId) {
-    throw new Error("Utilisateur non trouvable");
+    throw new Error("Profil non trouvable");
   }
 
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/users/${profileId}`,
+    `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles/${profileId}`,
   );
-  const user = await response.json();
+  const profile = await response.json();
 
-  return { user };
+  return { profile };
 };
 
 export const loadSpecies = async () => {
@@ -29,13 +34,14 @@ export const loadSpecies = async () => {
 
 export const loadAllDragons = async () => {
   const profileId = localStorage.getItem("profileId");
+  const userId = 1;
 
   if (!profileId) {
-    throw new Error("User not found");
+    throw new Error("Profile not found");
   }
 
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/users/${profileId}/dragons`,
+    `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles/${profileId}/dragons`,
   );
   const dragons = await response.json();
   return { dragons };
@@ -45,12 +51,13 @@ export const loadDragonDetails = async ({ params }: { params: Params }) => {
   const { dragonId } = params;
 
   const profileId = localStorage.getItem("profileId");
+  const userId = 1;
 
   if (!profileId) {
-    throw new Error("Utilisateur non trouvable");
+    throw new Error("Profil non trouvable");
   }
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/users/${profileId}/dragons/${dragonId}`,
+    `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles/${profileId}/dragons/${dragonId}`,
   );
 
   const dragon = await response.json();

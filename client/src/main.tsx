@@ -14,12 +14,12 @@ import App from "./App";
 import AdoptDragon from "./pages/AdoptDragon/AdoptDragon";
 import AllDragons from "./pages/AllDragons/AllDragons";
 import DragonDetails from "./pages/DragonDetails/DragonDetails";
-import SelectUser from "./pages/SelectUser/SelectUser";
+import SelectProfile from "./pages/SelectProfile/SelectProfile";
 import {
   loadAllDragons,
   loadDragonDetails,
+  loadProfiles,
   loadSpecies,
-  loadUsers,
 } from "./services/loader";
 
 // Import additional components for new routes
@@ -53,8 +53,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/profils",
-    element: <SelectUser />,
-    loader: loadUsers,
+    element: <SelectProfile />,
+    loader: loadProfiles,
   },
   // Try adding a new route! For example, "/about" with an About component
 ]);

@@ -1,25 +1,28 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { User } from "../../types/types";
+import type { Profile } from "../../types/types";
 import "./NavBar.css";
 
 export default function NavBar() {
-  const [user, setUser] = useState<User | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const profileId = localStorage.getItem("profileId");
   const navigate = useNavigate();
+  const userId = 1;
 
   useEffect(() => {
     if (profileId) {
-      fetch(`${import.meta.env.VITE_API_URL}/api/users/${profileId}`)
+      fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles/${profileId}`,
+      )
         .then((response) => response.json())
-        .then((data) => setUser(data))
+        .then((data) => setProfile(data))
         .catch((error) =>
-          console.error("Erreur de récupération du user", error),
+          console.error("Erreur de récupération du profile", error),
         );
     }
   }, [profileId]);
 
-  if (!user) return <div>Chargement</div>;
+  if (!profile) return <div>Chargement</div>;
 
   const handleGoBack = () => {
     navigate(-1);
@@ -38,8 +41,8 @@ export default function NavBar() {
         </button>
         <div>
           <img
-            src={`${import.meta.env.VITE_API_URL}/${user.url_avatar}`}
-            alt={user.username}
+            src={`${import.meta.env.VITE_API_URL}/${profile.url_avatar}`}
+            alt={profile.username}
             className="avatar"
           />
           <button type="button" onClick={handleLogOut}>

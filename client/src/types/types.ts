@@ -1,4 +1,4 @@
-export type User = {
+export type Profile = {
   id: string;
   username: string;
   url_avatar: string;
