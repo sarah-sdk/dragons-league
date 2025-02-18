@@ -14,6 +14,7 @@ import App from "./App";
 import AdoptDragon from "./pages/AdoptDragon/AdoptDragon";
 import AllDragons from "./pages/AllDragons/AllDragons";
 import DragonDetails from "./pages/DragonDetails/DragonDetails";
+import Login from "./pages/Login/Login";
 import SelectProfile from "./pages/SelectProfile/SelectProfile";
 import {
   loadAllDragons,
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
     path: "/profils",
     element: <SelectProfile />,
     loader: loadProfiles,
+  },
+  {
+    path: "/connexion",
+    element: <Login />,
   },
   // Try adding a new route! For example, "/about" with an About component
 ]);
