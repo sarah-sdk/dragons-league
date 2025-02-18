@@ -10,12 +10,12 @@ class UserSeeder extends AbstractSeeder {
     const users = [
       {
         email: "sarah.smandack@outlook.fr",
-        password: "hashpasswor123",
+        password: "hashPassword123!",
         isAdmin: true,
       },
       {
         email: "demo@dragonsleague.com",
-        password: "hashpassword123",
+        password: "hashPassword123!",
         isAdmin: false,
       },
     ];

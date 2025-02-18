@@ -1,5 +1,6 @@
 import type { RequestHandler } from "express";
 import { loginSchema, registerSchema } from "../../schemas/authSchema";
+import { generateToken } from "../../services/jwtServices";
 import { comparePassword, hashPassword } from "../../services/passwordServices";
 import authRepository from "./authRepository";
 
@@ -50,7 +51,9 @@ const login: RequestHandler = async (req, res, next): Promise<void> => {
       throw new Error("Invalid password");
     }
 
-    res.sendStatus(200);
+    const token = generateToken(user.id, user.isAdmin);
+
+    res.status(200).json({ token, role: user.isAdmin ? "admin" : "user" });
   } catch (error) {
     next(error);
   }

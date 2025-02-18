@@ -24,7 +24,7 @@ class authRepository {
   async getUserByEmail(email: string) {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT id, email, isAdmin
+      SELECT id, email, password, isAdmin
       FROM user
       WHERE email = ?
       `,

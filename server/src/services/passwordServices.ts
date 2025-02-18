@@ -20,8 +20,9 @@ export const comparePassword = async (
   hashedPassword: string,
 ) => {
   try {
-    return await argon2.verify(hashedPassword, password);
+    const isMatch = await argon2.verify(hashedPassword, password);
+    return isMatch;
   } catch (error) {
-    throw Error("Erreur lors de la comparaison des mots de passe");
+    throw new Error("Erreur lors de la comparaison des mots de passe");
   }
 };

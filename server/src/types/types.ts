@@ -48,3 +48,9 @@ export type DragonTraining = {
   speed_earned: number;
   stamina_earned: number;
 };
+
+export type JwtPayload = {
+  id: number;
+  email: string;
+  isAdmin: boolean;
+};
