@@ -1,3 +1,5 @@
+import type { ChangeEvent } from "react";
+
 export type Profile = {
   id: string;
   username: string;
@@ -39,4 +41,13 @@ export type ModalProps = {
   onNameChange: (name: string) => void;
   dragonName: string;
   onAdopt: (name: string, specieName: string) => void;
+};
+
+export type InputFieldProps = {
+  label: string;
+  type: string;
+  name: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  errors?: string | string[];
 };

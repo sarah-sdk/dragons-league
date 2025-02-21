@@ -1,4 +1,5 @@
 import { type ChangeEvent, useState } from "react";
+import InputField from "../../components/Register/InputField";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -58,46 +59,37 @@ export default function Register() {
     <main>
       <h1>Inscription</h1>
       <form>
-        <label htmlFor="email">Email</label>
-        <input
+        <InputField
+          label="Votre email"
           type="email"
-          id="email"
           name="email"
           value={email}
           onChange={handleChange}
-          autoComplete="on"
-          required
+          errors={errors.email}
         />
-        {errors.email && <p>{errors.email}</p>}
 
-        <label htmlFor="password">Mot de passe</label>
-        <input
+        <InputField
+          label="Votre mot de pass"
           type="password"
-          id="password"
           name="password"
           value={password}
           onChange={handleChange}
-          autoComplete="on"
-          required
+          errors={[
+            errors.passwordLength,
+            errors.passwordUppercase,
+            errors.passwordNumber,
+            errors.passwordSpecialChar,
+          ].filter(Boolean)}
         />
-        <ul>
-          {errors.passwordLength && <li>{errors.passwordLength}</li>}
-          {errors.passwordUppercase && <li>{errors.passwordUppercase}</li>}
-          {errors.passwordNumber && <li>{errors.passwordNumber}</li>}
-          {errors.passwordSpecialChar && <li>{errors.passwordSpecialChar}</li>}
-        </ul>
 
-        <label htmlFor="confirmPassword">Confirmez votre mot de passe</label>
-        <input
+        <InputField
+          label="Confirmez votre mot de passe"
           type="password"
-          id="confirmPassword"
           name="confirmPassword"
           value={confirmPassword}
           onChange={handleChange}
-          autoComplete="on"
-          required
+          errors={errors.confirmPassword}
         />
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
 
         <button type="submit">S'inscrire</button>
       </form>
