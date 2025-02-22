@@ -1,4 +1,5 @@
 import { useState } from "react";
+import logo from "/logo.png";
 import InputField from "../../components/Register/InputField";
 import "./Register.css";
 
@@ -56,6 +57,7 @@ export default function Register() {
 
   return (
     <main className="register">
+      <img src={logo} alt="" />
       <h1>Inscription</h1>
       <form>
         <InputField

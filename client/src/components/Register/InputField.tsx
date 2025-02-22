@@ -21,16 +21,22 @@ export default function InputField({
         required
       />
       {typeof criteria === "string" && (
-        <p className={criteria.includes("❌") ? "invalid" : "valid"}>
+        <p
+          className={
+            criteria.includes("❌") ? "criteria invalid" : " criteria valid"
+          }
+        >
           {criteria}
         </p>
       )}
       {Array.isArray(criteria) && criteria.length > 0 && (
-        <ul>
+        <ul className="criteria-list">
           {criteria.map((criterion) => (
             <li
               key={criterion}
-              className={criterion.includes("❌") ? "invalid" : "valid"}
+              className={
+                criterion.includes("❌") ? "criteria invalid" : "criteria valid"
+              }
             >
               {criterion}
             </li>

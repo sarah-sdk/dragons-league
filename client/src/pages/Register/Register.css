@@ -1,5 +1,17 @@
 @import url("../../variables.css");
 
+.register {
+  margin: 0 1rem;
+}
+
+.criteria-list li {
+  list-style-type: none;
+}
+
+.criteria {
+  font-size: .75rem;
+}
+
 .valid {
   color: #008000;
 }
