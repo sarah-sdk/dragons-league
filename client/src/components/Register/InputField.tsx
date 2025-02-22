@@ -6,7 +6,7 @@ export default function InputField({
   name,
   value,
   onChange,
-  errors,
+  criteria,
 }: InputFieldProps) {
   return (
     <>
@@ -20,12 +20,19 @@ export default function InputField({
         autoComplete="on"
         required
       />
-      {typeof errors === "string" && <p className="error">{errors}</p>}
-      {Array.isArray(errors) && errors.length > 0 && (
-        <ul className="error-list">
-          {errors.map((error) => (
-            <li key={error} className="error-item">
-              {error}
+      {typeof criteria === "string" && (
+        <p className={criteria.includes("❌") ? "invalid" : "valid"}>
+          {criteria}
+        </p>
+      )}
+      {Array.isArray(criteria) && criteria.length > 0 && (
+        <ul>
+          {criteria.map((criterion) => (
+            <li
+              key={criterion}
+              className={criterion.includes("❌") ? "invalid" : "valid"}
+            >
+              {criterion}
             </li>
           ))}
         </ul>

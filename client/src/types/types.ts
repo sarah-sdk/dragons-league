@@ -49,5 +49,5 @@ export type InputFieldProps = {
   name: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  errors?: string | string[];
+  criteria?: string | string[];
 };

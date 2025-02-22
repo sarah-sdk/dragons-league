@@ -1,62 +1,61 @@
-import { type ChangeEvent, useState } from "react";
+import { useState } from "react";
 import InputField from "../../components/Register/InputField";
+import "./Register.css";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState({
-    email: "",
-    passwordLength: "",
-    passwordUppercase: "",
-    passwordNumber: "",
-    passwordSpecialChar: "",
-    confirmPassword: "",
+
+  const [criteria, setCriteria] = useState({
+    email: "❌  L'email doit être de type address@example.com",
+    passwordLength: "❌  Minimum 12 caractères",
+    passwordUppercase: "❌  Au moins 1 majuscule",
+    passwordNumber: "❌  Au moins 1 chiffre",
+    passwordSpecialChar: "❌  Au moins 1 caractère spécial",
+    confirmPassword: "❌  Les mots de passe doivent correspondre",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const validateEmail = (email: string) => {
+    setCriteria((prev) => ({
+      ...prev,
+      email: /\S+@\S+\.\S+/.test(email)
+        ? "✅  Email valide"
+        : "❌  L'email doit être de type address@example.com",
+    }));
+  };
 
-    if (name === "email") {
-      setEmail(value);
-      setErrors((prev) => ({
-        ...prev,
-        email: value.includes("@") ? "" : "L'email n'est pas valide.",
-      }));
-    }
+  const validatePassword = (password: string) => {
+    setCriteria((prev) => ({
+      ...prev,
+      passwordLength:
+        password.length >= 12
+          ? "✅  Minimum 12 caractères"
+          : "❌  Minimum 12 caractères",
+      passwordUppercase: /[A-Z]/.test(password)
+        ? "✅  Au moins 1 majuscule"
+        : "❌  Au moins 1 majuscule",
+      passwordNumber: /\d/.test(password)
+        ? "✅  Au moins 1 chiffre"
+        : "❌  Au moins 1 chiffre",
+      passwordSpecialChar: /[!@#$%^&*]/.test(password)
+        ? "✅  Au moins 1 caractère spécial"
+        : "❌  Au moins 1 caractère spécial",
+    }));
+  };
 
-    if (name === "password") {
-      setPassword(value);
-      setErrors((prev) => ({
-        ...prev,
-        passwordLength:
-          value.length >= 12
-            ? ""
-            : "Le mot de passe doit contenir 12 caractères minimum.",
-        passwordUppercase: /[A-Z]/.test(value)
-          ? ""
-          : "Le mot de passe doit contenir au moins 1 majuscule.",
-        passwordNumber: /\d/.test(value)
-          ? ""
-          : "Le mot de passe doit contenir au moins 1 chiffre.",
-        passwordSpecialChar: /[!@#$%^&*]/.test(value)
-          ? ""
-          : "Le mot de passe doit contenir 1 caractère spécial.",
-      }));
-    }
-
-    if (name === "confirmPassword") {
-      setConfirmPassword(value);
-      setErrors((prev) => ({
-        ...prev,
-        confirmPassword:
-          value === password ? "" : "Les mots de passe ne correspondent pas.",
-      }));
-    }
+  const validateConfirmPassword = (confirmPassword: string) => {
+    setCriteria((prev) => ({
+      ...prev,
+      confirmPassword:
+        confirmPassword === password
+          ? "✅  Les mots de passe correspondent"
+          : "❌  Les mots de passe doivent correspondre",
+    }));
   };
 
   return (
-    <main>
+    <main className="register">
       <h1>Inscription</h1>
       <form>
         <InputField
@@ -64,22 +63,28 @@ export default function Register() {
           type="email"
           name="email"
           value={email}
-          onChange={handleChange}
-          errors={errors.email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            validateEmail(e.target.value);
+          }}
+          criteria={criteria.email}
         />
 
         <InputField
-          label="Votre mot de pass"
+          label="Votre mot de passe"
           type="password"
           name="password"
           value={password}
-          onChange={handleChange}
-          errors={[
-            errors.passwordLength,
-            errors.passwordUppercase,
-            errors.passwordNumber,
-            errors.passwordSpecialChar,
-          ].filter(Boolean)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            validatePassword(e.target.value);
+          }}
+          criteria={[
+            criteria.passwordLength,
+            criteria.passwordUppercase,
+            criteria.passwordNumber,
+            criteria.passwordSpecialChar,
+          ]}
         />
 
         <InputField
@@ -87,8 +92,11 @@ export default function Register() {
           type="password"
           name="confirmPassword"
           value={confirmPassword}
-          onChange={handleChange}
-          errors={errors.confirmPassword}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+            validateConfirmPassword(e.target.value);
+          }}
+          criteria={criteria.confirmPassword}
         />
 
         <button type="submit">S'inscrire</button>
