@@ -10,6 +10,14 @@
   height: 8rem;
 }
 
+.register .error {
+  font-size: 1rem;
+
+  &::before {
+    content: "❌ ";
+  }
+}
+
 .register input,
 .register label,
 .register p,
@@ -52,7 +60,8 @@
   color: #00e600;
 }
 
-.invalid {
+.invalid,
+.register .error {
   color: #ffadb8;
 }
 

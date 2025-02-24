@@ -24,7 +24,12 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 import cors from "cors";
 
 if (process.env.CLIENT_URL != null) {
-  app.use(cors({ origin: [process.env.CLIENT_URL] }));
+  app.use(
+    cors({
+      origin: [process.env.CLIENT_URL],
+      credentials: true,
+    }),
+  );
 }
 
 // If you need to allow extra origins, you can add something like this:

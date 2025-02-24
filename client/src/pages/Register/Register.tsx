@@ -12,14 +12,16 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   const [criteria, setCriteria] = useState({
-    email: "❌  L'email doit être de type address@example.com",
-    passwordLength: "❌  Minimum 12 caractères",
-    passwordUppercase: "❌  Au moins 1 majuscule",
-    passwordNumber: "❌  Au moins 1 chiffre",
-    passwordSpecialChar: "❌  Au moins 1 caractère spécial",
-    confirmPassword: "❌  Les mots de passe doivent correspondre",
+    email: "❌ L'email doit être de type address@example.com",
+    passwordLength: "❌ Minimum 12 caractères",
+    passwordLowercase: "❌ Au moins 1 minuscule",
+    passwordUppercase: "❌ Au moins 1 majuscule",
+    passwordNumber: "❌ Au moins 1 chiffre",
+    passwordSpecialChar: "❌ Au moins 1 caractère spécial",
+    confirmPassword: "❌ Les mots de passe doivent correspondre",
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -40,17 +42,20 @@ export default function Register() {
       ...prev,
       passwordLength:
         password.length >= 12
-          ? "✅  Minimum 12 caractères"
-          : "❌  Minimum 12 caractères",
+          ? "✅ Minimum 12 caractères"
+          : "❌ Minimum 12 caractères",
+      passwordLowercase: /[a-z]/.test(password)
+        ? "✅ Au moins 1 minuscule"
+        : "❌ Au moins 1 minuscule",
       passwordUppercase: /[A-Z]/.test(password)
-        ? "✅  Au moins 1 majuscule"
-        : "❌  Au moins 1 majuscule",
+        ? "✅ Au moins 1 majuscule"
+        : "❌ Au moins 1 majuscule",
       passwordNumber: /\d/.test(password)
-        ? "✅  Au moins 1 chiffre"
-        : "❌  Au moins 1 chiffre",
+        ? "✅ Au moins 1 chiffre"
+        : "❌ Au moins 1 chiffre",
       passwordSpecialChar: /[!@#$%^&*]/.test(password)
-        ? "✅  Au moins 1 caractère spécial"
-        : "❌  Au moins 1 caractère spécial",
+        ? "✅ Au moins 1 caractère spécial"
+        : "❌ Au moins 1 caractère spécial",
     }));
   };
 
@@ -59,8 +64,8 @@ export default function Register() {
       ...prev,
       confirmPassword:
         confirmPassword === password
-          ? "✅  Les mots de passe correspondent"
-          : "❌  Les mots de passe doivent correspondre",
+          ? "✅ Les mots de passe correspondent"
+          : "❌ Les mots de passe doivent correspondre",
     }));
   };
 
@@ -70,15 +75,59 @@ export default function Register() {
     setState((prevState) => !prevState);
   };
 
-  const handleSubmit = (event: FormEvent) => {
+  const isFormValid = () => {
+    return (
+      criteria.email.includes("✅") &&
+      criteria.passwordLength.includes("✅") &&
+      criteria.passwordLowercase.includes("✅") &&
+      criteria.passwordUppercase.includes("✅") &&
+      criteria.passwordNumber.includes("✅") &&
+      criteria.passwordSpecialChar.includes("✅") &&
+      criteria.confirmPassword.includes("✅")
+    );
+  };
+
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.info(`profil : ${email} ; ${password}`);
+    setError("");
+
+    if (!isFormValid()) {
+      setError("Veuillez remplir correctement tous les champs.");
+      return;
+    }
+
+    const newUser = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/auth/register`,
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify(newUser),
+          credentials: "include",
+        },
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        console.info("Succès :", data);
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      setError((error as Error).message);
+    }
   };
 
   return (
     <main className="register">
       <img src={logo} alt="" />
       <h1>Inscription</h1>
+      {error && <p className="error">{error}</p>}
       <form>
         <InputField
           label="Votre email"
@@ -103,6 +152,7 @@ export default function Register() {
           }}
           criteria={[
             criteria.passwordLength,
+            criteria.passwordLowercase,
             criteria.passwordUppercase,
             criteria.passwordNumber,
             criteria.passwordSpecialChar,

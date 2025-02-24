@@ -2,11 +2,22 @@ import type { RequestHandler } from "express";
 import { loginSchema, registerSchema } from "../../schemas/authSchema";
 import { generateToken } from "../../services/jwtServices";
 import { comparePassword, hashPassword } from "../../services/passwordServices";
+import userRepository from "../user/userRepository";
 import authRepository from "./authRepository";
 
 const register: RequestHandler = async (req, res, next) => {
   try {
+    const { email, password } = req.body;
     const { error } = registerSchema.validate(req.body);
+
+    if (!email || !password) {
+      res.status(400).json({ message: "Tous les champs sont requis." });
+    }
+
+    const existingUser = await authRepository.getUserByEmail(email);
+    if (existingUser) {
+      res.status(409).json({ message: "Cet email est déjà utilisé." });
+    }
 
     if (error) {
       throw new Error(`Validation error: ${error.details[0].message}`);
@@ -20,9 +31,7 @@ const register: RequestHandler = async (req, res, next) => {
       isAdmin: req.body.isAdmin || false,
     });
 
-    res
-      .sendStatus(201)
-      .json({ email: newUser.email, isAdmin: newUser.isAdmin });
+    res.status(201).json({ email: newUser.email, isAdmin: newUser.isAdmin });
   } catch (error) {
     next(error);
   }
