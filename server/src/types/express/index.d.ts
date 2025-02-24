@@ -8,7 +8,9 @@ declare global {
       // Add your custom properties here, for example:
       //
       user?: {
-        role?: string;
+        isAdmin: boolean;
+        userEmail: string;
+        userId: number;
       };
       /* ************************************************************************* */
     }

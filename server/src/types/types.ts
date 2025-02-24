@@ -50,7 +50,6 @@ export type DragonTraining = {
 };
 
 export type JwtPayload = {
-  id: number;
   email: string;
   isAdmin: boolean;
 };
