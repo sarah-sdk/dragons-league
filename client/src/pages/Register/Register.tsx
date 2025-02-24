@@ -1,4 +1,9 @@
-import { type Dispatch, type SetStateAction, useState } from "react";
+import {
+  type Dispatch,
+  type FormEvent,
+  type SetStateAction,
+  useState,
+} from "react";
 import logo from "/logo.png";
 import InputField from "../../components/Register/InputField";
 import "./Register.css";
@@ -65,6 +70,11 @@ export default function Register() {
     setState((prevState) => !prevState);
   };
 
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    console.info(`profil : ${email} ; ${password}`);
+  };
+
   return (
     <main className="register">
       <img src={logo} alt="" />
@@ -119,7 +129,9 @@ export default function Register() {
           }
         />
 
-        <button type="submit">S'inscrire</button>
+        <button type="submit" onClick={handleSubmit}>
+          S'inscrire
+        </button>
       </form>
     </main>
   );
