@@ -7,8 +7,10 @@ import {
 import logo from "/logo.png";
 import InputField from "../../components/Register/InputField";
 import "./Register.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -114,7 +116,7 @@ export default function Register() {
 
       const data = await response.json();
       if (response.ok) {
-        console.info("Succès :", data);
+        navigate("/profils");
       } else {
         throw new Error(data.message);
       }

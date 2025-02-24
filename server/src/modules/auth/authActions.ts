@@ -1,4 +1,5 @@
 import type { RequestHandler } from "express";
+import jwt from "jsonwebtoken";
 import { loginSchema, registerSchema } from "../../schemas/authSchema";
 import { generateToken } from "../../services/jwtServices";
 import { comparePassword, hashPassword } from "../../services/passwordServices";
@@ -29,6 +30,15 @@ const register: RequestHandler = async (req, res, next) => {
       email: req.body.email,
       password: hashedPassword,
       isAdmin: req.body.isAdmin || false,
+    });
+
+    const token = generateToken(newUser.email, newUser.isAdmin);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 3600 * 1000,
     });
 
     res.status(201).json({ email: newUser.email, isAdmin: newUser.isAdmin });
