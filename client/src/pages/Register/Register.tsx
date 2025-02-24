@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 import logo from "/logo.png";
 import InputField from "../../components/Register/InputField";
 import "./Register.css";
+import ShowPassword from "../../components/Register/ShowPassword";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -16,6 +17,10 @@ export default function Register() {
     passwordSpecialChar: "❌  Au moins 1 caractère spécial",
     confirmPassword: "❌  Les mots de passe doivent correspondre",
   });
+
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
 
   const validateEmail = (email: string) => {
     setCriteria((prev) => ({
@@ -55,6 +60,12 @@ export default function Register() {
     }));
   };
 
+  const togglePasswordVisibility = (
+    setState: Dispatch<SetStateAction<boolean>>,
+  ) => {
+    setState((prevState) => !prevState);
+  };
+
   return (
     <main className="register">
       <img src={logo} alt="" />
@@ -74,7 +85,7 @@ export default function Register() {
 
         <InputField
           label="Votre mot de passe"
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           value={password}
           onChange={(e) => {
@@ -88,10 +99,16 @@ export default function Register() {
             criteria.passwordSpecialChar,
           ]}
         />
+        <ShowPassword
+          showPassword={showPassword}
+          togglePasswordVisibility={() =>
+            togglePasswordVisibility(setShowPassword)
+          }
+        />
 
         <InputField
           label="Confirmez votre mot de passe"
-          type="password"
+          type={showConfirmPassword ? "text" : "password"}
           name="confirmPassword"
           value={confirmPassword}
           onChange={(e) => {
@@ -99,6 +116,12 @@ export default function Register() {
             validateConfirmPassword(e.target.value);
           }}
           criteria={criteria.confirmPassword}
+        />
+        <ShowPassword
+          showPassword={showConfirmPassword}
+          togglePasswordVisibility={() =>
+            togglePasswordVisibility(setShowConfirmPassword)
+          }
         />
 
         <button type="submit">S'inscrire</button>

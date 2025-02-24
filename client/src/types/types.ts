@@ -51,3 +51,8 @@ export type InputFieldProps = {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   criteria?: string | string[];
 };
+
+export type ShowPasswordProps = {
+  showPassword: boolean;
+  togglePasswordVisibility: () => void;
+};

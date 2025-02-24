@@ -1,7 +1,7 @@
 @import url("../../variables.css");
 
 .register {
-  margin: 0 1rem;
+  margin: 0 clamp(1rem, 50%, 10rem);
 }
 
 .criteria-list li {
