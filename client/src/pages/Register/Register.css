@@ -18,13 +18,6 @@
   }
 }
 
-.register input,
-.register label,
-.register p,
-.register button {
-  margin-bottom: .5rem;
-}
-
 .register li {
   margin-bottom: 0;
 }
