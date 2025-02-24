@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import { loginSchema, registerSchema } from "../../schemas/authSchema";
 import { generateToken } from "../../services/jwtServices";
 import { comparePassword, hashPassword } from "../../services/passwordServices";
-import userRepository from "../user/userRepository";
 import authRepository from "./authRepository";
 
 const register: RequestHandler = async (req, res, next) => {
@@ -32,7 +31,7 @@ const register: RequestHandler = async (req, res, next) => {
       isAdmin: req.body.isAdmin || false,
     });
 
-    const token = generateToken(newUser.email, newUser.isAdmin);
+    const token = generateToken(newUser.email);
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -41,13 +40,13 @@ const register: RequestHandler = async (req, res, next) => {
       maxAge: 3600 * 1000,
     });
 
-    res.status(201).json({ email: newUser.email, isAdmin: newUser.isAdmin });
+    res.status(201).json({ token, isAdmin: newUser.isAdmin });
   } catch (error) {
     next(error);
   }
 };
 
-const login: RequestHandler = async (req, res, next): Promise<void> => {
+const login: RequestHandler = async (req, res, next) => {
   try {
     const { error } = loginSchema.validate(req.body);
 
@@ -70,9 +69,16 @@ const login: RequestHandler = async (req, res, next): Promise<void> => {
       throw new Error("Invalid password");
     }
 
-    const token = generateToken(user.id, user.isAdmin);
+    const token = generateToken(user.email);
 
-    res.status(200).json({ token, role: user.isAdmin ? "admin" : "user" });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 3600 * 1000,
+    });
+
+    res.status(200).json({ token, isAdmin: user.isAdmin });
   } catch (error) {
     next(error);
   }

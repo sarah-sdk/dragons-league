@@ -5,6 +5,11 @@ export const loadProfiles = async () => {
 
   const response = await fetch(
     `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles`,
+    {
+      method: "GET",
+      headers: { "Content-type": "application/json" },
+      credentials: "include",
+    },
   );
   const profiles = await response.json();
   return { profiles };
