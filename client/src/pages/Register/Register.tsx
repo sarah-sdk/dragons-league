@@ -2,7 +2,6 @@ import { type Dispatch, type SetStateAction, useState } from "react";
 import logo from "/logo.png";
 import InputField from "../../components/Register/InputField";
 import "./Register.css";
-import ShowPassword from "../../components/Register/ShowPassword";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -98,8 +97,6 @@ export default function Register() {
             criteria.passwordNumber,
             criteria.passwordSpecialChar,
           ]}
-        />
-        <ShowPassword
           showPassword={showPassword}
           togglePasswordVisibility={() =>
             togglePasswordVisibility(setShowPassword)
@@ -116,8 +113,6 @@ export default function Register() {
             validateConfirmPassword(e.target.value);
           }}
           criteria={criteria.confirmPassword}
-        />
-        <ShowPassword
           showPassword={showConfirmPassword}
           togglePasswordVisibility={() =>
             togglePasswordVisibility(setShowConfirmPassword)

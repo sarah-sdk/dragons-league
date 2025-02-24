@@ -1,4 +1,5 @@
 import type { InputFieldProps } from "../../types/types";
+import ShowPassword from "./ShowPassword";
 
 export default function InputField({
   label,
@@ -7,6 +8,8 @@ export default function InputField({
   value,
   onChange,
   criteria,
+  showPassword,
+  togglePasswordVisibility,
 }: InputFieldProps) {
   return (
     <>
@@ -20,6 +23,14 @@ export default function InputField({
         autoComplete="on"
         required
       />
+
+      {showPassword !== undefined && togglePasswordVisibility && (
+        <ShowPassword
+          showPassword={showPassword ?? false}
+          togglePasswordVisibility={togglePasswordVisibility}
+        />
+      )}
+
       {typeof criteria === "string" && (
         <p
           className={
