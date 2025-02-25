@@ -12,6 +12,9 @@
   cursor: pointer;
   transition: transform 0.3s ease;
   margin: 1rem auto;
+
+  background: none;
+  padding: 0;
 }
 
 .dragonImageBtn {
@@ -48,6 +51,7 @@
 }
 
 .dragonInfo h2 {
+  padding-top: 1rem;
   font-size: 1rem;
 }
 

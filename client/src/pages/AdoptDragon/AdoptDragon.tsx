@@ -47,6 +47,7 @@ export default function AdoptDragon() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(newDragon),
+            credentials: "include",
           },
         );
 

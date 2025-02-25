@@ -12,19 +12,15 @@ export default function DragonCard({ dragon }: { dragon: Dragon }) {
   };
 
   return (
-    <figure className="dragonCard">
-      <button
-        type="button"
-        onClick={handleCardClick}
-        className="dragonImageBtn"
-      >
+    <button type="button" className="dragonCard" onClick={handleCardClick}>
+      <figure className="dragonImageBtn">
         <img
           src={`${import.meta.env.VITE_API_URL}/${dragonImage}`}
           alt={dragon.name}
           className="dragonImage"
         />
-      </button>
-      <button type="button" onClick={handleCardClick} className="dragonInfo">
+      </figure>
+      <legend className="dragonInfo">
         <h2>{dragon.name}</h2>
         <StatDetails
           strength={+dragon.strength}
@@ -32,7 +28,7 @@ export default function DragonCard({ dragon }: { dragon: Dragon }) {
           stamina={+dragon.stamina}
           size="10"
         />
-      </button>
-    </figure>
+      </legend>
+    </button>
   );
 }

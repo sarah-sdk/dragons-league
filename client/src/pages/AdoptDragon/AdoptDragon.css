@@ -12,6 +12,13 @@
   cursor: pointer;
   transition: transform 0.3s ease;
   margin: 1rem auto;
+
+  background: none;
+  padding: 0;
+}
+
+.adoptionCard:last-of-type {
+  padding: .5rem;
 }
 
 .adoptionImageBtn {
@@ -56,6 +63,8 @@
   border: none;
   margin-bottom: 0;
   padding-bottom: 0;
+  padding-top: 1.5rem;
+  padding-left: .5rem;
 }
 
 .adoptionInfo h2 {
