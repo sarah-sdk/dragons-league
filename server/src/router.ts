@@ -10,6 +10,7 @@ const router = express.Router();
 import authActions from "./modules/auth/authActions";
 router.post("/api/auth/register", authActions.register);
 router.post("/api/auth/login", authActions.login);
+router.post("/api/auth/logout", authActions.logout);
 
 import verifyToken from "./middlewares/authMiddlewares";
 router.use("/api", verifyToken);

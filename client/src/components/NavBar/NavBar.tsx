@@ -12,9 +12,20 @@ export default function NavBar() {
     navigate(-1);
   };
 
-  const handleLogOut = () => {
-    localStorage.removeItem("profileId");
-    navigate("/profils");
+  const handleLogOut = async () => {
+    try {
+      fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+
+      localStorage.removeItem("profileId");
+      document.cookie = "token=; Max-Age=0";
+
+      navigate("/connexion");
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion:", error);
+    }
   };
 
   return (

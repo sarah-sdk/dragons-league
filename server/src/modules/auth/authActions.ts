@@ -91,4 +91,9 @@ const login: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { register, login };
+const logout: RequestHandler = async (req, res, next) => {
+  res.clearCookie("token");
+  res.status(200).send({ message: "Déconnexion réussie" });
+};
+
+export default { register, login, logout };
