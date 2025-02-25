@@ -13,6 +13,10 @@ router.post("/api/auth/login", authActions.login);
 
 import verifyToken from "./middlewares/authMiddlewares";
 router.use("/api", verifyToken);
+router.get("/api/auth/me", verifyToken, (req, res) => {
+  if (!req.user) throw new Error("Aucun utilisateur");
+  res.json({ userId: req.user.id });
+});
 
 import userActions from "./modules/user/userActions";
 router.get("/api/users", userActions.browse);

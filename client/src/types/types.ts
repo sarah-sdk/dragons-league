@@ -1,5 +1,9 @@
 import type { ChangeEvent } from "react";
 
+export type User = {
+  id: string;
+};
+
 export type Profile = {
   id: string;
   username: string;

@@ -20,6 +20,7 @@ import SelectProfile from "./pages/SelectProfile/SelectProfile";
 import {
   loadAllDragons,
   loadDragonDetails,
+  loadProfile,
   loadProfiles,
   loadSpecies,
 } from "./services/loader";
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
   {
     path: "/", // The root path
     element: <App />, // Renders the App component for the home page
+    loader: loadProfile,
     children: [
       { path: "/", element: <Navigate to="mes-dragons" /> },
       { path: "adopter-dragon", element: <AdoptDragon />, loader: loadSpecies },

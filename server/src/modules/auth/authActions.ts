@@ -1,5 +1,4 @@
 import type { RequestHandler } from "express";
-import jwt from "jsonwebtoken";
 import { loginSchema, registerSchema } from "../../schemas/authSchema";
 import { generateToken } from "../../services/jwtServices";
 import { comparePassword, hashPassword } from "../../services/passwordServices";
@@ -40,7 +39,11 @@ const register: RequestHandler = async (req, res, next) => {
       maxAge: 3600 * 1000,
     });
 
-    res.status(201).json({ token, isAdmin: newUser.isAdmin });
+    res.status(201).json({
+      message: "Register successful",
+      userId: newUser.id,
+      isAdmin: newUser.isAdmin,
+    });
   } catch (error) {
     next(error);
   }
@@ -78,7 +81,11 @@ const login: RequestHandler = async (req, res, next) => {
       maxAge: 3600 * 1000,
     });
 
-    res.status(200).json({ token, isAdmin: user.isAdmin });
+    res.status(200).json({
+      message: "Login successful",
+      userId: user.id,
+      isAdmin: user.isAdmin,
+    });
   } catch (error) {
     next(error);
   }

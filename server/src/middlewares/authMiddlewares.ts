@@ -26,7 +26,9 @@ const verifyToken: RequestHandler = async (req, res, next) => {
       res.status(401).json({ message: "Utilisateur non trouvé" });
     } else {
       req.user = {
+        id: +user.id,
         email: user.email,
+        isAdmin: user.isAdmin,
       };
       next();
     }
