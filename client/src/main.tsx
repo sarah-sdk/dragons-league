@@ -14,12 +14,15 @@ import App from "./App";
 import AdoptDragon from "./pages/AdoptDragon/AdoptDragon";
 import AllDragons from "./pages/AllDragons/AllDragons";
 import DragonDetails from "./pages/DragonDetails/DragonDetails";
-import SelectUser from "./pages/SelectUser/SelectUser";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
+import SelectProfile from "./pages/SelectProfile/SelectProfile";
 import {
   loadAllDragons,
   loadDragonDetails,
+  loadProfile,
+  loadProfiles,
   loadSpecies,
-  loadUsers,
 } from "./services/loader";
 
 // Import additional components for new routes
@@ -36,6 +39,7 @@ const router = createBrowserRouter([
   {
     path: "/", // The root path
     element: <App />, // Renders the App component for the home page
+    loader: loadProfile,
     children: [
       { path: "/", element: <Navigate to="mes-dragons" /> },
       { path: "adopter-dragon", element: <AdoptDragon />, loader: loadSpecies },
@@ -53,8 +57,16 @@ const router = createBrowserRouter([
   },
   {
     path: "/profils",
-    element: <SelectUser />,
-    loader: loadUsers,
+    element: <SelectProfile />,
+    loader: loadProfiles,
+  },
+  {
+    path: "/connexion",
+    element: <Login />,
+  },
+  {
+    path: "/inscription",
+    element: <Register />,
   },
   // Try adding a new route! For example, "/about" with an About component
 ]);

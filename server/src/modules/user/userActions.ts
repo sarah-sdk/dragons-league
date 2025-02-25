@@ -1,4 +1,5 @@
 import type { RequestHandler } from "express";
+import { hashPassword } from "../../services/passwordServices";
 import type { User } from "../../types/types";
 import userRepository from "./userRepository";
 
@@ -7,9 +8,7 @@ const browse: RequestHandler = async (req, res, next) => {
   try {
     const users = await userRepository.readAll();
 
-    if (!users) {
-      res.sendStatus(404);
-    }
+    if (!users) res.sendStatus(404);
 
     res.json(users);
   } catch (error) {
@@ -19,14 +18,12 @@ const browse: RequestHandler = async (req, res, next) => {
 
 // R of BREAD
 const read: RequestHandler = async (req, res, next) => {
-  const userId = Number(req.params.id);
+  const userId = Number(req.params.userId);
 
   try {
     const user = await userRepository.read(userId);
 
-    if (!user) {
-      res.sendStatus(404);
-    }
+    if (!user) res.sendStatus(404);
 
     res.json(user);
   } catch (error) {
@@ -36,20 +33,20 @@ const read: RequestHandler = async (req, res, next) => {
 
 // E of BREAD
 const edit: RequestHandler = async (req, res, next) => {
-  const userId = Number(req.params.id);
+  const userId = Number(req.params.userId);
 
   try {
-    const user: User = {
-      username: req.body.username,
-      url_avatar: req.body.url_avatar,
+    const hashedPassword = await hashPassword(req.body.password);
+
+    const user: Omit<User, "isAdmin"> = {
       id: userId,
+      email: req.body.email,
+      password: hashedPassword,
     };
 
     const updateUser = await userRepository.update(user);
 
-    if (!updateUser) {
-      res.sendStatus(404);
-    }
+    if (!updateUser) res.sendStatus(404);
 
     res.sendStatus(204);
   } catch (error) {
@@ -60,9 +57,12 @@ const edit: RequestHandler = async (req, res, next) => {
 // A of BREAD
 const add: RequestHandler = async (req, res, next) => {
   try {
+    const hashedPassword = await hashPassword(req.body.password);
+
     const user: Omit<User, "id"> = {
-      username: req.body.username,
-      url_avatar: req.body.url_avatar,
+      email: req.body.email,
+      password: hashedPassword,
+      isAdmin: req.body.isAdmin,
     };
 
     const insertId = await userRepository.create(user);
@@ -75,14 +75,12 @@ const add: RequestHandler = async (req, res, next) => {
 
 // D of BREAD
 const destroy: RequestHandler = async (req, res, next) => {
-  const userId = Number(req.params.id);
+  const userId = Number(req.params.userId);
 
   try {
     const affectedRows = await userRepository.destroy(userId);
 
-    if (affectedRows === 0) {
-      res.sendStatus(404);
-    }
+    if (affectedRows === 0) res.sendStatus(404);
 
     res.sendStatus(204);
   } catch (error) {

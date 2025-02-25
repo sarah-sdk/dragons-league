@@ -1,48 +1,49 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import "./SelectUser.css";
+import "./SelectProfile.css";
 import { useState } from "react";
-import ProfileModal from "../../components/SelectUser/ProfileModal";
-import UserCard from "../../components/SelectUser/UserCard";
-import type { User } from "../../types/types";
+import ProfileCard from "../../components/SelectProfile/ProfileCard";
+import ProfileModal from "../../components/SelectProfile/ProfileModal";
+import type { Profile } from "../../types/types";
 
-export default function SelectUser() {
-  const { users } = useLoaderData() as { users: User[] };
+export default function SelectProfile() {
+  const { profiles } = useLoaderData() as { profiles: Profile[] };
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleUserSelect = (userId: number) => {
-    localStorage.setItem("userId", userId.toString());
+  const handleProfileSelect = (profileId: number) => {
+    localStorage.setItem("profileId", profileId.toString());
 
     navigate("/");
   };
 
-  if (!users) {
+  if (!profiles) {
     return <div>Chargement des utilisateurs...</div>;
   }
 
   const handleCreateProfile = async (username: string, avatar: string) => {
+    const userId = 1;
     if (username && avatar) {
-      const newUser = {
+      const newProfile = {
         username: username,
         url_avatar: avatar,
       };
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/users`,
+          `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(newUser),
+            body: JSON.stringify(newProfile),
           },
         );
 
         if (response.ok) {
           const { insertId } = await response.json();
-          localStorage.setItem("userId", insertId.toString());
+          localStorage.setItem("profileId", insertId.toString());
 
           setIsModalOpen(false);
           navigate("/mes-dragons");
@@ -59,18 +60,18 @@ export default function SelectUser() {
   };
 
   return (
-    <section className="user-selection">
+    <section className="profile-selection">
       <h1>Choissisez un utilisateur</h1>
-      {users.map((user) => (
-        <UserCard
-          key={user.username}
-          user={user}
-          onClick={() => handleUserSelect(+user.id)}
+      {profiles.map((profile) => (
+        <ProfileCard
+          key={profile.username}
+          profile={profile}
+          onClick={() => handleProfileSelect(+profile.id)}
         />
       ))}
       <button
         type="button"
-        className="user-card"
+        className="profile-card"
         onClick={() => setIsModalOpen(true)}
       >
         <p>+</p>

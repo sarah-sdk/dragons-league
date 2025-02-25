@@ -5,17 +5,17 @@ import dragonTrainingRepository from "./dragonTrainingRepository";
 // B of BREAD
 const browse: RequestHandler = async (req, res, next) => {
   const userId = Number(req.params.userId);
+  const profileId = Number(req.params.profileId);
   const dragonId = Number(req.params.dragonId);
 
   try {
     const dragonTranings = await dragonTrainingRepository.readAll({
       userId,
+      profileId,
       dragonId,
     });
 
-    if (!dragonTranings) {
-      res.sendStatus(404);
-    }
+    if (!dragonTranings) res.sendStatus(404);
 
     res.json(dragonTranings);
   } catch (error) {
@@ -26,19 +26,19 @@ const browse: RequestHandler = async (req, res, next) => {
 // R of BREAD
 const read: RequestHandler = async (req, res, next) => {
   const userId = Number(req.params.userId);
+  const profileId = Number(req.params.profileId);
   const dragonId = Number(req.params.dragonId);
   const trainingId = Number(req.params.trainingId);
 
   try {
     const dragonTraining = await dragonTrainingRepository.read({
       userId,
+      profileId,
       dragonId,
       trainingId,
     });
 
-    if (!dragonTraining) {
-      res.sendStatus(404);
-    }
+    if (!dragonTraining) res.sendStatus(404);
 
     res.json(dragonTraining);
   } catch (error) {
@@ -49,6 +49,7 @@ const read: RequestHandler = async (req, res, next) => {
 // E of BREAD
 const edit: RequestHandler = async (req, res, next) => {
   const userId = Number(req.params.userId);
+  const profileId = Number(req.params.profileId);
   const dragonId = Number(req.params.dragonId);
   const trainingId = Number(req.params.trainingId);
 
@@ -56,6 +57,7 @@ const edit: RequestHandler = async (req, res, next) => {
     const dragonTraining: Omit<DragonTraining, "training_id"> = {
       id: trainingId,
       user_id: userId,
+      profile_id: profileId,
       dragon_id: dragonId,
       strength_earned: req.body.strength_earned,
       speed_earned: req.body.speed_earned,
@@ -78,11 +80,13 @@ const edit: RequestHandler = async (req, res, next) => {
 // A of BREAD
 const add: RequestHandler = async (req, res, next) => {
   const userId = Number(req.params.userId);
+  const profileId = Number(req.params.profileId);
   const dragonId = Number(req.params.dragonId);
 
   try {
     const dragonTraining: Omit<DragonTraining, "id"> = {
       user_id: userId,
+      profile_id: profileId,
       dragon_id: dragonId,
       training_id: req.body.training_id,
       strength_earned: req.body.strength_earned,
@@ -101,19 +105,19 @@ const add: RequestHandler = async (req, res, next) => {
 // D of BREAD
 const destroy: RequestHandler = async (req, res, next) => {
   const userId = Number(req.params.userId);
+  const profileId = Number(req.params.profileId);
   const dragonId = Number(req.params.dragonId);
   const trainingId = Number(req.params.trainingId);
 
   try {
     const success = await dragonTrainingRepository.destroy({
       userId,
+      profileId,
       dragonId,
       trainingId,
     });
 
-    if (!success) {
-      res.sendStatus(404);
-    }
+    if (!success) res.sendStatus(404);
 
     res.sendStatus(204);
   } catch (error) {

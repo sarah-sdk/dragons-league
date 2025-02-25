@@ -7,7 +7,7 @@ import Modal from "../../components/AdoptDragon/AdoptModal";
 
 export default function AdoptDragon() {
   const { species } = useLoaderData() as { species: Specie[] };
-  const userId = localStorage.getItem("userId");
+  const profileId = localStorage.getItem("profileId");
 
   const navigate = useNavigate();
 
@@ -31,6 +31,7 @@ export default function AdoptDragon() {
   };
 
   const handleAdopt = async (name: string, specieId: string) => {
+    const userId = 1;
     if (name && specieId) {
       const newDragon = {
         name: name,
@@ -39,7 +40,7 @@ export default function AdoptDragon() {
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/users/${userId}/dragons`,
+          `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles/${profileId}/dragons`,
           {
             method: "POST",
             headers: {

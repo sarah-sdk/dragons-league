@@ -1,0 +1,111 @@
+@import url("../../variables.css");
+
+.register {
+  margin: 0 auto;
+  width: clamp(17rem, 85vw, 20rem);
+  height: 95vh;
+}
+
+.register > img {
+  height: 8rem;
+}
+
+.register .error {
+  font-size: 1rem;
+
+  &::before {
+    content: "❌ ";
+  }
+}
+
+.register li {
+  margin-bottom: 0;
+}
+
+.register p,
+.register li {
+  font-size: .75rem;
+}
+
+.register form > button:nth-of-type(1),
+.register form > button:nth-of-type(2) {
+  padding: 0;
+
+  display: grid;
+  justify-content: center;
+  align-items: center;
+
+  & img {
+    height: 1rem;
+    margin: 0;
+  }
+}
+
+.criteria-list li {
+  list-style-type: none;
+}
+
+.criteria {
+  font-size: .75rem;
+}
+
+.valid {
+  color: #00e600;
+}
+
+.invalid,
+.register .error {
+  color: #ffadb8;
+}
+
+.register form {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  gap: .5rem;
+
+  margin-bottom: 1rem;
+}
+
+.register form > label:nth-of-type(1) {
+  grid-area: 1 / 1 / 2 / 3;
+}
+
+.register form > input:nth-of-type(1) {
+  grid-area: 2 / 1 / 3 / 3;
+}
+
+.register form > p:nth-of-type(1) {
+  grid-area: 3 / 1 / 4 / 3;
+}
+
+.register form > label:nth-of-type(2) {
+  grid-area: 4 / 1 / 5 / 3;
+}
+
+.register form > input:nth-of-type(2) {
+  grid-area: 5 / 1 / 6 / 2;
+}
+
+.register form > button:nth-of-type(1) {
+  grid-area: 5 / 2 / 6 / 3;
+}
+
+.register form ul:nth-of-type(1) {
+  grid-area: 6 / 1 / 7 / 3;
+}
+
+.register form > label:nth-of-type(3) {
+  grid-area: 7 / 1 / 8 / 3;
+}
+
+.register form > button:nth-of-type(2) {
+  grid-area: 8 / 2 / 9 / 3;
+}
+
+.register form > p:nth-of-type(2) {
+  grid-area: 9 / 1 / 10 / 3;
+}
+
+.register form > button:nth-of-type(3) {
+  grid-area: 10 / 1 / 11 / 3;
+}
