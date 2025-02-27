@@ -13,7 +13,7 @@ export default function AddSpeciesForm() {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    if (!specie || !strength || !speed || !stamina) {
+    if (!specie || !strength || !speed || !stamina || babyImage || adultImage) {
       setErrors("Veuillez remplir les champs requis.");
       return;
     }
