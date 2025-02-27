@@ -7,6 +7,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 // Import the main app component
 import App from "./App";
+import AdminRoute from "./components/ProtectedRoute/AdminRoute";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import AdoptDragon from "./pages/AdoptDragon/AdoptDragon";
 import AllDragons from "./pages/AllDragons/AllDragons";
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <ProtectedRoute element={<Dashboard />} />,
+        element: <AdminRoute element={<Dashboard />} />,
       },
       {
         path: "/connexion",
