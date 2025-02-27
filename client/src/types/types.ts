@@ -16,6 +16,9 @@ export type ValidationCriteria = {
 
 export type User = {
   id: string;
+  email?: string;
+  created_at?: string;
+  isAdmin?: boolean;
 };
 
 export type Profile = {
@@ -42,6 +45,7 @@ export type Specie = {
   base_strength: number;
   base_speed: number;
   base_stamina: number;
+  url_baby?: string;
   url_adult: string;
 };
 
