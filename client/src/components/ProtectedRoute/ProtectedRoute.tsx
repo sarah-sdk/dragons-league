@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import authServices from "../../services/authServices";
 import type { RouteType } from "../../types/types";
 
 const ProtectedRoute = ({ element }: RouteType) => {
@@ -9,14 +10,9 @@ const ProtectedRoute = ({ element }: RouteType) => {
   useEffect(() => {
     const checkAuthentification = async () => {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/auth/me`,
-          {
-            method: "GET",
-            credentials: "include",
-          },
-        );
-        if (response.ok) {
+        const userData = await authServices.fetchProfile();
+
+        if (userData) {
           setIsAuthenticate(true);
         } else {
           setIsAuthenticate(false);
