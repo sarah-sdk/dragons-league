@@ -16,7 +16,7 @@ function App() {
     if (
       location.pathname !== "/connexion" &&
       location.pathname !== "/inscription" &&
-      location.pathname !== "/proA  fils"
+      location.pathname !== "/profils"
     ) {
       const profileId = localStorage.getItem("profileId");
 
