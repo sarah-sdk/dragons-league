@@ -14,7 +14,6 @@ router.post("/api/auth/logout", authActions.logout);
 
 import verifyToken from "./middlewares/authMiddlewares";
 router.get("/api/auth/me", verifyToken, (req, res) => {
-  console.info("Utilisateur authentifié:", req.user);
   if (!req.user) {
     res.status(401).json({ message: "Aucun utilisateur connecté" });
   } else {
