@@ -14,7 +14,7 @@ export default function SelectProfile() {
   const handleProfileSelect = (profileId: number) => {
     localStorage.setItem("profileId", profileId.toString());
 
-    navigate("/");
+    navigate("/mes-dragons");
   };
 
   if (!profiles) {
