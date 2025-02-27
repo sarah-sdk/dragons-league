@@ -1,11 +1,11 @@
 import eyeSlash from "/eye-slash.svg";
 import eye from "/eye.svg";
-import type { ShowPasswordProps } from "../../types/types";
+import type { ShowPasswordType } from "../../types/types";
 
 export default function ShowPassword({
   togglePasswordVisibility,
   showPassword,
-}: ShowPasswordProps) {
+}: ShowPasswordType) {
   return (
     <button type="button" onClick={togglePasswordVisibility}>
       {showPassword ? (

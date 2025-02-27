@@ -15,25 +15,32 @@ const verifyToken: RequestHandler = async (req, res, next) => {
   const token = req.cookies.token;
 
   if (!token) {
-    throw new Error("Accès non autorisé, token manquant.");
+    res.status(401).json({ message: "Accès non autorisé, token manquant." });
+    return;
   }
 
   try {
-    const decoded = jwt.verify(token, jwtSecret) as JwtPayload;
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET as string,
+    ) as JwtPayload;
     const user = await authRepository.getUserByEmail(decoded.email);
 
     if (!user) {
       res.status(401).json({ message: "Utilisateur non trouvé" });
-    } else {
-      req.user = {
-        id: +user.id,
-        email: user.email,
-        isAdmin: user.isAdmin,
-      };
-      next();
+      return;
     }
+
+    req.user = {
+      id: +user.id,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    };
+
+    next();
   } catch (error) {
-    next(error);
+    res.status(401).json({ message: "Token invalide" });
+    return;
   }
 };
 

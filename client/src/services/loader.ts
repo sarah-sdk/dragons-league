@@ -8,6 +8,10 @@ const getUserId = async () => {
   });
 
   if (!response.ok) {
+    if (response.status === 401) {
+      window.location.href = "/connexion";
+    }
+
     throw new Error("Utilisateur introuvable");
   }
 
@@ -17,6 +21,7 @@ const getUserId = async () => {
 
 export const loadProfiles = async () => {
   const userId = await getUserId();
+  console.info(userId);
 
   const response = await fetch(
     `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles`,

@@ -91,4 +91,20 @@ const login: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { register, login };
+const logout: RequestHandler = async (req, res, next) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+  });
+  res.status(200).send({ message: "Déconnexion réussie" });
+};
+
+const check: RequestHandler = async (req, res) => {
+  if (req.user.id) {
+    res.status(200).json({ authenticated: true });
+  } else {
+    res.status(401).json({ authenticated: false });
+  }
+};
+
+export default { register, login, logout, check };

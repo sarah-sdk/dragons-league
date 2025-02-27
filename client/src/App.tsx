@@ -1,22 +1,32 @@
-import "./App.css";
 import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
+import "./App.css";
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const hideNavBar =
+    location.pathname === "/connexion" ||
+    location.pathname === "/inscription" ||
+    location.pathname === "/profils";
 
   useEffect(() => {
-    const profileId = localStorage.getItem("profileId");
+    if (
+      location.pathname !== "/connexion" &&
+      location.pathname !== "/inscription" &&
+      location.pathname !== "/proA  fils"
+    ) {
+      const profileId = localStorage.getItem("profileId");
 
-    if (!profileId) {
-      navigate("/profils");
+      if (!profileId) navigate("/profils");
     }
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
   return (
     <>
-      <NavBar />
+      {!hideNavBar && <NavBar />}
       <Outlet />
     </>
   );

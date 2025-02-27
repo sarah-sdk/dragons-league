@@ -10,13 +10,19 @@ const router = express.Router();
 import authActions from "./modules/auth/authActions";
 router.post("/api/auth/register", authActions.register);
 router.post("/api/auth/login", authActions.login);
+router.post("/api/auth/logout", authActions.logout);
 
 import verifyToken from "./middlewares/authMiddlewares";
-router.use("/api", verifyToken);
 router.get("/api/auth/me", verifyToken, (req, res) => {
-  if (!req.user) throw new Error("Aucun utilisateur");
-  res.json({ userId: req.user.id });
+  console.info("Utilisateur authentifié:", req.user);
+  if (!req.user) {
+    res.status(401).json({ message: "Aucun utilisateur connecté" });
+  } else {
+    res.json({ userId: req.user.id });
+  }
 });
+router.use("/api", verifyToken);
+router.get("/api/auth/check", authActions.check);
 
 import userActions from "./modules/user/userActions";
 router.get("/api/users", userActions.browse);

@@ -1,18 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./ProfileModal.css";
-
-interface ProfileModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onCreate: (username: string, avatar: string) => void;
-}
+import type { ProfileModalType } from "../../types/types";
 
 export default function ProfileModal({
   isOpen,
   onClose,
   onCreate,
-}: ProfileModalProps) {
+}: ProfileModalType) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [username, setUsername] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState("");

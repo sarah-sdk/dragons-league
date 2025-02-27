@@ -1,4 +1,4 @@
-import type { InputFieldProps } from "../../types/types";
+import type { InputFieldType } from "../../types/types";
 import ShowPassword from "./ShowPassword";
 
 export default function InputField({
@@ -10,7 +10,7 @@ export default function InputField({
   criteria,
   showPassword,
   togglePasswordVisibility,
-}: InputFieldProps) {
+}: InputFieldType) {
   return (
     <>
       <label htmlFor={name}>{label}</label>

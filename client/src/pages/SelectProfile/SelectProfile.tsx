@@ -38,6 +38,7 @@ export default function SelectProfile() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(newProfile),
+            credentials: "include",
           },
         );
 

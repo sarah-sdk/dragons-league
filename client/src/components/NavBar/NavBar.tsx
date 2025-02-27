@@ -1,20 +1,70 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { Profile } from "../../types/types";
 import "./NavBar.css";
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const { profile } = useLoaderData() as { profile: Profile };
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!profile) return <div>Chargement</div>;
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const authResponse = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/auth/me`,
+          {
+            method: "GET",
+            credentials: "include",
+          },
+        );
+
+        if (!authResponse.ok) throw new Error("Utilisateur non authentifié");
+        const authData = await authResponse.json();
+        const userId = authData.userId;
+
+        const profileId = localStorage.getItem("profileId");
+        if (!profileId) throw new Error("Aucun profileId trouvé");
+
+        const profileResponse = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles/${profileId}`,
+          { method: "GET", credentials: "include" },
+        );
+
+        if (!profileResponse.ok) throw new Error("Profil introuvable");
+
+        const profileData = await profileResponse.json();
+        setProfile(profileData);
+      } catch (error) {
+        console.error("Erreur d'authentification", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  if (loading || !profile) return <div>Chargement</div>;
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  const handleLogOut = () => {
-    localStorage.removeItem("profileId");
-    navigate("/profils");
+  const handleLogOut = async () => {
+    try {
+      fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+
+      localStorage.removeItem("profileId");
+      setProfile(null);
+
+      navigate("/connexion");
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion:", error);
+    }
   };
 
   return (
