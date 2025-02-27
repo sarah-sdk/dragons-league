@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SpecieDisplay from "../../services/SpecieDisplay";
 import type { Specie, User } from "../../types/types";
 import "./Dashboard.css";
+import AddSpeciesForm from "../../components/Dashboard/Species/AddSpeciesForm";
 import formatDate from "../../services/formatDate";
 
 export default function Dashboard() {
@@ -66,6 +67,7 @@ export default function Dashboard() {
           ))}
         </tbody>
       </table>
+      <AddSpeciesForm />
 
       <h2>Utilisateurs :</h2>
       <table>

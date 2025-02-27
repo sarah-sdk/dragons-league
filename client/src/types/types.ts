@@ -74,10 +74,12 @@ export type ProfileModalType = {
 export type InputFieldType = {
   label: string;
   type: string;
+  max?: number;
   name: string;
-  value: string;
+  value?: string | number;
+  accept?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  criteria: string | string[];
+  criteria?: string | string[];
   showPassword?: boolean;
   togglePasswordVisibility?: () => void;
 };
