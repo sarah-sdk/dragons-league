@@ -21,7 +21,6 @@ const getUserId = async () => {
 
 export const loadProfiles = async () => {
   const userId = await getUserId();
-  console.info(userId);
 
   const response = await fetch(
     `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles`,
