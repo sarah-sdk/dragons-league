@@ -16,7 +16,6 @@ const ProtectedRoute = ({ element }: RouteType) => {
             credentials: "include",
           },
         );
-        console.info("Réponse de l'API:", response.status);
         if (response.ok) {
           setIsAuthenticate(true);
         } else {
