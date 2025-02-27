@@ -69,6 +69,7 @@ export default function AddSpeciesForm() {
           onChange={(e) => {
             let newValue = Number(e.target.value);
             if (newValue > 10) newValue = 10;
+            if (newValue < 0) newValue = 0;
             setStrength(newValue);
           }}
         />
@@ -81,6 +82,7 @@ export default function AddSpeciesForm() {
           onChange={(e) => {
             let newValue = Number(e.target.value);
             if (newValue > 10) newValue = 10;
+            if (newValue < 0) newValue = 0;
             setSpeed(newValue);
           }}
         />
@@ -93,6 +95,7 @@ export default function AddSpeciesForm() {
           onChange={(e) => {
             let newValue = Number(e.target.value);
             if (newValue > 10) newValue = 10;
+            if (newValue < 0) newValue = 0;
             setStamina(newValue);
           }}
         />
