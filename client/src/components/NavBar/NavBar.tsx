@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Profile } from "../../types/types";
 import "./NavBar.css";
+import authServices from "../../services/authServices";
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -11,17 +12,7 @@ export default function NavBar() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const authResponse = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/auth/me`,
-          {
-            method: "GET",
-            credentials: "include",
-          },
-        );
-
-        if (!authResponse.ok) throw new Error("Utilisateur non authentifié");
-        const authData = await authResponse.json();
-        const userId = authData.userId;
+        const userId = await authServices.fetchProfile();
 
         const profileId = localStorage.getItem("profileId");
         if (!profileId) throw new Error("Aucun profileId trouvé");
