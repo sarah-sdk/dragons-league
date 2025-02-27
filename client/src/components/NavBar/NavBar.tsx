@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { Profile } from "../../types/types";
 import "./NavBar.css";
 import authServices from "../../services/authServices";
@@ -72,11 +72,14 @@ export default function NavBar() {
           ←
         </button>
         <div>
-          <img
-            src={`${import.meta.env.VITE_API_URL}/${profile.url_avatar}`}
-            alt={profile.username}
-            className="avatar"
-          />
+          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/mes-dragons">
+            <img
+              src={`${import.meta.env.VITE_API_URL}/${profile.url_avatar}`}
+              alt={profile.username}
+              className="avatar"
+            />
+          </Link>
           <button type="button" onClick={handleChangeProfile}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
