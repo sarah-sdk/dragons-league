@@ -1,5 +1,13 @@
 export type User = {
   id: number;
+  email: string;
+  password: string;
+  isAdmin: boolean;
+};
+
+export type Profile = {
+  user_id: number;
+  id: number;
   username: string;
   url_avatar: string;
 };
@@ -26,15 +34,22 @@ export type Dragon = {
   speed: number;
   stamina: number;
   specie_id: number;
+  profile_id: number;
   user_id: number;
 };
 
 export type DragonTraining = {
   id: number;
   user_id: number;
+  profile_id: number;
   dragon_id: number;
   training_id: number;
   strength_earned: number;
   speed_earned: number;
   stamina_earned: number;
+};
+
+export type JwtPayload = {
+  email: string;
+  isAdmin: boolean;
 };

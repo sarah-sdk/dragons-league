@@ -1,3 +1,4 @@
+import { hashPassword } from "../../src/services/passwordServices";
 import AbstractSeeder from "./AbstractSeeder";
 
 class UserSeeder extends AbstractSeeder {
@@ -5,20 +6,37 @@ class UserSeeder extends AbstractSeeder {
     super({ table: "user", truncate: true });
   }
 
-  run() {
+  async run() {
     const users = [
       {
-        username: "saratruche",
-        url_avatar: "assets/images/avatars/avatar1.png",
+        email: "sarah.smandack@outlook.fr",
+        password: "hashPassword123!",
+        isAdmin: true,
       },
       {
-        username: "demo_user",
-        url_avatar: "assets/images/avatars/avatar2.png",
+        email: "demo@dragonsleague.com",
+        password: "hashPassword123!",
+        isAdmin: false,
       },
     ];
 
-    for (let i = 0; i < users.length; i++) {
-      this.insert(users[i]);
+    for (const user of users) {
+      try {
+        const hashedPassword = await hashPassword(user.password);
+
+        const userData = {
+          email: user.email,
+          password: hashedPassword,
+          isAdmin: user.isAdmin,
+        };
+
+        this.insert(userData);
+      } catch (error) {
+        console.error(
+          `Erreur lors de l'insertion de l'utilisateur ${user.email}:`,
+          error,
+        );
+      }
     }
   }
 }

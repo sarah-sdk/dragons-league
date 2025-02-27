@@ -7,10 +7,10 @@ class userRepository {
   async create(user: Omit<User, "id">) {
     const [result] = await databaseClient.execute<Result>(
       `
-      INSERT INTO user (username, url_avatar)
-      VALUES (?, ?)
+      INSERT INTO user (email, password, isAdmin)
+      VALUES (?, ?, ?)
       `,
-      [user.username, user.url_avatar],
+      [user.email, user.password, user.isAdmin],
     );
 
     const userId = result.insertId;
@@ -22,7 +22,7 @@ class userRepository {
   async readAll() {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT id, username, url_avatar, created_at
+      SELECT id, email, isAdmin, created_at
       FROM user
       `,
     );
@@ -33,7 +33,7 @@ class userRepository {
   async read(id: number) {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT id, username, url_avatar, created_at
+      SELECT id, email, isAdmin, created_at
       FROM user
       WHERE id = ?
       `,
@@ -44,14 +44,14 @@ class userRepository {
   }
 
   // U of CRUD
-  async update(user: User) {
+  async update(user: Omit<User, "isAdmin">) {
     const [result] = await databaseClient.execute<Result>(
       `
       UPDATE user
-      SET username = ?, url_avtar = ?
+      SET email = ?, password = ?
       WHERE id = ?
       `,
-      [user.username, user.url_avatar, user.id],
+      [user.email, user.password, user.id],
     );
 
     return result.affectedRows > 0;

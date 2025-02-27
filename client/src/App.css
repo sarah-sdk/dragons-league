@@ -47,3 +47,8 @@ img {
 button {
   margin-bottom: 0;
 }
+
+button:focus,
+input:focus {
+  outline: 1px solid var(--pico-primary);
+}

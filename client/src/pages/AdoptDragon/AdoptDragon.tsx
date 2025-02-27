@@ -2,18 +2,33 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import AdoptionCard from "../../components/AdoptDragon/AdoptionCard";
 import type { Specie } from "../../types/types";
 import "./AdoptDragon.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../components/AdoptDragon/AdoptModal";
+import authServices from "../../services/authServices";
 
 export default function AdoptDragon() {
   const { species } = useLoaderData() as { species: Specie[] };
-  const userId = localStorage.getItem("userId");
-
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSpecie, setSelectedSpecie] = useState<Specie | null>(null);
   const [dragonName, setDragonName] = useState<string>("");
+  const [userId, setUserId] = useState<number | null>(null);
+
+  const profileId = localStorage.getItem("profileId");
+
+  useEffect(() => {
+    const getUserId = async () => {
+      try {
+        const fetchedUserId = await authServices.fetchProfile();
+        setUserId(fetchedUserId);
+      } catch (error) {
+        console.error("Erreur d'authentification", error);
+      }
+    };
+
+    getUserId();
+  }, []);
 
   const handleOpenModal = (specie: Specie) => {
     setSelectedSpecie(specie);
@@ -39,13 +54,14 @@ export default function AdoptDragon() {
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/users/${userId}/dragons`,
+          `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles/${profileId}/dragons`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(newDragon),
+            credentials: "include",
           },
         );
 

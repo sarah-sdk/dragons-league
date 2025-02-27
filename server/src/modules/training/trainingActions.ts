@@ -19,7 +19,7 @@ const browse: RequestHandler = async (req, res, next) => {
 
 // R of BREAD
 const read: RequestHandler = async (req, res, next) => {
-  const trainingId = Number(req.params.id);
+  const trainingId = Number(req.params.trainingId);
 
   try {
     const training = await trainingRepository.read(trainingId);
@@ -36,7 +36,7 @@ const read: RequestHandler = async (req, res, next) => {
 
 // E of BREAD
 const edit: RequestHandler = async (req, res, next) => {
-  const trainingId = Number(req.params.id);
+  const trainingId = Number(req.params.trainingId);
 
   try {
     const training: Training = {
@@ -73,7 +73,7 @@ const add: RequestHandler = async (req, res, next) => {
 
 // D of BREAD
 const destroy: RequestHandler = async (req, res, next) => {
-  const trainingId = Number(req.params.id);
+  const trainingId = Number(req.params.trainingId);
 
   try {
     const affectedRows = await trainingRepository.destroy(trainingId);

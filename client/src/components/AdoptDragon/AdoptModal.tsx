@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import SpecieDisplay from "../../services/SpecieDisplay";
-import type { ModalProps } from "../../types/types";
+import type { ModalType } from "../../types/types";
 import "./AdoptModal.css";
 
 export default function Modal({
@@ -12,7 +12,7 @@ export default function Modal({
   onNameChange,
   dragonName,
   onAdopt,
-}: ModalProps) {
+}: ModalType) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {

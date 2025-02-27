@@ -1,25 +1,24 @@
 // Import necessary modules from React and React Router
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import {
-  Navigate,
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 /* ************************************************************************* */
 
 // Import the main app component
 import App from "./App";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import AdoptDragon from "./pages/AdoptDragon/AdoptDragon";
 import AllDragons from "./pages/AllDragons/AllDragons";
 import DragonDetails from "./pages/DragonDetails/DragonDetails";
-import SelectUser from "./pages/SelectUser/SelectUser";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
+import SelectProfile from "./pages/SelectProfile/SelectProfile";
 import {
   loadAllDragons,
   loadDragonDetails,
+  loadProfiles,
   loadSpecies,
-  loadUsers,
 } from "./services/loader";
 
 // Import additional components for new routes
@@ -37,24 +36,35 @@ const router = createBrowserRouter([
     path: "/", // The root path
     element: <App />, // Renders the App component for the home page
     children: [
-      { path: "/", element: <Navigate to="mes-dragons" /> },
-      { path: "adopter-dragon", element: <AdoptDragon />, loader: loadSpecies },
+      {
+        path: "adopter-dragon",
+        element: <ProtectedRoute element={<AdoptDragon />} />,
+        loader: loadSpecies,
+      },
       {
         path: "mes-dragons/:dragonId",
-        element: <DragonDetails />,
+        element: <ProtectedRoute element={<DragonDetails />} />,
         loader: loadDragonDetails,
       },
       {
         path: "/mes-dragons",
-        element: <AllDragons />,
+        element: <ProtectedRoute element={<AllDragons />} />,
         loader: loadAllDragons,
       },
+      {
+        path: "/profils",
+        element: <ProtectedRoute element={<SelectProfile />} />,
+        loader: loadProfiles,
+      },
+      {
+        path: "/connexion",
+        element: <Login />,
+      },
+      {
+        path: "/inscription",
+        element: <Register />,
+      },
     ],
-  },
-  {
-    path: "/profils",
-    element: <SelectUser />,
-    loader: loadUsers,
   },
   // Try adding a new route! For example, "/about" with an About component
 ]);
