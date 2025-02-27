@@ -1,8 +1,9 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import "./SelectProfile.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProfileCard from "../../components/SelectProfile/ProfileCard";
 import ProfileModal from "../../components/SelectProfile/ProfileModal";
+import authServices from "../../services/authServices";
 import type { Profile } from "../../types/types";
 
 export default function SelectProfile() {
@@ -10,19 +11,32 @@ export default function SelectProfile() {
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userId, setUserId] = useState<number | null>(null);
 
   const handleProfileSelect = (profileId: number) => {
     localStorage.setItem("profileId", profileId.toString());
 
-    navigate("/");
+    navigate("/mes-dragons");
   };
+
+  useEffect(() => {
+    const getUserId = async () => {
+      try {
+        const fetchedUserId = await authServices.fetchProfile();
+        setUserId(fetchedUserId);
+      } catch (error) {
+        console.error("Erreur d'authentification", error);
+      }
+    };
+
+    getUserId();
+  }, []);
 
   if (!profiles) {
     return <div>Chargement des utilisateurs...</div>;
   }
 
   const handleCreateProfile = async (username: string, avatar: string) => {
-    const userId = 1;
     if (username && avatar) {
       const newProfile = {
         username: username,
