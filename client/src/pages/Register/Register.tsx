@@ -1,13 +1,9 @@
-import {
-  type Dispatch,
-  type FormEvent,
-  type SetStateAction,
-  useState,
-} from "react";
+import { type FormEvent, useState } from "react";
 import logo from "/logo.png";
 import InputField from "../../components/Register/InputField";
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
+import { useAuthForm } from "../../hooks/useAuthForm";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -16,66 +12,16 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const [criteria, setCriteria] = useState({
-    email: "❌ L'email doit être de type address@example.com",
-    passwordLength: "❌ Minimum 12 caractères",
-    passwordLowercase: "❌ Au moins 1 minuscule",
-    passwordUppercase: "❌ Au moins 1 majuscule",
-    passwordNumber: "❌ Au moins 1 chiffre",
-    passwordSpecialChar: "❌ Au moins 1 caractère spécial",
-    confirmPassword: "❌ Les mots de passe doivent correspondre",
-  });
-
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState<boolean>(false);
-
-  const validateEmail = (email: string) => {
-    setCriteria((prev) => ({
-      ...prev,
-      email: /\S+@\S+\.\S+/.test(email)
-        ? "✅  Email valide"
-        : "❌  L'email doit être de type address@example.com",
-    }));
-  };
-
-  const validatePassword = (password: string) => {
-    setCriteria((prev) => ({
-      ...prev,
-      passwordLength:
-        password.length >= 12
-          ? "✅ Minimum 12 caractères"
-          : "❌ Minimum 12 caractères",
-      passwordLowercase: /[a-z]/.test(password)
-        ? "✅ Au moins 1 minuscule"
-        : "❌ Au moins 1 minuscule",
-      passwordUppercase: /[A-Z]/.test(password)
-        ? "✅ Au moins 1 majuscule"
-        : "❌ Au moins 1 majuscule",
-      passwordNumber: /\d/.test(password)
-        ? "✅ Au moins 1 chiffre"
-        : "❌ Au moins 1 chiffre",
-      passwordSpecialChar: /[!@#$%^&*]/.test(password)
-        ? "✅ Au moins 1 caractère spécial"
-        : "❌ Au moins 1 caractère spécial",
-    }));
-  };
-
-  const validateConfirmPassword = (confirmPassword: string) => {
-    setCriteria((prev) => ({
-      ...prev,
-      confirmPassword:
-        confirmPassword === password
-          ? "✅ Les mots de passe correspondent"
-          : "❌ Les mots de passe doivent correspondre",
-    }));
-  };
-
-  const togglePasswordVisibility = (
-    setState: Dispatch<SetStateAction<boolean>>,
-  ) => {
-    setState((prevState) => !prevState);
-  };
+  const {
+    criteria,
+    showPassword,
+    setShowPassword,
+    showConfirmPassword,
+    setShowConfirmPassword,
+    validateEmail,
+    validatePassword,
+    togglePasswordVisibility,
+  } = useAuthForm();
 
   const isFormValid = () => {
     return (
@@ -85,7 +31,9 @@ export default function Register() {
       criteria.passwordUppercase.includes("✅") &&
       criteria.passwordNumber.includes("✅") &&
       criteria.passwordSpecialChar.includes("✅") &&
-      criteria.confirmPassword.includes("✅")
+      (criteria.confirmPassword
+        ? criteria.confirmPassword.includes("✅")
+        : false)
     );
   };
 
@@ -172,9 +120,9 @@ export default function Register() {
           value={confirmPassword}
           onChange={(e) => {
             setConfirmPassword(e.target.value);
-            validateConfirmPassword(e.target.value);
+            validatePassword(e.target.value);
           }}
-          criteria={criteria.confirmPassword}
+          criteria={criteria.confirmPassword ? criteria.confirmPassword : ""}
           showPassword={showConfirmPassword}
           togglePasswordVisibility={() =>
             togglePasswordVisibility(setShowConfirmPassword)

@@ -1,13 +1,9 @@
-import {
-  type Dispatch,
-  type FormEvent,
-  type SetStateAction,
-  useState,
-} from "react";
+import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/Register/InputField";
 import "./Login.css";
 import logo from "/logo.png";
+import { useAuthForm } from "../../hooks/useAuthForm";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -16,53 +12,14 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const [criteria, setCriteria] = useState({
-    email: "❌ L'email doit être de type address@example.com",
-    passwordLength: "❌ Minimum 12 caractères",
-    passwordLowercase: "❌ Au moins 1 minuscule",
-    passwordUppercase: "❌ Au moins 1 majuscule",
-    passwordNumber: "❌ Au moins 1 chiffre",
-    passwordSpecialChar: "❌ Au moins 1 caractère spécial",
-  });
-
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-
-  const validateEmail = (email: string) => {
-    setCriteria((prev) => ({
-      ...prev,
-      email: /\S+@\S+\.\S+/.test(email)
-        ? "✅  Email valide"
-        : "❌  L'email doit être de type address@example.com",
-    }));
-  };
-
-  const validatePassword = (password: string) => {
-    setCriteria((prev) => ({
-      ...prev,
-      passwordLength:
-        password.length >= 12
-          ? "✅ Minimum 12 caractères"
-          : "❌ Minimum 12 caractères",
-      passwordLowercase: /[a-z]/.test(password)
-        ? "✅ Au moins 1 minuscule"
-        : "❌ Au moins 1 minuscule",
-      passwordUppercase: /[A-Z]/.test(password)
-        ? "✅ Au moins 1 majuscule"
-        : "❌ Au moins 1 majuscule",
-      passwordNumber: /\d/.test(password)
-        ? "✅ Au moins 1 chiffre"
-        : "❌ Au moins 1 chiffre",
-      passwordSpecialChar: /[!@#$%^&*]/.test(password)
-        ? "✅ Au moins 1 caractère spécial"
-        : "❌ Au moins 1 caractère spécial",
-    }));
-  };
-
-  const togglePasswordVisibility = (
-    setState: Dispatch<SetStateAction<boolean>>,
-  ) => {
-    setState((prevState) => !prevState);
-  };
+  const {
+    criteria,
+    showPassword,
+    setShowPassword,
+    validateEmail,
+    validatePassword,
+    togglePasswordVisibility,
+  } = useAuthForm();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -104,7 +61,7 @@ export default function Login() {
       <img src={logo} alt="" />
       <h1>Connexion</h1>
       {error && <p className="error">{error}</p>}
-      <form>
+      <form onSubmit={handleSubmit}>
         <InputField
           label="Votre email"
           type="email"
@@ -139,9 +96,7 @@ export default function Login() {
           }
         />
 
-        <button type="submit" onClick={handleSubmit}>
-          Se connecter
-        </button>
+        <button type="submit">Se connecter</button>
         <button type="button" onClick={() => navigate("/inscription")}>
           S'inscrire
         </button>
