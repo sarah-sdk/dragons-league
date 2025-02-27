@@ -13,7 +13,7 @@ export default function NavBar() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const userData = await authServices.fetchProfile();
+        const userData = await authServices.fetchUserData();
         const userId = userData?.userId;
         setIsAdmin(userData?.isAdmin);
 

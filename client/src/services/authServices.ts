@@ -14,7 +14,7 @@ const checkIfLoggedIn = async () => {
   }
 };
 
-const fetchProfile = async () => {
+const fetchUserData = async () => {
   try {
     const authResponse = await fetch(
       `${import.meta.env.VITE_API_URL}/api/auth/me`,
@@ -34,4 +34,4 @@ const fetchProfile = async () => {
   }
 };
 
-export default { checkIfLoggedIn, fetchProfile };
+export default { checkIfLoggedIn, fetchUserData };

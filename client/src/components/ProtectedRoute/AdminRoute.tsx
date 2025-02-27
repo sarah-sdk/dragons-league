@@ -11,7 +11,7 @@ const AdminRoute = ({ element }: RouteType) => {
   useEffect(() => {
     const checkAuthentification = async () => {
       try {
-        const userData = await authServices.fetchProfile();
+        const userData = await authServices.fetchUserData();
         if (userData) {
           setIsAuthenticate(true);
           setLoading(false);
