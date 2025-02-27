@@ -27,7 +27,8 @@ const fetchProfile = async () => {
     if (!authResponse.ok) throw new Error("Utilisateur non authentifié");
 
     const authData = await authResponse.json();
-    return authData.userId;
+
+    return { userId: authData.userId, isAdmin: authData.isAdmin };
   } catch (error) {
     console.error("Erreur d'authentification", error);
   }

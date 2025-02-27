@@ -20,8 +20,8 @@ export default function AdoptDragon() {
   useEffect(() => {
     const getUserId = async () => {
       try {
-        const fetchedUserId = await authServices.fetchProfile();
-        setUserId(fetchedUserId);
+        const userData = await authServices.fetchProfile();
+        setUserId(userData?.userId);
       } catch (error) {
         console.error("Erreur d'authentification", error);
       }

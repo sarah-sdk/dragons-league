@@ -17,7 +17,7 @@ router.get("/api/auth/me", verifyToken, (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: "Aucun utilisateur connecté" });
   } else {
-    res.json({ userId: req.user.id });
+    res.json({ userId: req.user.id, isAdmin: req.user.isAdmin });
   }
 });
 router.use("/api", verifyToken);
