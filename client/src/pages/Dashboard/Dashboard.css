@@ -1,7 +1,15 @@
+.dashboard {
+  margin: 0 1rem;
+}
+
 .dashboard img {
   height: 5rem;
 }
 
 .dashboard table {
   align-items: center;
+}
+
+.dashboard form:first-of-type {
+  display: grid;
 }

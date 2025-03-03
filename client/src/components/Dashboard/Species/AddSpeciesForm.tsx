@@ -1,4 +1,9 @@
-import { type FormEvent, useState } from "react";
+import {
+  type ChangeEvent,
+  type Dispatch,
+  type FormEvent,
+  useState,
+} from "react";
 import InputField from "../../Form/InputField";
 
 export default function AddSpeciesForm() {
@@ -7,39 +12,67 @@ export default function AddSpeciesForm() {
   const [speed, setSpeed] = useState(0);
   const [stamina, setStamina] = useState(0);
   const [babyImage, setBabyImage] = useState<File | null>(null);
+  const [babyPreview, setBabyPreview] = useState("");
   const [adultImage, setAdultImage] = useState<File | null>(null);
+  const [adultPreview, setAdultPreview] = useState("");
   const [errors, setErrors] = useState("");
 
+  const handleFileChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    setFile: Dispatch<React.SetStateAction<File | null>>,
+    setPreview: Dispatch<React.SetStateAction<string>>,
+  ) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      const previewUrl = URL.createObjectURL(selectedFile);
+      setPreview(previewUrl);
+    }
+  };
+
   const handleSubmit = async (event: FormEvent) => {
+    console.info("on rentre dans le handleSubmit");
     event.preventDefault();
 
-    if (!specie || !strength || !speed || !stamina || babyImage || adultImage) {
+    if (
+      !specie ||
+      !strength ||
+      !speed ||
+      !stamina ||
+      !babyImage ||
+      !adultImage
+    ) {
       setErrors("Veuillez remplir les champs requis.");
+      console.info(specie, strength, speed, stamina, babyImage, adultImage);
       return;
     }
 
-    const newSpecie = {
-      specie: specie,
-      base_strength: strength,
-      base_speed: speed,
-      base_stamina: stamina,
-      url_baby: babyImage,
-      url_adult: adultImage,
-    };
+    const formData = new FormData();
+    formData.append("specie", specie);
+    formData.append("base_strength", strength.toString());
+    formData.append("base_speed", speed.toString());
+    formData.append("base_stamina", stamina.toString());
+    if (babyImage) formData.append("babyImage", babyImage);
+    if (adultImage) formData.append("adultImage", adultImage);
+
+    formData.forEach((value, key) => {
+      console.info(key, value);
+    });
 
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/species`,
         {
           method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify(newSpecie),
+          body: formData,
           credentials: "include",
         },
       );
 
       const data = await response.json();
+      console.info("response :", response);
       if (response.ok) {
+        console.info("Donnés envoyées au back !");
         window.location.reload();
       } else {
         throw new Error(data.message);
@@ -90,7 +123,7 @@ export default function AddSpeciesForm() {
         <InputField
           label="Endurance de base"
           type="number"
-          name="base-speed"
+          name="base-stamina"
           value={stamina}
           onChange={(e) => {
             let newValue = Number(e.target.value);
@@ -103,20 +136,28 @@ export default function AddSpeciesForm() {
         <InputField
           label="Image version bébé"
           type="file"
-          name="babyImage"
+          name="baby-image"
           accept="image/*"
-          onChange={(e) => setBabyImage(e.target.files?.[0] || null)}
+          onChange={(event) =>
+            handleFileChange(event, setBabyImage, setBabyPreview)
+          }
         />
+        {babyPreview && <img src={babyPreview} alt={`baby ${specie}`} />}
 
         <InputField
           label="Image version adulte"
           type="file"
-          name="adultImage"
+          name="adult-image"
           accept="image/*"
-          onChange={(e) => setAdultImage(e.target.files?.[0] || null)}
+          onChange={(event) =>
+            handleFileChange(event, setAdultImage, setAdultPreview)
+          }
         />
+        {adultPreview && <img src={adultPreview} alt={`adult ${specie}`} />}
 
-        <button type="submit">+</button>
+        <button type="submit" onClick={() => console.info("bouton cliquée")}>
+          +
+        </button>
       </form>
     </>
   );
