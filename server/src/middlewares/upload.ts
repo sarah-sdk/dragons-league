@@ -15,7 +15,7 @@ const upload = multer({
         );
       }
 
-      const isBaby = file.filename === "babyImage";
+      const isBaby = file.fieldname === "babyImage";
       const fileName = `${req.body.specie}_${isBaby ? "bebe" : "adulte"}${path.extname(file.originalname)}`;
 
       callback(null, fileName);
