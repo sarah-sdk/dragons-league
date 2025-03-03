@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { Profile } from "../../types/types";
 import "./NavBar.css";
 import authServices from "../../services/authServices";
@@ -8,11 +8,14 @@ export default function NavBar() {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const userId = await authServices.fetchProfile();
+        const userData = await authServices.fetchUserData();
+        const userId = userData?.userId;
+        setIsAdmin(userData?.isAdmin);
 
         const profileId = localStorage.getItem("profileId");
         if (!profileId) throw new Error("Aucun profileId trouvé");
@@ -72,11 +75,14 @@ export default function NavBar() {
           ←
         </button>
         <div>
-          <img
-            src={`${import.meta.env.VITE_API_URL}/${profile.url_avatar}`}
-            alt={profile.username}
-            className="avatar"
-          />
+          {isAdmin ? <Link to="/dashboard">Dashboard</Link> : ""}
+          <Link to="/mes-dragons">
+            <img
+              src={`${import.meta.env.VITE_API_URL}/${profile.url_avatar}`}
+              alt={profile.username}
+              className="avatar"
+            />
+          </Link>
           <button type="button" onClick={handleChangeProfile}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

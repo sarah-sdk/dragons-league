@@ -12,6 +12,8 @@ declare global {
         email: string;
         isAdmin: boolean;
       };
+
+      fileValidationError?: string;
       /* ************************************************************************* */
     }
   }

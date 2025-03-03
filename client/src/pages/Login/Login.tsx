@@ -1,6 +1,6 @@
 import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import InputField from "../../components/Register/InputField";
+import InputField from "../../components/Form/InputField";
 import "./Login.css";
 import logo from "/logo.png";
 import { useAuthForm } from "../../hooks/useAuthForm";

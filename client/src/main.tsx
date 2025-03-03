@@ -7,9 +7,11 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 // Import the main app component
 import App from "./App";
+import AdminRoute from "./components/ProtectedRoute/AdminRoute";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import AdoptDragon from "./pages/AdoptDragon/AdoptDragon";
 import AllDragons from "./pages/AllDragons/AllDragons";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import DragonDetails from "./pages/DragonDetails/DragonDetails";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
@@ -55,6 +57,10 @@ const router = createBrowserRouter([
         path: "/profils",
         element: <ProtectedRoute element={<SelectProfile />} />,
         loader: loadProfiles,
+      },
+      {
+        path: "/dashboard",
+        element: <AdminRoute element={<Dashboard />} />,
       },
       {
         path: "/connexion",
