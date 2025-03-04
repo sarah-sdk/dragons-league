@@ -67,7 +67,7 @@ const verifyId: RequestHandler = (req, res, next) => {
   const userFromRequest = Number(req.params.id);
 
   if (req.user.isAdmin || userFromToken === userFromRequest) {
-    next();
+    return next();
   }
 
   res
