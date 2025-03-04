@@ -1,10 +1,17 @@
-import { useLoaderData } from "react-router-dom";
 import type { Specie } from "../../../types/types";
 import SpecieCell from "./SpecieCell";
 
-export default function SpeciesTable() {
-  const { species } = useLoaderData() as { species: Specie[] };
+type SpeciesPageType = {
+  onEdit: (specieId: number) => void;
+  onDelete: (specieId: number) => void;
+  species: Specie[];
+};
 
+export default function SpeciesTable({
+  onEdit,
+  onDelete,
+  species,
+}: SpeciesPageType) {
   return (
     <table>
       <thead>
@@ -20,7 +27,12 @@ export default function SpeciesTable() {
       </thead>
       <tbody>
         {species.map((specie) => (
-          <SpecieCell key={specie.id} specie={specie} />
+          <SpecieCell
+            key={specie.id}
+            specie={specie}
+            onEdit={() => onEdit(+specie.id)}
+            onDelete={() => onDelete(+specie.id)}
+          />
         ))}
       </tbody>
     </table>

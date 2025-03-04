@@ -98,7 +98,14 @@ router.post(
 router.use("/api", authMiddlewares.authorizeAdmin);
 
 //SPECIE
-router.put("/api/species/:specieId", specieActions.edit);
+router.put(
+  "/api/species/:specieId",
+  upload.fields([
+    { name: "babyImage", maxCount: 1 },
+    { name: "adultImage", maxCount: 1 },
+  ]),
+  specieActions.edit,
+);
 router.post(
   "/api/species",
   upload.fields([
