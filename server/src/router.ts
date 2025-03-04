@@ -14,18 +14,14 @@ const router = express.Router();
 /* ************************************************************************* */
 // Authentification (routes publiques)
 /* ************************************************************************* */
-// Inscription
 router.post("/api/auth/register", authActions.register);
-// Connexion
 router.post("/api/auth/login", authActions.login);
 
 /* ************************************************************************* */
 // Mur d'authentification : toutes les routes suivantes nécessitent un token
 /* ************************************************************************* */
 router.use("/api", authMiddlewares.verifyToken);
-// Déconnexion
 router.post("/api/auth/logout", authActions.logout);
-// Récupère les informations de l'utilisateur connecté (userId, isAdmin)
 router.get("/api/auth/me", (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: "Aucun utilisateur connecté" });
@@ -33,7 +29,6 @@ router.get("/api/auth/me", (req, res) => {
     res.json({ userId: req.user.id, isAdmin: req.user.isAdmin });
   }
 });
-// Vérifie si le token est toujours valide
 router.get("/api/auth/check", authActions.check);
 
 //SPECIE
