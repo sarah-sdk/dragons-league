@@ -88,3 +88,11 @@ export type ShowPasswordType = {
   showPassword: boolean;
   togglePasswordVisibility: () => void;
 };
+
+export type EditSpecieModalType = {
+  isOpen: boolean;
+  specie: Specie;
+  onClose: () => void;
+  onSave: (updatedSpecie: Specie) => void;
+  onFileChange: (file: File | null, type: "baby" | "adult") => void;
+};

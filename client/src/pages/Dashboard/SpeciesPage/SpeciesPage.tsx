@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLoaderData, useRevalidator } from "react-router-dom";
 import AddSpeciesForm from "../../../components/Dashboard/Species/AddSpeciesForm";
+import DeleteSpecieModal from "../../../components/Dashboard/Species/DeleteSpecieModal";
 import EditSpecieModal from "../../../components/Dashboard/Species/EditSpecieModal";
 import SpeciesTable from "../../../components/Dashboard/Species/SpeciesTable";
 import type { Specie } from "../../../types/types";
@@ -10,6 +11,9 @@ export default function SpeciesPage() {
   const revalidator = useRevalidator();
   const [editingSpecie, setEditingSpecie] = useState<Specie | null>(null);
   const [isEditSpecieModalOpen, setIsEditSpecieModalOpen] =
+    useState<boolean>(false);
+  const [deletingSpecie, setDeletingSpecie] = useState<Specie | null>(null);
+  const [isDeleteSpecieModalOpen, setIsDeleteSpecieModalOpen] =
     useState<boolean>(false);
 
   const [babyFile, setBabyFile] = useState<File | null>(null);
@@ -25,9 +29,14 @@ export default function SpeciesPage() {
     }
   };
 
-  const handleCloseModal = () => {
+  const handleCloseEditSpecieModal = () => {
     setIsEditSpecieModalOpen(false);
     setEditingSpecie(null);
+  };
+
+  const handleCloseDeleteSpecieModal = () => {
+    setIsDeleteSpecieModalOpen(false);
+    setDeletingSpecie(null);
   };
 
   const handleFileChange = (file: File | null, type: "baby" | "adult") => {
@@ -74,7 +83,7 @@ export default function SpeciesPage() {
         const data = await response.json();
 
         if (data) {
-          handleCloseModal();
+          handleCloseEditSpecieModal();
           revalidator.revalidate();
         } else {
           throw new Error("No data returned from API");
@@ -86,15 +95,23 @@ export default function SpeciesPage() {
     }
   };
 
-  // const handleDelete = (specieId: number) => {
-  //   console.log(specieId);
-  // };
+  const handleDelete = (specieId: number) => {
+    const specie = species.find((s) => +s.id === specieId);
+    if (specie) {
+      setDeletingSpecie(specie);
+      setIsDeleteSpecieModalOpen(true);
+    }
+  };
+
+  const handleSubmitDelete = () => {
+    console.info("click");
+  };
   return (
     <>
       <h2>Espèces :</h2>
       <SpeciesTable
         onEdit={handleEdit}
-        onDelete={() => console.info("click")}
+        onDelete={handleDelete}
         species={species}
       />
       <AddSpeciesForm />
@@ -102,10 +119,19 @@ export default function SpeciesPage() {
       {isEditSpecieModalOpen && editingSpecie && (
         <EditSpecieModal
           isOpen={isEditSpecieModalOpen}
-          onClose={handleCloseModal}
+          onClose={handleCloseEditSpecieModal}
           specie={editingSpecie}
           onSave={handleSubmitEdit}
           onFileChange={handleFileChange}
+        />
+      )}
+
+      {isDeleteSpecieModalOpen && deletingSpecie && (
+        <DeleteSpecieModal
+          specie={deletingSpecie}
+          isOpen={isDeleteSpecieModalOpen}
+          onClose={handleCloseDeleteSpecieModal}
+          onDelete={handleSubmitDelete}
         />
       )}
     </>

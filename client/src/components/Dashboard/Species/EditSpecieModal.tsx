@@ -5,16 +5,8 @@ import {
   useRef,
   useState,
 } from "react";
-import type { Specie } from "../../../types/types";
+import type { EditSpecieModalType, Specie } from "../../../types/types";
 import "./EditSpecieModal.css";
-
-type EditSpecieModalType = {
-  isOpen: boolean;
-  specie: Specie;
-  onClose: () => void;
-  onSave: (updatedSpecie: Specie) => void;
-  onFileChange: (file: File | null, type: "baby" | "adult") => void;
-};
 
 export default function EditSpecieModal({
   isOpen,
