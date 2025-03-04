@@ -44,4 +44,36 @@ const verifyToken: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default verifyToken;
+const authorizeAdmin: RequestHandler = (req, res, next) => {
+  try {
+    const isAdmin = req.user?.isAdmin;
+    if (!isAdmin) {
+      throw new Error("Accès interdit: rôle insuffisant");
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+const verifyId: RequestHandler = (req, res, next) => {
+  if (!req.user) {
+    res.status(401).json({ message: "Utilisateur non authentifié." });
+    return;
+  }
+
+  const userFromToken = req.user.id;
+  const userFromRequest = Number(req.params.id);
+
+  if (req.user.isAdmin || userFromToken === userFromRequest) {
+    next();
+  }
+
+  res
+    .sendStatus(403)
+    .json({ message: "Vous ne pouvez pas accéder à ces données." });
+  return;
+};
+
+export default { verifyToken, authorizeAdmin, verifyId };
