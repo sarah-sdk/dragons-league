@@ -12,6 +12,8 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import AdoptDragon from "./pages/AdoptDragon/AdoptDragon";
 import AllDragons from "./pages/AllDragons/AllDragons";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import SpeciesPage from "./pages/Dashboard/SpeciesPage/SpeciesPage";
+import UsersPage from "./pages/Dashboard/UsersPage/UsersPage";
 import DragonDetails from "./pages/DragonDetails/DragonDetails";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
@@ -61,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <AdminRoute element={<Dashboard />} />,
+        children: [
+          { path: "species", element: <SpeciesPage />, loader: loadSpecies },
+          { path: "users", element: <UsersPage /> },
+        ],
       },
       {
         path: "/connexion",
