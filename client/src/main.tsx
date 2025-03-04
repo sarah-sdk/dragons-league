@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <AdminRoute element={<Dashboard />} />,
         children: [
-          { path: "species", element: <SpeciesPage /> },
+          { path: "species", element: <SpeciesPage />, loader: loadSpecies },
           { path: "users", element: <UsersPage /> },
         ],
       },

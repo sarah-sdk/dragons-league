@@ -1,19 +1,9 @@
-import { useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import type { Specie } from "../../../types/types";
 import SpecieCell from "./SpecieCell";
 
 export default function SpeciesTable() {
-  const [species, setSpecies] = useState<Specie[]>([]);
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/species`, {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => setSpecies(data))
-      .catch((error) => console.error(error));
-  }, []);
+  const { species } = useLoaderData() as { species: Specie[] };
 
   return (
     <table>
