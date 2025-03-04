@@ -6,8 +6,9 @@
   height: 5rem;
 }
 
-.dashboard table {
-  align-items: center;
+.dashboard td,
+.dashboard th {
+  text-align: center;
 }
 
 .dashboard form:first-of-type {
