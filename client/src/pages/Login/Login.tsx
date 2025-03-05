@@ -21,11 +21,23 @@ export default function Login() {
     togglePasswordVisibility,
   } = useAuthForm();
 
+  const isFormValid = () => {
+    return (
+      criteria.email.includes("✅") &&
+      criteria.passwordLength.includes("✅") &&
+      criteria.passwordLowercase.includes("✅") &&
+      criteria.passwordUppercase.includes("✅") &&
+      criteria.passwordNumber.includes("✅") &&
+      criteria.passwordSpecialChar.includes("✅")
+    );
+  };
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setError("");
 
-    if (!email || !password) {
-      setError("Veuillez remplir les champs requis.");
+    if (!isFormValid()) {
+      setError("Veuillez remplir correctement tous les champs.");
       return;
     }
 

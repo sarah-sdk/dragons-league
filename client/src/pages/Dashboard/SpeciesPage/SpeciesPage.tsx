@@ -34,11 +34,6 @@ export default function SpeciesPage() {
     setEditingSpecie(null);
   };
 
-  const handleCloseDeleteSpecieModal = () => {
-    setIsDeleteSpecieModalOpen(false);
-    setDeletingSpecie(null);
-  };
-
   const handleFileChange = (file: File | null, type: "baby" | "adult") => {
     if (type === "baby") {
       setBabyFile(file);
@@ -103,9 +98,36 @@ export default function SpeciesPage() {
     }
   };
 
-  const handleSubmitDelete = () => {
-    console.info("click");
+  const handleCloseDeleteSpecieModal = () => {
+    setIsDeleteSpecieModalOpen(false);
+    setDeletingSpecie(null);
   };
+
+  const handleSubmitDelete = async (deletedSpecieId: number) => {
+    if (deletedSpecieId) {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/species/${deletedSpecieId}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+          },
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Erreur: ${response.status} - ${response.statusText}`,
+          );
+        }
+
+        handleCloseDeleteSpecieModal();
+        revalidator.revalidate();
+      } catch (error) {
+        console.error("Échec de la suppression :", error);
+      }
+    }
+  };
+
   return (
     <>
       <h2>Espèces :</h2>
