@@ -42,7 +42,8 @@ router.get("/api/trainings/:trainingId", trainingActions.read);
 /* ************************************************************************* */
 // Mur de vérification : toutes les routes suivantes doivent venir du user ou d'un admin
 /* ************************************************************************* */
-router.use("/api", authMiddlewares.verifyId);
+// TODO: mettre le verifyId sur toutes les routes plutôt que faire un mur;
+// router.use("/api", authMiddlewares.verifyId);
 
 //USER
 router.get("/api/users/:userId", userActions.read);

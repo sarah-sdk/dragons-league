@@ -58,22 +58,20 @@ const authorizeAdmin: RequestHandler = (req, res, next) => {
 };
 
 const verifyId: RequestHandler = (req, res, next) => {
-  if (!req.user) {
-    res.status(401).json({ message: "Utilisateur non authentifié." });
-    return;
+  try {
+    if (!req.user) {
+      throw new Error("Vous devez être connecté pour accéder à cette route");
+    }
+
+    const userFromToken = req.user.id;
+    const userFromRequest = Number(req.params.userId);
+
+    if (req.user.isAdmin || userFromRequest === userFromToken) {
+      next();
+    }
+  } catch (error) {
+    res.sendStatus(404);
   }
-
-  const userFromToken = req.user.id;
-  const userFromRequest = Number(req.params.id);
-
-  if (req.user.isAdmin || userFromToken === userFromRequest) {
-    return next();
-  }
-
-  res
-    .sendStatus(403)
-    .json({ message: "Vous ne pouvez pas accéder à ces données." });
-  return;
 };
 
 export default { verifyToken, authorizeAdmin, verifyId };

@@ -10,7 +10,6 @@ export default function ProfileModal({
 }: ProfileModalType) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [username, setUsername] = useState("");
-  const [selectedAvatar, setSelectedAvatar] = useState("");
 
   const avatars = [
     "assets/images/avatars/avatar1.png",
@@ -19,6 +18,8 @@ export default function ProfileModal({
     "assets/images/avatars/avatar4.png",
     "assets/images/avatars/avatar5.png",
   ];
+
+  const [selectedAvatar, setSelectedAvatar] = useState(avatars[0]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {

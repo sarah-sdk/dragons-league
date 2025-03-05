@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { type MouseEvent, useEffect, useRef, useState } from "react";
 import SpecieDisplay from "../../../services/SpecieDisplay";
 import type { Specie } from "../../../types/types";
 import StatDetails from "../../DragonDetails/StatDetails";
@@ -8,7 +8,7 @@ type DeleteSpecieModalType = {
   isOpen: boolean;
   specie: Specie;
   onClose: () => void;
-  onDelete: () => void;
+  onDelete: (specieId: number) => void;
 };
 
 export default function DeleteSpecieModal({
@@ -56,6 +56,13 @@ export default function DeleteSpecieModal({
     }
   }, [isOpen]);
 
+  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const deletedSpecie = +formData.id;
+
+    onDelete(deletedSpecie);
+  };
+
   return (
     <dialog ref={dialogRef} className="delete-specie-modal-dialog">
       <h3>Êtes-vous sûr.e de vouloir supprimer :</h3>
@@ -74,7 +81,7 @@ export default function DeleteSpecieModal({
           size="10"
         />
       </figure>
-      <button type="submit" onClick={onDelete}>
+      <button type="submit" onClick={handleSubmit}>
         ✅
       </button>
       <button type="button" onClick={onClose}>
