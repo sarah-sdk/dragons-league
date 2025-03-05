@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import SpecieDisplay from "../../../services/SpecieDisplay";
 import type { Specie } from "../../../types/types";
 import StatDetails from "../../DragonDetails/StatDetails";
+import "./DeleteSpecieModal.css";
 
 type DeleteSpecieModalType = {
   isOpen: boolean;
@@ -63,17 +64,15 @@ export default function DeleteSpecieModal({
           src={`${import.meta.env.VITE_API_URL}/${formData.url_adult}`}
           alt={formData.specie}
         />
-        <legend>
-          <h4>
-            <SpecieDisplay specie={formData.specie} />
-          </h4>
-          <StatDetails
-            strength={formData.base_strength}
-            speed={formData.base_speed}
-            stamina={formData.base_stamina}
-            size="10"
-          />
-        </legend>
+        <h4>
+          <SpecieDisplay specie={formData.specie} />
+        </h4>
+        <StatDetails
+          strength={formData.base_strength}
+          speed={formData.base_speed}
+          stamina={formData.base_stamina}
+          size="10"
+        />
       </figure>
       <button type="submit" onClick={onDelete}>
         ✅
