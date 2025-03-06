@@ -72,6 +72,11 @@ export default function Login() {
     <main className="login">
       <img src={logo} alt="" />
       <h1>Connexion</h1>
+      <p>
+        Vous n'avez pas encore de compte ?{" "}
+        <a href="/inscription">Inscrivez-vous !</a>
+      </p>
+
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
         <InputField
@@ -109,9 +114,6 @@ export default function Login() {
         />
 
         <button type="submit">Se connecter</button>
-        <button type="button" onClick={() => navigate("/inscription")}>
-          S'inscrire
-        </button>
       </form>
     </main>
   );
