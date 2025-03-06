@@ -12,7 +12,8 @@
 
 .register label,
 .register input,
-.register p {
+.register p,
+.register ul {
   margin: 0;
 }
 
