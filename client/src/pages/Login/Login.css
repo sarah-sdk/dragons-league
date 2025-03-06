@@ -27,7 +27,8 @@
 }
 
 .login label,
-.login input {
+.login input,
+.login button {
   margin-bottom: 0;
 }
 
