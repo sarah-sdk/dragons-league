@@ -5,19 +5,17 @@ import {
   useRef,
   useState,
 } from "react";
-import type { EditSpecieModalType, Specie } from "../../../types/types";
-import "./EditSpecieModal.css";
+import type { AddSpecieModalType, Specie } from "../../../types/types";
+import "./AddSpecieModal.css";
 
-export default function EditSpecieModal({
+export default function AddSpecieModal({
   isOpen,
-  specie,
   onClose,
   onSave,
   onFileChange,
-}: EditSpecieModalType) {
+}: AddSpecieModalType) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [formData, setFormData] = useState<Specie>({
-    id: "0",
+  const [formData, setFormData] = useState<Omit<Specie, "id">>({
     specie: "",
     base_strength: 0,
     base_speed: 0,
@@ -31,11 +29,7 @@ export default function EditSpecieModal({
   const [babyPreview, setBabyPreview] = useState<string | null>(null);
   const [adultPreview, setAdultPreview] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (specie) {
-      setFormData(specie);
-    }
-  }, [specie]);
+  const [errors, setErrors] = useState("");
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -85,25 +79,38 @@ export default function EditSpecieModal({
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const updatedSpecie = {
+
+    if (
+      !formData.specie ||
+      !formData.base_strength ||
+      !formData.base_speed ||
+      !formData.base_stamina ||
+      !babyFile ||
+      !adultFile
+    ) {
+      setErrors("Veuillez remplir les champs requis.");
+      return;
+    }
+    const createdSpecie = {
       ...formData,
-      babyImage: babyFile || specie.url_baby,
-      adultImage: adultFile || specie.url_adult,
+      babyImage: babyFile,
+      adultImage: adultFile,
     };
-    onSave(updatedSpecie);
+    onSave(createdSpecie);
   };
 
   return (
-    <dialog ref={dialogRef} className="edit-specie-modal-dialog">
-      <h3>Modifier l'espèce</h3>
+    <dialog ref={dialogRef} className="add-specie-modal-dialog">
+      <h3>Ajouter une espèce</h3>
 
+      {errors && <p>{errors}</p>}
       <form method="dialog" onSubmit={handleSubmit}>
         <label htmlFor="specie">Espèce</label>
         <input
           type="text"
           id="specie"
           name="specie"
-          value={formData?.specie}
+          value={formData.specie}
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, specie: e.target.value }))
           }
@@ -114,7 +121,7 @@ export default function EditSpecieModal({
         <input
           type="number"
           id="base-strength"
-          value={formData?.base_strength}
+          value={formData.base_strength}
           onChange={(e) => {
             let newValue = Number(e.target.value);
             if (newValue > 10) newValue = 10;
@@ -128,7 +135,7 @@ export default function EditSpecieModal({
         <input
           type="number"
           id="base-speed"
-          value={formData?.base_speed}
+          value={formData.base_speed}
           onChange={(e) => {
             let newValue = Number(e.target.value);
             if (newValue > 10) newValue = 10;
@@ -142,7 +149,7 @@ export default function EditSpecieModal({
         <input
           type="number"
           id="base-stamina"
-          value={formData?.base_stamina}
+          value={formData.base_stamina}
           onChange={(e) => {
             let newValue = Number(e.target.value);
             if (newValue > 10) newValue = 10;
@@ -153,40 +160,36 @@ export default function EditSpecieModal({
         />
 
         <label htmlFor="baby-image">Image version bébé</label>
-        <img
-          src={
-            babyPreview
-              ? babyPreview
-              : `${import.meta.env.VITE_API_URL}/${formData?.url_baby}`
-          }
-          alt={`${formData.specie} bébé`}
-        />
+        {babyPreview ? (
+          <img src={babyPreview} alt={`${formData.specie} bébé`} />
+        ) : (
+          ""
+        )}
         <input
           type="file"
           name="baby-image"
           id="baby-image"
           accept="image/*"
           onChange={(e) => handleFileChange(e, "baby")}
+          required
         />
 
         <label htmlFor="adult-image">Image version adulte</label>
-        <img
-          src={
-            adultPreview
-              ? adultPreview
-              : `${import.meta.env.VITE_API_URL}/${formData?.url_adult}`
-          }
-          alt={`${formData.specie} adulte`}
-        />
+        {adultPreview ? (
+          <img src={adultPreview} alt={`${formData.specie} adulte`} />
+        ) : (
+          ""
+        )}
         <input
           type="file"
           name="adult-image"
           id="adult-image"
           accept="image/*"
           onChange={(e) => handleFileChange(e, "adult")}
+          required
         />
 
-        <button type="submit">Modifier l'espèce</button>
+        <button type="submit">Ajouter l'espèce</button>
         <button type="button" onClick={onClose}>
           ❌
         </button>

@@ -9,6 +9,7 @@ export const useAuthForm = () => {
     passwordUppercase: "❌ Au moins 1 majuscule",
     passwordNumber: "❌ Au moins 1 chiffre",
     passwordSpecialChar: "❌ Au moins 1 caractère spécial",
+    confirmPassword: "❌ Les mots de passe doivent correspondre",
   });
 
   const validateEmail = (email: string) => {

@@ -21,11 +21,23 @@ export default function Login() {
     togglePasswordVisibility,
   } = useAuthForm();
 
+  const isFormValid = () => {
+    return (
+      criteria.email.includes("✅") &&
+      criteria.passwordLength.includes("✅") &&
+      criteria.passwordLowercase.includes("✅") &&
+      criteria.passwordUppercase.includes("✅") &&
+      criteria.passwordNumber.includes("✅") &&
+      criteria.passwordSpecialChar.includes("✅")
+    );
+  };
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setError("");
 
-    if (!email || !password) {
-      setError("Veuillez remplir les champs requis.");
+    if (!isFormValid()) {
+      setError("Veuillez remplir correctement tous les champs.");
       return;
     }
 
@@ -60,6 +72,11 @@ export default function Login() {
     <main className="login">
       <img src={logo} alt="" />
       <h1>Connexion</h1>
+      <p>
+        Vous n'avez pas encore de compte ?{" "}
+        <a href="/inscription">Inscrivez-vous !</a>
+      </p>
+
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
         <InputField
@@ -97,9 +114,6 @@ export default function Login() {
         />
 
         <button type="submit">Se connecter</button>
-        <button type="button" onClick={() => navigate("/inscription")}>
-          S'inscrire
-        </button>
       </form>
     </main>
   );
