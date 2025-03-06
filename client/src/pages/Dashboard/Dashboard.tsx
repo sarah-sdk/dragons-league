@@ -1,7 +1,16 @@
+import { useEffect } from "react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-import { Link, Outlet } from "react-router-dom";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/dashboard") {
+      navigate("/dashboard/species", { replace: true });
+    }
+  }, [location.pathname, navigate]);
   return (
     <main className="dashboard">
       <h1>Dashboard</h1>

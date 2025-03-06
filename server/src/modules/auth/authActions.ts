@@ -54,38 +54,41 @@ const login: RequestHandler = async (req, res, next) => {
     const { error } = loginSchema.validate(req.body);
 
     if (error) {
-      throw new Error(`Validation error: ${error.details[0].message}`);
+      res
+        .status(400)
+        .json({ error: `Validation error: ${error.details[0].message}` });
+      return;
     }
 
     const user = await authRepository.getUserByEmail(req.body.email);
 
     if (!user) {
-      throw new Error("User not found");
+      res.status(400).json({ error: "Email incorrect" });
+    } else {
+      const isPasswordValid = await comparePassword(
+        req.body.password,
+        user.password,
+      );
+
+      if (!isPasswordValid) {
+        res.status(400).json({ error: "Mot de passe incorrect" });
+      } else {
+        const token = generateToken(user.email);
+
+        res.cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+          maxAge: 3600 * 1000,
+        });
+
+        res.status(200).json({
+          message: "Login successful",
+          userId: user.id,
+          isAdmin: user.isAdmin,
+        });
+      }
     }
-
-    const isPasswordValid = await comparePassword(
-      req.body.password,
-      user.password,
-    );
-
-    if (!isPasswordValid) {
-      throw new Error("Invalid password");
-    }
-
-    const token = generateToken(user.email);
-
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 3600 * 1000,
-    });
-
-    res.status(200).json({
-      message: "Login successful",
-      userId: user.id,
-      isAdmin: user.isAdmin,
-    });
   } catch (error) {
     next(error);
   }
