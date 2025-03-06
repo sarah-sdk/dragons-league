@@ -16,6 +16,9 @@ export type ValidationCriteria = {
 
 export type User = {
   id: string;
+  email?: string;
+  created_at?: string;
+  isAdmin?: boolean;
 };
 
 export type Profile = {
@@ -42,6 +45,7 @@ export type Specie = {
   base_strength: number;
   base_speed: number;
   base_stamina: number;
+  url_baby?: string;
   url_adult: string;
 };
 
@@ -70,10 +74,12 @@ export type ProfileModalType = {
 export type InputFieldType = {
   label: string;
   type: string;
+  max?: number;
   name: string;
-  value: string;
+  value?: string | number;
+  accept?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  criteria: string | string[];
+  criteria?: string | string[];
   showPassword?: boolean;
   togglePasswordVisibility?: () => void;
 };
@@ -81,4 +87,19 @@ export type InputFieldType = {
 export type ShowPasswordType = {
   showPassword: boolean;
   togglePasswordVisibility: () => void;
+};
+
+export type EditSpecieModalType = {
+  isOpen: boolean;
+  specie: Specie;
+  onClose: () => void;
+  onSave: (updatedSpecie: Specie) => void;
+  onFileChange: (file: File | null, type: "baby" | "adult") => void;
+};
+
+export type AddSpecieModalType = {
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (createdSpecie: Omit<Specie, "id">) => void;
+  onFileChange: (file: File | null, type: "baby" | "adult") => void;
 };

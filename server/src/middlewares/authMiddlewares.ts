@@ -44,4 +44,34 @@ const verifyToken: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default verifyToken;
+const authorizeAdmin: RequestHandler = (req, res, next) => {
+  try {
+    const isAdmin = req.user?.isAdmin;
+    if (!isAdmin) {
+      throw new Error("Accès interdit: rôle insuffisant");
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+const verifyId: RequestHandler = (req, res, next) => {
+  try {
+    if (!req.user) {
+      throw new Error("Vous devez être connecté pour accéder à cette route");
+    }
+
+    const userFromToken = req.user.id;
+    const userFromRequest = Number(req.params.userId);
+
+    if (req.user.isAdmin || userFromRequest === userFromToken) {
+      next();
+    }
+  } catch (error) {
+    res.sendStatus(404);
+  }
+};
+
+export default { verifyToken, authorizeAdmin, verifyId };

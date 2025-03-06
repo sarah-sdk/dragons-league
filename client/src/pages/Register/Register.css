@@ -6,8 +6,19 @@
   height: 95vh;
 }
 
+.register h1 {
+  margin: .25rem;
+}
+
+.register label,
+.register input,
+.register p {
+  margin: 0;
+}
+
 .register > img {
-  height: 8rem;
+  height: 6rem;
+  margin: .5rem auto .25rem;
 }
 
 .register .error {
@@ -30,6 +41,7 @@
 .register form > button:nth-of-type(1),
 .register form > button:nth-of-type(2) {
   padding: 0;
+  margin: 0;
 
   display: grid;
   justify-content: center;
@@ -43,10 +55,6 @@
 
 .criteria-list li {
   list-style-type: none;
-}
-
-.criteria {
-  font-size: .75rem;
 }
 
 .valid {

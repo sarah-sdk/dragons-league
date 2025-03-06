@@ -4,9 +4,11 @@ import ShowPassword from "./ShowPassword";
 export default function InputField({
   label,
   type,
+  max,
   name,
   value,
   onChange,
+  accept,
   criteria,
   showPassword,
   togglePasswordVisibility,
@@ -16,10 +18,12 @@ export default function InputField({
       <label htmlFor={name}>{label}</label>
       <input
         type={type}
+        max={max}
         id={name}
         name={name}
         value={value}
         onChange={onChange}
+        accept={accept}
         autoComplete="on"
         required
       />

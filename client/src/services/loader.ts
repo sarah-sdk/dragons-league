@@ -1,26 +1,22 @@
 import type { Params } from "react-router-dom";
+import authServices from "./authServices";
 
-const getUserId = async () => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
-    method: "GET",
-    headers: { "Content-type": "application/json" },
-    credentials: "include",
-  });
-
+const handleResponseError = (response: Response) => {
   if (!response.ok) {
     if (response.status === 401) {
       window.location.href = "/connexion";
     }
-
-    throw new Error("Utilisateur introuvable");
+    throw new Error("Erreur de récupération des données");
   }
+};
 
-  const data = await response.json();
-  return data.userId;
+const getUserInfo = async () => {
+  const userData = await authServices.fetchUserData();
+  return userData?.userId;
 };
 
 export const loadProfiles = async () => {
-  const userId = await getUserId();
+  const userId = await getUserInfo();
 
   const response = await fetch(
     `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles`,
@@ -29,12 +25,14 @@ export const loadProfiles = async () => {
       credentials: "include",
     },
   );
+  handleResponseError(response);
+
   const profiles = await response.json();
   return { profiles };
 };
 
 export const loadProfile = async () => {
-  const userId = await getUserId();
+  const userId = await getUserInfo();
   const profileId = localStorage.getItem("profileId");
 
   if (!profileId) {
@@ -48,6 +46,8 @@ export const loadProfile = async () => {
       credentials: "include",
     },
   );
+  handleResponseError(response);
+
   const profile = await response.json();
 
   return { profile };
@@ -58,12 +58,14 @@ export const loadSpecies = async () => {
     method: "GET",
     credentials: "include",
   });
+  handleResponseError(response);
+
   const species = await response.json();
   return { species };
 };
 
 export const loadAllDragons = async () => {
-  const userId = await getUserId();
+  const userId = await getUserInfo();
   const profileId = localStorage.getItem("profileId");
 
   if (!profileId) {
@@ -77,6 +79,8 @@ export const loadAllDragons = async () => {
       credentials: "include",
     },
   );
+  handleResponseError(response);
+
   const dragons = await response.json();
   return { dragons };
 };
@@ -84,7 +88,7 @@ export const loadAllDragons = async () => {
 export const loadDragonDetails = async ({ params }: { params: Params }) => {
   const { dragonId } = params;
 
-  const userId = await getUserId();
+  const userId = await getUserInfo();
   const profileId = localStorage.getItem("profileId");
 
   if (!profileId) {
@@ -97,6 +101,7 @@ export const loadDragonDetails = async ({ params }: { params: Params }) => {
       credentials: "include",
     },
   );
+  handleResponseError(response);
 
   const dragon = await response.json();
   return { dragon };

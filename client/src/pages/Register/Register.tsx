@@ -1,6 +1,6 @@
 import { type FormEvent, useState } from "react";
 import logo from "/logo.png";
-import InputField from "../../components/Register/InputField";
+import InputField from "../../components/Form/InputField";
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
 import { useAuthForm } from "../../hooks/useAuthForm";
@@ -20,6 +20,7 @@ export default function Register() {
     setShowConfirmPassword,
     validateEmail,
     validatePassword,
+    validateConfirmPassword,
     togglePasswordVisibility,
   } = useAuthForm();
 
@@ -121,8 +122,9 @@ export default function Register() {
           onChange={(e) => {
             setConfirmPassword(e.target.value);
             validatePassword(e.target.value);
+            validateConfirmPassword(password, e.target.value);
           }}
-          criteria={criteria.confirmPassword ? criteria.confirmPassword : ""}
+          criteria={criteria.confirmPassword}
           showPassword={showConfirmPassword}
           togglePasswordVisibility={() =>
             togglePasswordVisibility(setShowConfirmPassword)

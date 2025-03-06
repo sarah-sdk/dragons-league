@@ -22,8 +22,8 @@ export default function SelectProfile() {
   useEffect(() => {
     const getUserId = async () => {
       try {
-        const fetchedUserId = await authServices.fetchProfile();
-        setUserId(fetchedUserId);
+        const userData = await authServices.fetchUserData();
+        setUserId(userData?.userId);
       } catch (error) {
         console.error("Erreur d'authentification", error);
       }

@@ -14,7 +14,7 @@ const checkIfLoggedIn = async () => {
   }
 };
 
-const fetchProfile = async () => {
+const fetchUserData = async () => {
   try {
     const authResponse = await fetch(
       `${import.meta.env.VITE_API_URL}/api/auth/me`,
@@ -27,10 +27,11 @@ const fetchProfile = async () => {
     if (!authResponse.ok) throw new Error("Utilisateur non authentifié");
 
     const authData = await authResponse.json();
-    return authData.userId;
+
+    return { userId: authData.userId, isAdmin: authData.isAdmin };
   } catch (error) {
     console.error("Erreur d'authentification", error);
   }
 };
 
-export default { checkIfLoggedIn, fetchProfile };
+export default { checkIfLoggedIn, fetchUserData };

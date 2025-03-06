@@ -15,6 +15,14 @@
   .dragonDetails {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+
+    align-items: center;
+  }
+
+  .dragonDetails h2,
+  .dragonDetails ul,
+  .dragonDetails p {
+    margin: 0;
   }
 
   .dragonDetails h1 {
@@ -22,13 +30,6 @@
   }
 
   .dragonDetails img {
-    grid-area: 2 / 1 / 6 / 2;
-  }
-
-  .dragonDetails h2,
-  .dragonDetails h3,
-  .dragonDetails li,
-  .dragonDetails p {
-    margin-left: 1rem;
+    grid-area: 2 / 1 / 5 / 2;
   }
 }
