@@ -94,7 +94,6 @@ const edit: RequestHandler = async (req, res, next) => {
 const add: RequestHandler = async (req, res, next) => {
   try {
     const { specie, base_strength, base_speed, base_stamina } = req.body;
-    console.info(req.body);
 
     if (!specie || !base_strength || !base_speed || !base_stamina) {
       res.status(400).json({ error: "Champ obligatoire manquant" });
