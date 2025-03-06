@@ -13,6 +13,7 @@ export default function AllDragons() {
   return (
     <section className="dragonsList">
       <h1>Mes dragons</h1>
+      <p>Constituez votre équipe de dragons 🐉</p>
       {dragons.map((dragon) => (
         <DragonCard key={dragon.name} dragon={dragon} />
       ))}
