@@ -82,7 +82,7 @@ export default function DeleteSpecieModal({
         />
       </figure>
       <button type="submit" onClick={handleSubmit}>
-        ✅
+        Supprimer l'espèce
       </button>
       <button type="button" onClick={onClose}>
         ❌

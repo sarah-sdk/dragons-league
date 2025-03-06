@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import type { AddSpecieModalType, Specie } from "../../../types/types";
+import "./AddSpecieModal.css";
 
 export default function AddSpecieModal({
   isOpen,
