@@ -26,6 +26,12 @@
   font-size: .75rem;
 }
 
+.login label,
+.login input,
+.login button {
+  margin-bottom: 0;
+}
+
 .login > form label:nth-of-type(1) {
   grid-area: 1 / 1 / 2 / 3;
 }

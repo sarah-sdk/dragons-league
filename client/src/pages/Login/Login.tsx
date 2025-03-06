@@ -61,7 +61,7 @@ export default function Login() {
       if (response.ok) {
         navigate("/profils");
       } else {
-        throw new Error(data.message);
+        throw new Error(data.error);
       }
     } catch (error) {
       setError((error as Error).message);
@@ -77,7 +77,7 @@ export default function Login() {
         <a href="/inscription">Inscrivez-vous !</a>
       </p>
 
-      {error && <p className="error">{error}</p>}
+      {error && <p>❌ {error}</p>}
       <form onSubmit={handleSubmit}>
         <InputField
           label="Votre email"
