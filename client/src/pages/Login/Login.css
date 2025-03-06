@@ -6,8 +6,13 @@
   height: 95vh;
 }
 
+.login h1 {
+  margin: .25rem;
+}
+
 .login > img {
-  height: 8rem;
+  height: 6rem;
+  margin: .5rem auto .25rem;
 }
 
 .login > form {
@@ -62,11 +67,4 @@
 
 .login > form button:nth-of-type(2) {
   grid-area: 7 / 1 / 8 / 3;
-}
-
-.login > form button:nth-of-type(3) {
-  grid-area: 8 / 1 / 9 / 3;
-
-  background: var(--background-color);
-  color: var(--pico-background-color);
 }
