@@ -8,7 +8,7 @@ export default function ProfileCard({
     <button
       key={profile.id}
       type="button"
-      className="profile-card"
+      className="profileCard"
       onClick={onClick}
     >
       <img

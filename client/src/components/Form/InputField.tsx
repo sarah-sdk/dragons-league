@@ -45,7 +45,7 @@ export default function InputField({
         </p>
       )}
       {Array.isArray(criteria) && criteria.length > 0 && (
-        <ul className="criteria-list">
+        <ul className="criteriaList">
           {criteria.map((criterion) => (
             <li
               key={criterion}
