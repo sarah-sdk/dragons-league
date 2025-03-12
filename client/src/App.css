@@ -16,7 +16,7 @@ body {
 
 h1,
 h2 {
-  font-family: var(--title-font);
+  font-family: var(--titleFont);
 }
 
 h1 {
@@ -25,7 +25,7 @@ h1 {
 }
 
 h3 {
-  font-family: var(--text-font);
+  font-family: var(--textFont);
   font-weight: bold;
   font-size: 1.2rem;
 }
@@ -33,7 +33,7 @@ h3 {
 body,
 p,
 button {
-  font-family: var(--text-font);
+  font-family: var(--textFont);
 }
 
 img {

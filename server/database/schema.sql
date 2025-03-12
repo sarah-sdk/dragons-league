@@ -6,15 +6,6 @@ CREATE TABLE user (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null
 );
 
-CREATE TABLE profile (
-  id int unsigned primary key auto_increment not null,
-  username varchar(255) not null,
-  url_avatar varchar(255) not null,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,
-  user_id int unsigned not null,
-  foreign key(user_id) references user(id)
-);
-
 CREATE TABLE specie (
   id int unsigned primary key auto_increment not null,
   specie varchar(255) not null unique,
@@ -23,6 +14,20 @@ CREATE TABLE specie (
   base_stamina INT unsigned not null,
   url_baby varchar(255) not null,
   url_adult varchar(255) not null
+);
+
+CREATE TABLE training (
+  id INT unsigned primary key auto_increment not null,
+  training_type VARCHAR(255) not null
+);
+
+CREATE TABLE profile (
+  id int unsigned primary key auto_increment not null,
+  username varchar(255) not null,
+  url_avatar varchar(255) not null,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,
+  user_id int unsigned not null,
+  foreign key(user_id) references user(id)
 );
 
 CREATE TABLE dragon (
@@ -36,11 +41,6 @@ CREATE TABLE dragon (
   profile_id INT unsigned not null,
   foreign key(specie_id) references specie(id),
   foreign key(profile_id) references profile(id)
-);
-
-CREATE TABLE training (
-  id INT unsigned primary key auto_increment not null,
-  training_type VARCHAR(255) not null
 );
 
 CREATE TABLE dragon_training (

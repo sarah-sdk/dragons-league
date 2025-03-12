@@ -40,56 +40,86 @@ router.get("/api/trainings", trainingActions.browse);
 router.get("/api/trainings/:trainingId", trainingActions.read);
 
 /* ************************************************************************* */
-// Mur de vérification : toutes les routes suivantes doivent venir du user ou d'un admin
+// Toutes les routes suivantes doivent venir du user ou d'un admin
 /* ************************************************************************* */
-// TODO: mettre le verifyId sur toutes les routes plutôt que faire un mur;
-// router.use("/api", authMiddlewares.verifyId);
 
 //USER
-router.get("/api/users/:userId", userActions.read);
-router.put("/api/users/:userId", userActions.edit);
-router.delete("/api/users/:userId", userActions.destroy);
+router.get("/api/users/:userId", authMiddlewares.verifyId, userActions.read);
+router.put("/api/users/:userId", authMiddlewares.verifyId, userActions.edit);
+router.delete(
+  "/api/users/:userId",
+  authMiddlewares.verifyId,
+  userActions.destroy,
+);
 
 //PROFILE
-router.get("/api/users/:userId/profiles", profileActions.browse);
-router.get("/api/users/:userId/profiles/:profileId", profileActions.read);
-router.put("/api/users/:userId/profiles/:profileId", profileActions.edit);
-router.post("/api/users/:userId/profiles", profileActions.add);
-router.delete("/api/users/:userId/profiles/:profileId", profileActions.destroy);
+router.get(
+  "/api/users/:userId/profiles",
+  authMiddlewares.verifyId,
+  profileActions.browse,
+);
+router.get(
+  "/api/users/:userId/profiles/:profileId",
+  authMiddlewares.verifyId,
+  profileActions.read,
+);
+router.put(
+  "/api/users/:userId/profiles/:profileId",
+  authMiddlewares.verifyId,
+  profileActions.edit,
+);
+router.post(
+  "/api/users/:userId/profiles",
+  authMiddlewares.verifyId,
+  profileActions.add,
+);
+router.delete(
+  "/api/users/:userId/profiles/:profileId",
+  authMiddlewares.verifyId,
+  profileActions.destroy,
+);
 
 //DRAGON
 router.get(
   "/api/users/:userId/profiles/:profileId/dragons",
+  authMiddlewares.verifyId,
   dragonActions.browse,
 );
 router.get(
   "/api/users/:userId/profiles/:profileId/dragons/:dragonId",
+  authMiddlewares.verifyId,
   dragonActions.read,
 );
 router.put(
   "/api/users/:userId/profiles/:profileId/dragons/:dragonId",
+  authMiddlewares.verifyId,
   dragonActions.edit,
 );
 router.post(
   "/api/users/:userId/profiles/:profileId/dragons/",
+  authMiddlewares.verifyId,
   dragonActions.add,
 );
 router.delete(
   "/api/users/:userId/profiles/:profileId/dragons/:dragonId",
+  authMiddlewares.verifyId,
   dragonActions.destroy,
 );
 
 //DRAGON-TRAINING
 router.get(
   "/api/users/:userId/profiles/:profileId/dragons/:dragonId/trainings",
+  authMiddlewares.verifyId,
   dragonTrainingActions.browse,
 );
 router.get(
   "/api/users/:userId/profiles/:profileId/dragons/:dragonId/trainings/:trainingId",
+  authMiddlewares.verifyId,
   dragonTrainingActions.read,
 );
 router.post(
   "/api/users/:userId/profiles/:profileId/dragons/:dragonId/trainings/",
+  authMiddlewares.verifyId,
   dragonTrainingActions.add,
 );
 

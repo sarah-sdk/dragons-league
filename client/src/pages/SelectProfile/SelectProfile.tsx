@@ -75,7 +75,7 @@ export default function SelectProfile() {
   };
 
   return (
-    <section className="profile-selection">
+    <section className="profileSelection">
       <h1>Choissisez un utilisateur</h1>
       {profiles.map((profile) => (
         <ProfileCard
@@ -86,7 +86,7 @@ export default function SelectProfile() {
       ))}
       <button
         type="button"
-        className="profile-card"
+        className="profileCard"
         onClick={() => setIsModalOpen(true)}
       >
         <p>+</p>
