@@ -22,13 +22,7 @@ router.post("/api/auth/login", authActions.login);
 /* ************************************************************************* */
 router.use("/api", authMiddlewares.verifyToken);
 router.post("/api/auth/logout", authActions.logout);
-router.get("/api/auth/me", (req, res) => {
-  if (!req.user) {
-    res.status(401).json({ message: "Aucun utilisateur connecté" });
-  } else {
-    res.json({ userId: req.user.id, isAdmin: req.user.isAdmin });
-  }
-});
+router.get("/api/auth/me", authActions.getMe);
 router.get("/api/auth/check", authActions.check);
 
 //SPECIE
