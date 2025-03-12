@@ -8,15 +8,15 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (location.pathname === "/dashboard") {
-      navigate("/dashboard/species", { replace: true });
+      navigate("/dashboard/especes", { replace: true });
     }
   }, [location.pathname, navigate]);
   return (
     <main className="dashboard">
       <h1>Dashboard</h1>
       <nav>
-        <Link to="/dashboard/species">Espèces</Link>
-        <Link to="/dashboard/users">Utilisateurs</Link>
+        <Link to="/dashboard/especes">Espèces</Link>
+        <Link to="/dashboard/utilisateurs">Utilisateurs</Link>
       </nav>
       <Outlet />
     </main>
