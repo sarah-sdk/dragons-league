@@ -102,6 +102,14 @@ const logout: RequestHandler = async (req, res, next) => {
   res.status(200).send({ message: "Déconnexion réussie" });
 };
 
+const getMe: RequestHandler = async (req, res) => {
+  if (!req.user) {
+    res.status(401).json({ message: "Aucun utilisateur connecté" });
+  } else {
+    res.json({ userId: req.user.id, isAdmin: req.user.isAdmin });
+  }
+};
+
 const check: RequestHandler = async (req, res) => {
   if (req.user.id) {
     res.status(200).json({ authenticated: true });
@@ -110,4 +118,4 @@ const check: RequestHandler = async (req, res) => {
   }
 };
 
-export default { register, login, logout, check };
+export default { register, login, logout, getMe, check };

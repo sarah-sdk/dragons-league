@@ -41,12 +41,12 @@ const router = createBrowserRouter([
     element: <App />, // Renders the App component for the home page
     children: [
       {
-        path: "adopter-dragon",
+        path: "/adopter-dragon",
         element: <ProtectedRoute element={<AdoptDragon />} />,
         loader: loadSpecies,
       },
       {
-        path: "mes-dragons/:dragonId",
+        path: "/mes-dragons/:dragonId",
         element: <ProtectedRoute element={<DragonDetails />} />,
         loader: loadDragonDetails,
       },
@@ -64,8 +64,8 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <AdminRoute element={<Dashboard />} />,
         children: [
-          { path: "species", element: <SpeciesPage />, loader: loadSpecies },
-          { path: "users", element: <UsersPage /> },
+          { path: "especes", element: <SpeciesPage />, loader: loadSpecies },
+          { path: "utilisateurs", element: <UsersPage /> },
         ],
       },
       {
