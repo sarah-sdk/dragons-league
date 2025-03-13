@@ -1,19 +1,3 @@
-const checkIfLoggedIn = async () => {
-  try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/auth/check`,
-      {
-        method: "GET",
-        credentials: "include",
-      },
-    );
-    return response.ok;
-  } catch (error) {
-    console.error("Erreur de vérification de l'authentification:", error);
-    return false;
-  }
-};
-
 const fetchUserData = async () => {
   try {
     const authResponse = await fetch(
@@ -34,4 +18,4 @@ const fetchUserData = async () => {
   }
 };
 
-export default { checkIfLoggedIn, fetchUserData };
+export default { fetchUserData };

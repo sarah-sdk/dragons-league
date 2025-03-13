@@ -110,12 +110,4 @@ const getMe: RequestHandler = async (req, res) => {
   }
 };
 
-const check: RequestHandler = async (req, res) => {
-  if (req.user.id) {
-    res.status(200).json({ authenticated: true });
-  } else {
-    res.status(401).json({ authenticated: false });
-  }
-};
-
-export default { register, login, logout, getMe, check };
+export default { register, login, logout, getMe };
