@@ -23,7 +23,6 @@ router.post("/api/auth/login", authActions.login);
 router.use("/api", authMiddlewares.verifyToken);
 router.post("/api/auth/logout", authActions.logout);
 router.get("/api/auth/me", authActions.getMe);
-router.get("/api/auth/check", authActions.check);
 
 //SPECIE
 router.get("/api/species", specieActions.browse);
