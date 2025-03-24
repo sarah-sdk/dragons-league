@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import SpecieDisplay from "../../services/SpecieDisplay";
 import type { ModalType } from "../../types/types";
 import "./AdoptModal.css";
+import InputField from "../Form/InputField";
 
 export default function Modal({
   isOpen,
@@ -37,12 +38,12 @@ export default function Modal({
     }
   }, [isOpen]);
 
-  const handleAdoptClick = () => {
+  const handleAdoptSubmit = () => {
     onAdopt(dragonName, specieId);
   };
 
   return (
-    <dialog ref={dialogRef} className="modal-dialog">
+    <dialog ref={dialogRef} className="adoptModal">
       <img
         src={`${import.meta.env.VITE_API_URL}/${specieImage}`}
         alt={specieName}
@@ -50,18 +51,21 @@ export default function Modal({
       <h2>
         <SpecieDisplay specie={specieName} />
       </h2>
-      <input
-        type="text"
-        placeholder="Nom du dragon"
-        value={dragonName}
-        onChange={(e) => onNameChange(e.target.value)}
-      />
-      <button type="submit" onClick={handleAdoptClick}>
-        Adopter votre dragon
-      </button>
-      <button type="button" onClick={onClose}>
-        ❌
-      </button>
+
+      <form method="dialog" onSubmit={handleAdoptSubmit}>
+        <InputField
+          label="Nom du dragon"
+          name="dragon-name"
+          type="text"
+          value={dragonName}
+          onChange={(e) => onNameChange(e.target.value)}
+        />
+
+        <button type="submit">Adopter votre dragon</button>
+        <button type="button" onClick={onClose}>
+          ❌
+        </button>
+      </form>
     </dialog>
   );
 }
