@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./ProfileModal.css";
 import type { ProfileModalType } from "../../types/types";
+import InputField from "../Form/InputField";
 
 export default function ProfileModal({
   isOpen,
@@ -46,36 +47,42 @@ export default function ProfileModal({
   };
 
   return (
-    <dialog ref={dialogRef} className="profile-modal-dialog">
+    <dialog ref={dialogRef} className="profileModal">
       <h2>Créer un nouveau profil</h2>
-      <div className="avatar-selection">
-        {avatars.map((avatar, index) => (
-          <button
-            type="button"
-            key={uuidv4()}
-            onClick={() => setSelectedAvatar(avatar)}
-            className={selectedAvatar === avatar ? "selected" : ""}
-          >
-            <img
-              src={`${import.meta.env.VITE_API_URL}/${avatar}`}
-              alt={`Avatar ${index + 1}`}
+
+      <form method="dialog" onSubmit={handleCreate}>
+        <div className="avatar-selection">
+          {avatars.map((avatar, index) => (
+            <button
+              type="button"
+              key={uuidv4()}
+              onClick={() => setSelectedAvatar(avatar)}
               className={selectedAvatar === avatar ? "selected" : ""}
-            />
-          </button>
-        ))}
-      </div>
-      <input
-        type="text"
-        placeholder="Nom d'utilisateur"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <button type="submit" onClick={handleCreate} className="navBtn">
-        Créer le profil
-      </button>
-      <button type="button" onClick={onClose} className="navBtn">
-        ❌
-      </button>
+            >
+              <img
+                src={`${import.meta.env.VITE_API_URL}/${avatar}`}
+                alt={`Avatar ${index + 1}`}
+                className={selectedAvatar === avatar ? "selected" : ""}
+              />
+            </button>
+          ))}
+        </div>
+
+        <InputField
+          type="text"
+          label="Nom d'utilisateur"
+          name="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+
+        <button type="submit" className="navBtn">
+          Créer le profil
+        </button>
+        <button type="button" onClick={onClose} className="navBtn">
+          ❌
+        </button>
+      </form>
     </dialog>
   );
 }
