@@ -20,7 +20,7 @@ export default function CriteriaMessage({ criteria }: CriteriaMessageType) {
             <li
               key={criterion}
               className={
-                criteria.includes("❌") ? "criteria invalid" : "criteria valid"
+                criterion.includes("❌") ? "criteria invalid" : "criteria valid"
               }
             >
               {criterion}

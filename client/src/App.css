@@ -52,3 +52,7 @@ button:focus,
 input:focus {
   outline: 1px solid var(--pico-primary);
 }
+
+ul > li {
+  list-style-type: none;
+}
