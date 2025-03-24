@@ -1,4 +1,4 @@
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, Dispatch } from "react";
 
 export type RouteType = {
   element: React.ReactElement;
@@ -73,15 +73,31 @@ export type ProfileModalType = {
 
 export type InputFieldType = {
   label: string;
-  type: string;
-  max?: number;
+  type: "text" | "password" | "number" | "email";
   name: string;
-  value?: string | number;
-  accept?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  min?: number;
+  max?: number;
+  value?: string | number;
   criteria?: string | string[];
   showPassword?: boolean;
   togglePasswordVisibility?: () => void;
+};
+
+export type FileInputFieldType = {
+  label: string;
+  name: string;
+  file: File | null;
+  setFile: Dispatch<React.SetStateAction<File | null>>;
+  preview: string | null;
+  setPreview: Dispatch<React.SetStateAction<string | null>>;
+  onFileChange: (file: File, type: "baby" | "adult") => void;
+  type: "baby" | "adult";
+  required?: boolean;
+};
+
+export type CriteriaMessageType = {
+  criteria: string | string[];
 };
 
 export type ShowPasswordType = {
