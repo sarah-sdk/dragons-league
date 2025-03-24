@@ -1,62 +1,62 @@
-.modal-dialog {
+.adoptModal {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.adoptModal button:nth-of-type(2) {
+  background: transparent;
+}
+
+.adoptModal form {
   display: grid;
-  grid-template-rows: 2fr .5fr .5fr .5fr;
-  grid-template-columns: 3fr 1fr;
-  justify-items: stretch;
-  gap: .5rem;
-
-  padding: 2rem 2.5rem;
+  width: 100%;
+  gap: 1rem;
 }
 
-.modal-dialog img {
-  grid-area: 1 / 1 / 2 / 4;
+.adoptModal form label,
+.adoptModal form input,
+.adoptModal form button {
+  margin-bottom: 0;
 }
 
-.modal-dialog h2 {
+.adoptModal form label {
+  grid-area: 1 / 1 / 2 / 3;
+}
+
+.adoptModal form input {
   grid-area: 2 / 1 / 3 / 3;
 }
 
-.modal-dialog input {
-  grid-area: 3 / 1 / 4 / 3;
+.adoptModal form button:nth-of-type(1) {
+  grid-area: 3 / 1 / 4 / 2;
 }
 
-.modal-dialog button:first-of-type {
-  grid-area: 4 / 1 / 5 / 2;
-}
-
-.modal-dialog button:last-of-type {
-  grid-area: 4 / 2 / 5 / 3;
-  background-color: transparent;
+.adoptModal form button:nth-of-type(2) {
+  grid-area: 3 / 2 / 4 / 3;
+  width: 5rem;
+  justify-self: center;
 }
 
 @media screen and (min-width: 600px) {
-  .modal-dialog {
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 2fr 2fr 1fr;
+  .adoptModal {
+    display: grid;
+    grid-template-rows: 5rem 13rem;
+    gap: 1rem;
 
-    padding: 8rem 3rem;
+    padding: 15rem 1rem;
   }
 
-  .modal-dialog img {
-    grid-area: 1 / 1 / 4 / 2;
+  .adoptModal img {
+    grid-area: 1 / 1 / 3 / 2;
   }
 
-  .modal-dialog h2 {
-    grid-area: 1 / 2 / 2 / 4;
-    padding-top: 5rem;
+  .adoptModal h2 {
+    grid-area: 1 / 2 / 2 / 3;
   }
 
-  .modal-dialog input {
-    grid-area: 2 / 2 / 3 / 4;
-  }
-
-  .modal-dialog button:first-of-type {
-    grid-area: 3 / 2 / 4 / 3;
-    margin-bottom: 5rem;
-  }
-
-  .modal-dialog button:last-of-type {
-    grid-area: 3 / 3 / 4 / 4;
-    margin-bottom: 5rem;
+  .adoptModal form {
+    grid-area: 2 / 2 / 3 / 3;
+    align-self: start;
   }
 }

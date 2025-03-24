@@ -1,14 +1,15 @@
 import type { InputFieldType } from "../../types/types";
+import CriteriaMessage from "./CriteriaMessage";
 import ShowPassword from "./ShowPassword";
 
 export default function InputField({
   label,
   type,
+  min,
   max,
   name,
   value,
   onChange,
-  accept,
   criteria,
   showPassword,
   togglePasswordVisibility,
@@ -16,17 +17,27 @@ export default function InputField({
   return (
     <>
       <label htmlFor={name}>{label}</label>
-      <input
-        type={type}
-        max={max}
-        id={name}
-        name={name}
-        value={value}
-        onChange={onChange}
-        accept={accept}
-        autoComplete="on"
-        required
-      />
+      {type === "number" ? (
+        <input
+          type={type}
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          max={max}
+          min={min}
+          required
+        />
+      ) : (
+        <input
+          type={type}
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          required
+        />
+      )}
 
       {showPassword !== undefined && togglePasswordVisibility && (
         <ShowPassword
@@ -35,29 +46,7 @@ export default function InputField({
         />
       )}
 
-      {typeof criteria === "string" && (
-        <p
-          className={
-            criteria.includes("❌") ? "criteria invalid" : " criteria valid"
-          }
-        >
-          {criteria}
-        </p>
-      )}
-      {Array.isArray(criteria) && criteria.length > 0 && (
-        <ul className="criteriaList">
-          {criteria.map((criterion) => (
-            <li
-              key={criterion}
-              className={
-                criterion.includes("❌") ? "criteria invalid" : "criteria valid"
-              }
-            >
-              {criterion}
-            </li>
-          ))}
-        </ul>
-      )}
+      {criteria && <CriteriaMessage criteria={criteria} />}
     </>
   );
 }

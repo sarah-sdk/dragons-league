@@ -79,7 +79,7 @@ export default function Register() {
       <img src={logo} alt="" />
       <h1>Inscription</h1>
       {error && <p className="error">{error}</p>}
-      <form>
+      <form onSubmit={handleSubmit}>
         <InputField
           label="Votre email"
           type="email"
@@ -121,7 +121,6 @@ export default function Register() {
           value={confirmPassword}
           onChange={(e) => {
             setConfirmPassword(e.target.value);
-            validatePassword(e.target.value);
             validateConfirmPassword(password, e.target.value);
           }}
           criteria={criteria.confirmPassword}
@@ -131,9 +130,7 @@ export default function Register() {
           }
         />
 
-        <button type="submit" onClick={handleSubmit}>
-          S'inscrire
-        </button>
+        <button type="submit">S'inscrire</button>
       </form>
     </main>
   );

@@ -1,12 +1,8 @@
-import {
-  type ChangeEvent,
-  type FormEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import type { AddSpecieModalType, Specie } from "../../../types/types";
 import "./AddSpecieModal.css";
+import FileInputField from "../../Form/FileInputField";
+import InputField from "../../Form/InputField";
 
 export default function AddSpecieModal({
   isOpen,
@@ -52,31 +48,6 @@ export default function AddSpecieModal({
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    if (babyFile) {
-      setBabyPreview(URL.createObjectURL(babyFile));
-    }
-    if (adultFile) {
-      setAdultPreview(URL.createObjectURL(adultFile));
-    }
-  }, [babyFile, adultFile]);
-
-  const handleFileChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    type: "baby" | "adult",
-  ) => {
-    const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
-      if (type === "baby") {
-        setBabyFile(selectedFile);
-        onFileChange(selectedFile, "baby");
-      } else {
-        setAdultFile(selectedFile);
-        onFileChange(selectedFile, "adult");
-      }
-    }
-  };
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
@@ -105,87 +76,82 @@ export default function AddSpecieModal({
 
       {errors && <p>{errors}</p>}
       <form method="dialog" onSubmit={handleSubmit}>
-        <label htmlFor="specie">Espèce</label>
-        <input
+        <InputField
+          label="Espèce"
           type="text"
-          id="specie"
           name="specie"
           value={formData.specie}
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, specie: e.target.value }))
           }
-          required
         />
 
-        <label htmlFor="base-strength">Force de base</label>
-        <input
+        <InputField
+          label="Force de base"
           type="number"
-          id="base-strength"
+          name="base-strength"
           value={formData.base_strength}
+          min={0}
+          max={10}
           onChange={(e) => {
             let newValue = Number(e.target.value);
             if (newValue > 10) newValue = 10;
             if (newValue < 0) newValue = 0;
             setFormData((prev) => ({ ...prev, base_strength: newValue }));
           }}
-          required
         />
 
-        <label htmlFor="base-speed">Vitesse de base</label>
-        <input
+        <InputField
+          label="Vitesse de base"
           type="number"
-          id="base-speed"
+          name="base-speed"
           value={formData.base_speed}
+          min={0}
+          max={10}
           onChange={(e) => {
             let newValue = Number(e.target.value);
             if (newValue > 10) newValue = 10;
             if (newValue < 0) newValue = 0;
             setFormData((prev) => ({ ...prev, base_speed: newValue }));
           }}
-          required
         />
 
-        <label htmlFor="base-stamina">Endurance de base</label>
-        <input
+        <InputField
+          label="Endurance de base"
           type="number"
-          id="base-stamina"
+          name="base-stamina"
           value={formData.base_stamina}
+          min={0}
+          max={10}
           onChange={(e) => {
             let newValue = Number(e.target.value);
             if (newValue > 10) newValue = 10;
             if (newValue < 0) newValue = 0;
             setFormData((prev) => ({ ...prev, base_stamina: newValue }));
           }}
-          required
         />
 
-        <label htmlFor="baby-image">Image version bébé</label>
-        {babyPreview ? (
-          <img src={babyPreview} alt={`${formData.specie} bébé`} />
-        ) : (
-          ""
-        )}
-        <input
-          type="file"
+        <FileInputField
+          label="Image version bébé"
           name="baby-image"
-          id="baby-image"
-          accept="image/*"
-          onChange={(e) => handleFileChange(e, "baby")}
+          file={babyFile}
+          setFile={setBabyFile}
+          preview={babyPreview}
+          setPreview={setBabyPreview}
+          onFileChange={onFileChange}
+          type="baby"
           required
         />
 
-        <label htmlFor="adult-image">Image version adulte</label>
-        {adultPreview ? (
-          <img src={adultPreview} alt={`${formData.specie} adulte`} />
-        ) : (
-          ""
-        )}
-        <input
-          type="file"
+        <FileInputField
+          label="Image version adulte"
           name="adult-image"
-          id="adult-image"
-          accept="image/*"
-          onChange={(e) => handleFileChange(e, "adult")}
+          file={adultFile}
+          setFile={setAdultFile}
+          preview={adultPreview}
+          setPreview={setAdultPreview}
+          onFileChange={onFileChange}
+          type="adult"
           required
         />
 
