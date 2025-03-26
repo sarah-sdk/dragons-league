@@ -20,7 +20,7 @@
   margin-bottom: 0;
 }
 
-.profileModal form .avatar-selection {
+.profileModal form .avatarSelection {
   grid-area: 1 / 1 / 2 / 3;
 
   display: grid;
@@ -30,15 +30,15 @@
   align-items: center;
 }
 
-.profileModal form .avatar-selection button,
-.profileModal form .avatar-selection button img {
+.profileModal form .avatarSelection button,
+.profileModal form .avatarSelection button img {
   border-radius: 50%;
   height: 5rem;
   width: 5rem;
   margin: 0;
 }
 
-.profileModal form .avatar-selection img {
+.profileModal form .avatarSelection img {
   object-fit: cover;
 }
 

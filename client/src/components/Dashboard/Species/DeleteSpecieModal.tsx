@@ -64,7 +64,7 @@ export default function DeleteSpecieModal({
   };
 
   return (
-    <dialog ref={dialogRef} className="delete-specie-modal-dialog">
+    <dialog ref={dialogRef} className="deleteSpecieModal">
       <h3>Êtes-vous sûr.e de vouloir supprimer :</h3>
       <figure>
         <img

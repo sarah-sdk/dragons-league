@@ -65,7 +65,7 @@ export default function EditSpecieModal({
   };
 
   return (
-    <dialog ref={dialogRef} className="edit-specie-modal-dialog">
+    <dialog ref={dialogRef} className="editSpecieModal">
       <h3>Modifier l'espèce</h3>
 
       <form method="dialog" onSubmit={handleSubmit}>

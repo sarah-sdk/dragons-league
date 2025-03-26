@@ -51,7 +51,7 @@ export default function ProfileModal({
       <h2>Créer un nouveau profil</h2>
 
       <form method="dialog" onSubmit={handleCreate}>
-        <div className="avatar-selection">
+        <div className="avatarSelection">
           {avatars.map((avatar, index) => (
             <button
               type="button"

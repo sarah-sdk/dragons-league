@@ -71,7 +71,7 @@ export default function AddSpecieModal({
   };
 
   return (
-    <dialog ref={dialogRef} className="add-specie-modal-dialog">
+    <dialog ref={dialogRef} className="addSpecieModal">
       <h3>Ajouter une espèce</h3>
 
       {errors && <p>{errors}</p>}
