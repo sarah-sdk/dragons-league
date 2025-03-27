@@ -18,6 +18,7 @@ import DragonDetails from "./pages/DragonDetails/DragonDetails";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import SelectProfile from "./pages/SelectProfile/SelectProfile";
+import Trainings from "./pages/Trainings/Trainings";
 import {
   loadAllDragons,
   loadDragonDetails,
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
         path: "/mes-dragons/:dragonId",
         element: <ProtectedRoute element={<DragonDetails />} />,
         loader: loadDragonDetails,
+      },
+      {
+        path: "/mes-dragons/:dragonId/entrainements",
+        element: <Trainings />,
       },
       {
         path: "/mes-dragons",

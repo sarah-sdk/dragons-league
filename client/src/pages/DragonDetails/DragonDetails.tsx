@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import AdoptedAt from "../../components/DragonDetails/AdoptedAt";
 import NameAndPhoto from "../../components/DragonDetails/NameAndPhoto";
 import StatDetails from "../../components/DragonDetails/StatDetails";
@@ -6,7 +6,14 @@ import type { Dragon } from "../../types/types";
 import "./DragonDetails.css";
 
 export default function DragonDetails() {
+  const navigate = useNavigate();
   const { dragon } = useLoaderData() as { dragon: Dragon };
+
+  const handleTrained = (dragonId: number) => {
+    localStorage.setItem("dragonId", dragon.dragon_id.toString());
+
+    navigate(`/mes-dragons/${dragonId}/entrainements`);
+  };
 
   return (
     <article className="dragonDetails">
@@ -20,6 +27,9 @@ export default function DragonDetails() {
         />
       </ul>
       <AdoptedAt dragon={dragon} />
+      <button type="button" onClick={() => handleTrained(+dragon.dragon_id)}>
+        Entraine-moi !
+      </button>
     </article>
   );
 }
