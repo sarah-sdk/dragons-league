@@ -21,6 +21,7 @@ import SelectProfile from "./pages/SelectProfile/SelectProfile";
 import Trainings from "./pages/Trainings/Trainings";
 import {
   loadAllDragons,
+  loadDragonAndTrainings,
   loadDragonDetails,
   loadProfiles,
   loadSpecies,
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
       {
         path: "/mes-dragons/:dragonId/entrainements",
         element: <Trainings />,
+        loader: loadDragonAndTrainings,
       },
       {
         path: "/mes-dragons",

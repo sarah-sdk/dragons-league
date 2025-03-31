@@ -104,5 +104,28 @@ export const loadDragonDetails = async ({ params }: { params: Params }) => {
   handleResponseError(response);
 
   const dragon = await response.json();
-  return { dragon };
+  return { dragon, userId, profileId };
+};
+
+const loadTrainings = async () => {
+  const response = await fetch(
+    `${import.meta.env.VITE_API_URL}/api/trainings`,
+    { method: "GET", credentials: "include" },
+  );
+
+  handleResponseError(response);
+
+  const trainings = await response.json();
+  return { trainings };
+};
+
+export const loadDragonAndTrainings = async ({
+  params,
+}: { params: Params }) => {
+  const [dragonData, trainingsData] = await Promise.all([
+    loadDragonDetails({ params }),
+    loadTrainings(),
+  ]);
+
+  return { ...dragonData, ...trainingsData };
 };
