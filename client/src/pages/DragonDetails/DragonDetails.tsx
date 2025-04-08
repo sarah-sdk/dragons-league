@@ -18,14 +18,12 @@ export default function DragonDetails() {
   return (
     <article className="dragonDetails">
       <NameAndPhoto dragon={dragon} />
-      <ul>
-        <StatDetails
-          strength={dragon.strength}
-          speed={dragon.speed}
-          stamina={dragon.stamina}
-          size="16"
-        />
-      </ul>
+      <StatDetails
+        strength={dragon.strength}
+        speed={dragon.speed}
+        stamina={dragon.stamina}
+        size="16"
+      />
       <AdoptedAt dragon={dragon} />
       <button type="button" onClick={() => handleGoTraining(+dragon.dragon_id)}>
         Entraine-moi !
