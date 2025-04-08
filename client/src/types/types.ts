@@ -73,8 +73,10 @@ export type ProfileModalType = {
 
 export type InputFieldType = {
   label: string;
-  type: "text" | "password" | "number" | "email";
+  type: "text" | "password" | "number" | "email" | "radio";
   name: string;
+  id?: string;
+  className?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   min?: number;
   max?: number;
@@ -118,4 +120,9 @@ export type AddSpecieModalType = {
   onClose: () => void;
   onSave: (createdSpecie: Omit<Specie, "id">) => void;
   onFileChange: (file: File | null, type: "baby" | "adult") => void;
+};
+
+export type TrainingsType = {
+  training_type: "strength" | "speed" | "stamina";
+  id: number;
 };
