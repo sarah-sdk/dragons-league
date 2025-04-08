@@ -107,7 +107,7 @@ export default function Trainings() {
   };
 
   return (
-    <main className="trainingList">
+    <section className="trainingList">
       <h1>Entrainez {dragon.name}</h1>
 
       <article>
@@ -141,6 +141,6 @@ export default function Trainings() {
           <button type="submit">Confirmer l'entraînement</button>
         </form>
       </article>
-    </main>
+    </section>
   );
 }

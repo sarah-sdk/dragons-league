@@ -29,7 +29,9 @@ function App() {
     <>
       <ToastContainer />
       {!hideNavBar && <NavBar />}
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
     </>
   );
 }

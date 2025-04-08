@@ -1,9 +1,7 @@
-.dragonsDetails {
+.dragonDetails {
   margin: 0 auto;
-}
-
-.dragonDetails h1 {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .dragonDetails ul li {
