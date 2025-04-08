@@ -1,15 +1,20 @@
-.trainingList article ul li {
-  text-align: center;
+.trainingList article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.trainingList article ul {
+  margin-bottom: 0;
 }
 
 .trainingList article form {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-
   justify-items: center;
+  align-content: center;
   gap: 1rem;
-
-  margin: 0 1rem;
+  margin: 0;
 }
 
 .trainingList article form input {
@@ -31,19 +36,14 @@
 
 .trainingList article form label {
   border-radius: 50%;
-
   height: 5rem;
   width: 5rem;
-
   margin: 0;
   padding: 1rem;
-
   font-size: 2rem;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   cursor: pointer;
   transition: background-color 0.3s ease, filter 0.3s ease;
 }
@@ -71,7 +71,7 @@
 
 .trainingList article form button {
   grid-column: span 3;
-  width: 95%;
+  width: 80%;
   margin-bottom: 0;
 }
 
@@ -79,22 +79,24 @@
   .trainingList article {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-
-    justify-items: center;
+    gap: .5rem;
     align-items: center;
-
-    height: 75vh;
+    justify-items: center;
   }
 
   .trainingList article img {
     grid-area: 1 / 1 / 3 / 2;
   }
 
-  .trainingList article ul {
-    align-self: flex-end;
+  .trainingList article form {
+    max-width: 400px;
+    width: 100%;
   }
 
-  .trainingList article form {
-    align-self: flex-start;
+  .trainingList article form label {
+    height: 3rem;
+    width: 3rem;
+    max-width: 3rem;
+    max-height: 3rem;
   }
 }
