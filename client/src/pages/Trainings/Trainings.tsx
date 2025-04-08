@@ -38,6 +38,19 @@ export default function Trainings() {
     { training: "stamina", emoji: "♥️" },
   ];
 
+  const getRadioClass = (trainingType: string) => {
+    switch (trainingType) {
+      case "speed":
+        return "bgBlue";
+      case "strength":
+        return "bgRed";
+      case "stamina":
+        return "bgGreen";
+      default:
+        return "";
+    }
+  };
+
   const handleTrain = (training: TrainingsType) => {
     setSelectedTraining(training);
 
@@ -84,7 +97,10 @@ export default function Trainings() {
       );
 
       const data = await response.json();
-      if (data) navigate(`/mes-dragons/${dragon.dragon_id}`);
+      if (data)
+        navigate(`/mes-dragons/${dragon.dragon_id}`, {
+          state: { trainingSuccess: true },
+        });
     } catch (error) {
       console.error("Echec lors de l'envoi de l'entrainement");
     }
@@ -94,7 +110,7 @@ export default function Trainings() {
     <main className="trainingList">
       <h1>Entrainez {dragon.name}</h1>
 
-      <section>
+      <article>
         <img
           src={`${import.meta.env.VITE_API_URL}/${imageDragon}`}
           alt={dragon.name}
@@ -119,12 +135,12 @@ export default function Trainings() {
               name="training"
               id={training.training_type ?? undefined}
               onChange={() => handleTrain(training)}
-              className="stat-button"
+              className={`statButton ${getRadioClass(training.training_type ?? "")}`}
             />
           ))}
           <button type="submit">Confirmer l'entraînement</button>
         </form>
-      </section>
+      </article>
     </main>
   );
 }

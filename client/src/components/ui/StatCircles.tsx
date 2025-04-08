@@ -5,7 +5,7 @@ import CircleFill from "../../assets/images/CircleFill";
 import type { Stat } from "../../types/types";
 
 export default function StatCircles({ value, size, highlight = false }: Stat) {
-  const totalCircles = 50;
+  const totalCircles = 10;
   const filledCircles = value;
   const hasHighlight = highlight && value < totalCircles;
   const emptyCircles = totalCircles - filledCircles - (hasHighlight ? 1 : 0);
