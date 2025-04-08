@@ -1,4 +1,6 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
+import { Bounce, toast } from "react-toastify";
 import AdoptedAt from "../../components/DragonDetails/AdoptedAt";
 import NameAndPhoto from "../../components/DragonDetails/NameAndPhoto";
 import StatDetails from "../../components/DragonDetails/StatDetails";
@@ -7,7 +9,25 @@ import "./DragonDetails.css";
 
 export default function DragonDetails() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { dragon } = useLoaderData() as { dragon: Dragon };
+
+  useEffect(() => {
+    if (location.state?.trainingSuccess) {
+      toast.success("Entraînement effectué avec succès !", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+        closeButton: false,
+      });
+    }
+  }, [location]);
 
   const handleGoTraining = (dragonId: number) => {
     localStorage.setItem("dragonId", dragon.dragon_id.toString());
