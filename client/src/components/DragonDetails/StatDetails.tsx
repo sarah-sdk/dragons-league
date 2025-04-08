@@ -1,3 +1,4 @@
+import type { Stats } from "../../types/types";
 import StatCircles from "../ui/StatCircles";
 
 export default function StatDetails({
@@ -5,20 +6,33 @@ export default function StatDetails({
   speed,
   stamina,
   size,
-}: { strength: number; speed: number; stamina: number; size: string }) {
+  highlightedStat,
+}: Stats) {
   return (
     <ul>
       <li>
-        {"Force"}
-        <StatCircles value={strength} size={size} />
-      </li>
-      <li>
         {"Vitesse"}
-        <StatCircles value={speed} size={size} />
+        <StatCircles
+          value={speed}
+          size={size}
+          highlight={highlightedStat === "speed"}
+        />
       </li>
       <li>
         {"Endurance"}
-        <StatCircles value={stamina} size={size} />
+        <StatCircles
+          value={stamina}
+          size={size}
+          highlight={highlightedStat === "stamina"}
+        />
+      </li>
+      <li>
+        {"Force"}
+        <StatCircles
+          value={strength}
+          size={size}
+          highlight={highlightedStat === "strength"}
+        />
       </li>
     </ul>
   );
