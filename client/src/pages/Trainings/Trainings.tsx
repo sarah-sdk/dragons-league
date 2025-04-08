@@ -1,21 +1,24 @@
 import { type FormEvent, useState } from "react";
-import { useLoaderData } from "react-router-dom";
-import TrainingDisplay from "../../services/trainingDisplay";
-import type { Dragon } from "../../types/types";
-
-type TrainingsType = {
-  training_type: "strength" | "speed" | "stamina";
-  id: number;
-};
+import { useLoaderData, useNavigate } from "react-router-dom";
+import StatDetails from "../../components/DragonDetails/StatDetails";
+import getDragonImage from "../../services/getDragonImage";
+import type { Dragon, TrainingsType } from "../../types/types";
+import "./Trainings.css";
+import InputField from "../../components/Form/InputField";
 
 export default function Trainings() {
+  const navigate = useNavigate();
+
   const [statsEarned, setStatsEarned] = useState({
     strengthEarned: 0,
     speedEarned: 0,
     staminaEarned: 0,
   });
 
-  const [trainingId, setTrainingId] = useState(0);
+  const [selectedTraining, setSelectedTraining] = useState<TrainingsType>({
+    id: 0,
+    training_type: null,
+  });
 
   const { dragon, userId, profileId, trainings } = useLoaderData() as {
     dragon: Dragon;
@@ -24,8 +27,19 @@ export default function Trainings() {
     trainings: TrainingsType[];
   };
 
+  const imageDragon = getDragonImage({ dragon });
+
+  const trainingEmoji: {
+    training: "speed" | "strength" | "stamina";
+    emoji: string;
+  }[] = [
+    { training: "strength", emoji: "💪🏼" },
+    { training: "speed", emoji: "🪽" },
+    { training: "stamina", emoji: "♥️" },
+  ];
+
   const handleTrain = (training: TrainingsType) => {
-    setTrainingId(training.id);
+    setSelectedTraining(training);
 
     setStatsEarned((prev) => ({
       strengthEarned:
@@ -50,7 +64,7 @@ export default function Trainings() {
       user_id: userId,
       profile_id: +profileId,
       dragon_id: dragon.dragon_id,
-      training_id: trainingId,
+      training_id: selectedTraining.id,
       strength_earned: statsEarned.strengthEarned,
       speed_earned: statsEarned.speedEarned,
       stamina_earned: statsEarned.staminaEarned,
@@ -70,33 +84,47 @@ export default function Trainings() {
       );
 
       const data = await response.json();
-      // TODO : rediriger vers la page du dragon
-      if (data) console.info("Entrainement posté !");
+      if (data) navigate(`/mes-dragons/${dragon.dragon_id}`);
     } catch (error) {
       console.error("Echec lors de l'envoi de l'entrainement");
     }
   };
 
   return (
-    <main>
-      <h1>Entrainement de {dragon.name}</h1>
+    <main className="trainingList">
+      <h1>Entrainez {dragon.name}</h1>
 
-      <form onSubmit={handlePostTraining}>
-        {trainings.map((training) => (
-          <div key={training.id}>
-            <input
-              type="checkbox"
-              name={training.training_type}
-              id={training.training_type}
-              onClick={() => handleTrain(training)}
+      <section>
+        <img
+          src={`${import.meta.env.VITE_API_URL}/${imageDragon}`}
+          alt={dragon.name}
+        />
+        <StatDetails
+          strength={dragon.strength}
+          speed={dragon.speed}
+          stamina={dragon.stamina}
+          size="16"
+          highlightedStat={selectedTraining.training_type}
+        />
+
+        <form onSubmit={handlePostTraining}>
+          {trainings.map((training) => (
+            <InputField
+              key={training.training_type}
+              label={
+                trainingEmoji.find((t) => t.training === training.training_type)
+                  ?.emoji ?? "❓"
+              }
+              type="radio"
+              name="training"
+              id={training.training_type ?? undefined}
+              onChange={() => handleTrain(training)}
+              className="stat-button"
             />
-            <label htmlFor={training.training_type}>
-              <TrainingDisplay training={training.training_type} />
-            </label>
-          </div>
-        ))}
-        <button type="submit">Confirmer l'entraînement</button>
-      </form>
+          ))}
+          <button type="submit">Confirmer l'entraînement</button>
+        </form>
+      </section>
     </main>
   );
 }

@@ -49,6 +49,20 @@ export type Specie = {
   url_adult: string;
 };
 
+export type Stat = {
+  value: number;
+  size: string;
+  highlight?: boolean;
+};
+
+export type Stats = {
+  strength: number;
+  speed: number;
+  stamina: number;
+  size: string;
+  highlightedStat?: "speed" | "strength" | "stamina" | null;
+};
+
 export type AdoptionType = {
   specie: Specie;
   onClick: () => void;
@@ -123,6 +137,6 @@ export type AddSpecieModalType = {
 };
 
 export type TrainingsType = {
-  training_type: "strength" | "speed" | "stamina";
+  training_type: "strength" | "speed" | "stamina" | null;
   id: number;
 };

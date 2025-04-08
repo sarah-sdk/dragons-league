@@ -1,0 +1,71 @@
+.trainingList section img {
+  border-radius: 50%;
+  border: .5rem solid var(--pico-primary);
+}
+
+.trainingList section ul li {
+  text-align: center;
+}
+
+.trainingList section form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  justify-items: center;
+  gap: 1rem;
+
+  margin: 0 1rem;
+}
+
+.trainingList section form input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.trainingList section form input:checked + label {
+  background-color: var(--pico-primary);
+  border-color: var(--pico-primary);
+}
+
+.trainingList section form label {
+  border: 1px solid tomato;
+  background-color: tomato;
+  border-radius: 50%;
+
+  height: 5rem;
+  width: 5rem;
+
+  margin: 0;
+  padding: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.trainingList section form button {
+  grid-column: span 3;
+  width: 95%;
+  margin-bottom: 0;
+}
+
+@media screen and (min-width: 600px) {
+  .trainingList section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .trainingList section form {
+    grid-column: span 2;
+  }
+}
