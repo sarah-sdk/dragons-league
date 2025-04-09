@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import SpeciesPage from "./pages/Dashboard/SpeciesPage/SpeciesPage";
 import UsersPage from "./pages/Dashboard/UsersPage/UsersPage";
 import DragonDetails from "./pages/DragonDetails/DragonDetails";
+import LandingPage from "./pages/LandingPage/LandingPage";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import SelectProfile from "./pages/SelectProfile/SelectProfile";
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
           { path: "especes", element: <SpeciesPage />, loader: loadSpecies },
           { path: "utilisateurs", element: <UsersPage /> },
         ],
+      },
+      {
+        path: "/bienvenue",
+        element: <LandingPage />,
       },
       {
         path: "/connexion",
