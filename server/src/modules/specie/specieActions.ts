@@ -39,42 +39,36 @@ const read: RequestHandler = async (req, res, next) => {
 const edit: RequestHandler = async (req, res, next) => {
   const specieId = Number(req.params.specieId);
 
-  const currentSpecie = await specieRepository.read(specieId);
-
   try {
-    const {
-      specie,
-      base_strength,
-      base_speed,
-      base_stamina,
-      url_baby,
-      url_adult,
-    } = req.body;
+    const currentSpecie = await specieRepository.read(specieId);
 
-    let babyUrl: string = url_baby;
-    let adultUrl: string = url_adult;
+    const { specie, baseStrength, baseSpeed, baseStamina, urlBaby, urlAdult } =
+      req.body;
+
+    let babyUrl: string = urlBaby;
+    let adultUrl: string = urlAdult;
 
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
 
     if (files.babyImage?.[0]) {
       babyUrl = path.join("uploads", files.babyImage[0].filename);
     } else {
-      babyUrl = currentSpecie.url_baby;
+      babyUrl = currentSpecie.urlBaby;
     }
 
     if (files.adultImage?.[0]) {
       adultUrl = path.join("uploads", files.adultImage[0].filename);
     } else {
-      adultUrl = currentSpecie.url_adult;
+      adultUrl = currentSpecie.urlAdult;
     }
 
-    const updateSpecie = {
+    const updateSpecie: Specie = {
       specie,
-      base_strength: Number(base_strength),
-      base_speed: Number(base_speed),
-      base_stamina: Number(base_stamina),
-      url_baby: babyUrl,
-      url_adult: adultUrl,
+      baseStrength: Number(baseStrength),
+      baseSpeed: Number(baseSpeed),
+      baseStamina: Number(baseStamina),
+      urlBaby: babyUrl,
+      urlAdult: adultUrl,
       id: specieId,
     };
 
@@ -93,9 +87,9 @@ const edit: RequestHandler = async (req, res, next) => {
 // A of BREAD
 const add: RequestHandler = async (req, res, next) => {
   try {
-    const { specie, base_strength, base_speed, base_stamina } = req.body;
+    const { specie, baseStrength, baseSpeed, baseStamina } = req.body;
 
-    if (!specie || !base_strength || !base_speed || !base_stamina) {
+    if (!specie || !baseStrength || !baseSpeed || !baseStamina) {
       res.status(400).json({ error: "Champ obligatoire manquant" });
     }
 
@@ -114,13 +108,13 @@ const add: RequestHandler = async (req, res, next) => {
       res.status(400).json({ error: "Image version adulte manquante" });
     }
 
-    const newSpecie = {
+    const newSpecie: Omit<Specie, "id"> = {
       specie,
-      base_strength: Number(base_strength),
-      base_speed: Number(base_speed),
-      base_stamina: Number(base_stamina),
-      url_baby: babyUrl ?? "",
-      url_adult: adultUrl ?? "",
+      baseStrength: Number(baseStrength),
+      baseSpeed: Number(baseSpeed),
+      baseStamina: Number(baseStamina),
+      urlBaby: babyUrl ?? "",
+      urlAdult: adultUrl ?? "",
     };
 
     const insertId = await specieRepository.create(newSpecie);

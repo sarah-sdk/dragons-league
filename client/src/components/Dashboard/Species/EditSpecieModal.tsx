@@ -15,11 +15,11 @@ export default function EditSpecieModal({
   const [formData, setFormData] = useState<Specie>({
     id: "0",
     specie: "",
-    base_strength: 0,
-    base_speed: 0,
-    base_stamina: 0,
-    url_baby: "",
-    url_adult: "",
+    baseStrength: 0,
+    baseSpeed: 0,
+    baseStamina: 0,
+    urlBaby: "",
+    urlAdult: "",
   });
 
   const [babyFile, setBabyFile] = useState<File | null>(null);
@@ -58,8 +58,8 @@ export default function EditSpecieModal({
     e.preventDefault();
     const updatedSpecie = {
       ...formData,
-      babyImage: babyFile || specie.url_baby,
-      adultImage: adultFile || specie.url_adult,
+      babyImage: babyFile || specie.urlBaby,
+      adultImage: adultFile || specie.urlAdult,
     };
     onSave(updatedSpecie);
   };
@@ -82,45 +82,45 @@ export default function EditSpecieModal({
         <InputField
           label="Force de base"
           type="number"
-          name="base-strength"
-          value={formData.base_strength}
+          name="baseStrength"
+          value={formData.baseStrength}
           min={0}
           max={10}
           onChange={(e) => {
             let newValue = Number(e.target.value);
             if (newValue > 10) newValue = 10;
             if (newValue < 0) newValue = 0;
-            setFormData((prev) => ({ ...prev, base_strength: newValue }));
+            setFormData((prev) => ({ ...prev, baseStrength: newValue }));
           }}
         />
 
         <InputField
           label="Vitesse de base"
           type="number"
-          name="base-speed"
-          value={formData.base_speed}
+          name="baseSpeed"
+          value={formData.baseSpeed}
           min={0}
           max={10}
           onChange={(e) => {
             let newValue = Number(e.target.value);
             if (newValue > 10) newValue = 10;
             if (newValue < 0) newValue = 0;
-            setFormData((prev) => ({ ...prev, base_speed: newValue }));
+            setFormData((prev) => ({ ...prev, baseSpeed: newValue }));
           }}
         />
 
         <InputField
           label="Endurance de base"
           type="number"
-          name="base-stamina"
-          value={formData.base_stamina}
+          name="baseStamina"
+          value={formData.baseStamina}
           min={0}
           max={10}
           onChange={(e) => {
             let newValue = Number(e.target.value);
             if (newValue > 10) newValue = 10;
             if (newValue < 0) newValue = 0;
-            setFormData((prev) => ({ ...prev, base_stamina: newValue }));
+            setFormData((prev) => ({ ...prev, baseStamina: newValue }));
           }}
         />
 

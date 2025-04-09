@@ -10,7 +10,7 @@ class profileRepository {
       INSERT INTO profile (user_id, username, url_avatar)
       VALUES (?, ?, ?)
       `,
-      [profile.user_id, profile.username, profile.url_avatar],
+      [profile.userId, profile.username, profile.urlAvatar],
     );
 
     const profileId = result.insertId;
@@ -29,7 +29,13 @@ class profileRepository {
       [userId],
     );
 
-    return rows;
+    return rows.map((profile) => ({
+      userId: profile.user_id,
+      id: profile.id,
+      username: profile.username,
+      urlAvatar: profile.url_avatar,
+      createdAt: profile.created_at,
+    }));
   }
 
   async read({ userId, profileId }: { userId: number; profileId: number }) {
@@ -42,7 +48,15 @@ class profileRepository {
       [userId, profileId],
     );
 
-    return rows[0];
+    const profile = rows[0];
+
+    return {
+      userId: profile.user_id,
+      id: profile.id,
+      username: profile.username,
+      urlAvatar: profile.url_avatar,
+      createdAt: profile.created_at,
+    };
   }
 
   // U of CRUD
@@ -53,7 +67,7 @@ class profileRepository {
       SET username = ?, url_avatar = ?
       WHERE user_id = ? AND id = ?
       `,
-      [profile.username, profile.url_avatar, profile.user_id, profile.id],
+      [profile.username, profile.urlAvatar, profile.userId, profile.id],
     );
 
     return result.affectedRows > 0;

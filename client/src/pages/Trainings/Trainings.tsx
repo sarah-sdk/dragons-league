@@ -17,7 +17,7 @@ export default function Trainings() {
 
   const [selectedTraining, setSelectedTraining] = useState<TrainingsType>({
     id: 0,
-    training_type: null,
+    type: null,
   });
 
   const { dragon, userId, profileId, trainings } = useLoaderData() as {
@@ -56,15 +56,13 @@ export default function Trainings() {
 
     setStatsEarned((prev) => ({
       strengthEarned:
-        training.training_type === "strength"
+        training.type === "strength"
           ? prev.strengthEarned + 1
           : prev.strengthEarned,
       speedEarned:
-        training.training_type === "speed"
-          ? prev.speedEarned + 1
-          : prev.speedEarned,
+        training.type === "speed" ? prev.speedEarned + 1 : prev.speedEarned,
       staminaEarned:
-        training.training_type === "stamina"
+        training.type === "stamina"
           ? prev.staminaEarned + 1
           : prev.staminaEarned,
     }));
@@ -74,18 +72,18 @@ export default function Trainings() {
     event.preventDefault();
 
     const stats = {
-      user_id: userId,
-      profile_id: +profileId,
-      dragon_id: dragon.dragon_id,
-      training_id: selectedTraining.id,
-      strength_earned: statsEarned.strengthEarned,
-      speed_earned: statsEarned.speedEarned,
-      stamina_earned: statsEarned.staminaEarned,
+      userId: userId,
+      profileId: +profileId,
+      dragonId: dragon.dragonId,
+      trainingId: selectedTraining.id,
+      strengthEarned: statsEarned.strengthEarned,
+      speedEarned: statsEarned.speedEarned,
+      staminaEarned: statsEarned.staminaEarned,
     };
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles/${profileId}/dragons/${dragon.dragon_id}/trainings`,
+        `${import.meta.env.VITE_API_URL}/api/users/${userId}/profiles/${profileId}/dragons/${dragon.dragonId}/trainings`,
         {
           method: "POST",
           credentials: "include",
@@ -98,7 +96,7 @@ export default function Trainings() {
 
       const data = await response.json();
       if (data)
-        navigate(`/mes-dragons/${dragon.dragon_id}`, {
+        navigate(`/mes-dragons/${dragon.dragonId}`, {
           state: { trainingSuccess: true },
         });
     } catch (error) {
@@ -120,22 +118,22 @@ export default function Trainings() {
           speed={dragon.speed}
           stamina={dragon.stamina}
           size="16"
-          highlightedStat={selectedTraining.training_type}
+          highlightedStat={selectedTraining.type}
         />
 
         <form onSubmit={handlePostTraining}>
           {trainings.map((training) => (
             <InputField
-              key={training.training_type}
+              key={training.type}
               label={
-                trainingEmoji.find((t) => t.training === training.training_type)
+                trainingEmoji.find((t) => t.training === training.type)
                   ?.emoji ?? "❓"
               }
               type="radio"
               name="training"
-              id={training.training_type ?? undefined}
+              id={training.type ?? undefined}
               onChange={() => handleTrain(training)}
-              className={`statButton ${getRadioClass(training.training_type ?? "")}`}
+              className={`statButton ${getRadioClass(training.type ?? "")}`}
             />
           ))}
           <button type="submit">Confirmer l'entraînement</button>

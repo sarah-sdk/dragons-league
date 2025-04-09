@@ -16,7 +16,7 @@ const AdminRoute = ({ element }: RouteType) => {
           setIsAuthenticate(true);
           setLoading(false);
 
-          if (userData.isAdmin === 1) {
+          if (userData.isAdmin === true) {
             setIsAdmin(true);
           }
         }

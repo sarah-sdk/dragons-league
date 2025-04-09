@@ -40,7 +40,7 @@ const edit: RequestHandler = async (req, res, next) => {
 
   try {
     const training: Training = {
-      training_type: req.body.training_type,
+      type: req.body.type,
       id: trainingId,
     };
 
@@ -60,7 +60,7 @@ const edit: RequestHandler = async (req, res, next) => {
 const add: RequestHandler = async (req, res, next) => {
   try {
     const training: Omit<Training, "id"> = {
-      training_type: req.body.training_type,
+      type: req.body.type,
     };
 
     const insertId = await trainingRepository.create(training);

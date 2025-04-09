@@ -7,9 +7,9 @@ class TrainingSeeder extends AbstractSeeder {
 
   run() {
     const trainings = [
-      { training_type: "speed" },
-      { training_type: "strength" },
-      { training_type: "stamina" },
+      { type: "speed" },
+      { type: "strength" },
+      { type: "stamina" },
     ];
 
     for (let i = 0; i < trainings.length; i++) {

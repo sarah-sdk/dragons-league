@@ -12,7 +12,7 @@ export default function ProfileCard({
       onClick={onClick}
     >
       <img
-        src={`${import.meta.env.VITE_API_URL}/${profile.url_avatar}`}
+        src={`${import.meta.env.VITE_API_URL}/${profile.urlAvatar}`}
         alt={`avatar-${profile.username}`}
         className="avatar"
       />
