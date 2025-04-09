@@ -16,6 +16,7 @@ function App() {
 
   useEffect(() => {
     if (
+      location.pathname !== "/bienvenue" &&
       location.pathname !== "/connexion" &&
       location.pathname !== "/inscription" &&
       location.pathname !== "/profils"
