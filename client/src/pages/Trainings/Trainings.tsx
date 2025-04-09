@@ -33,17 +33,17 @@ export default function Trainings() {
   }[] = [
     { training: "strength", emoji: "💪🏼" },
     { training: "speed", emoji: "🪽" },
-    { training: "stamina", emoji: "♥️" },
+    { training: "stamina", emoji: "⚡️" },
   ];
 
   const getRadioClass = (trainingType: string) => {
     switch (trainingType) {
       case "speed":
-        return "bgBlue";
+        return "bgSpeed";
       case "strength":
-        return "bgRed";
+        return "bgStrength";
       case "stamina":
-        return "bgGreen";
+        return "bgStamina";
       default:
         return "";
     }

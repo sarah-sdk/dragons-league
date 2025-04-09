@@ -48,15 +48,15 @@
   transition: background-color 0.3s ease, filter 0.3s ease;
 }
 
-.bgBlue {
+.bgSpeed {
   background-color: #1e90ff;
 }
 
-.bgRed {
+.bgStrength {
   background-color: #b22222;
 }
 
-.bgGreen {
+.bgStamina {
   background-color: #228b22;
 }
 
