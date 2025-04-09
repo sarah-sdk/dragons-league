@@ -120,7 +120,7 @@
 @media screen and (min-width: 800px) {
   .trainingList h2,
   .trainingList ul,
-  .trainingList p {
+  .trainingList form {
     justify-self: flex-start;
   }
 }
