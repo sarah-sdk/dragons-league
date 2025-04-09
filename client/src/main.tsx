@@ -54,7 +54,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/mes-dragons/:dragonId/entrainements",
-        element: <Trainings />,
+        element: <ProtectedRoute element={<Trainings />} />,
         loader: loadDragonAndTrainings,
       },
       {
