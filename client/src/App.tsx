@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import "./App.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const navigate = useNavigate();
@@ -26,8 +27,11 @@ function App() {
 
   return (
     <>
+      <ToastContainer />
       {!hideNavBar && <NavBar />}
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
     </>
   );
 }
