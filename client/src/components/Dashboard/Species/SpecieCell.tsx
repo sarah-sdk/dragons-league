@@ -13,18 +13,18 @@ export default function SpecieCell({
       <td>
         <SpecieDisplay specie={specie.specie} />
       </td>
-      <td>{specie.base_strength}</td>
-      <td>{specie.base_speed}</td>
-      <td>{specie.base_stamina}</td>
+      <td>{specie.baseStrength}</td>
+      <td>{specie.baseSpeed}</td>
+      <td>{specie.baseStamina}</td>
       <td>
         <img
-          src={`${import.meta.env.VITE_API_URL}/${specie.url_baby}`}
+          src={`${import.meta.env.VITE_API_URL}/${specie.urlBaby}`}
           alt={`${specie.specie} bébé`}
         />
       </td>
       <td>
         <img
-          src={`${import.meta.env.VITE_API_URL}/${specie.url_adult}`}
+          src={`${import.meta.env.VITE_API_URL}/${specie.urlAdult}`}
           alt={`${specie.specie} adulte`}
         />
       </td>

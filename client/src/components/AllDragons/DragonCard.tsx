@@ -8,7 +8,7 @@ export default function DragonCard({ dragon }: { dragon: Dragon }) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/mes-dragons/${dragon.dragon_id}`);
+    navigate(`/mes-dragons/${dragon.dragonId}`);
   };
 
   return (

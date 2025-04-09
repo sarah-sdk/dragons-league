@@ -40,10 +40,10 @@ const edit: RequestHandler = async (req, res, next) => {
 
   try {
     const profile: Profile = {
-      user_id: userId,
+      userId: userId,
       id: profileId,
       username: req.body.username,
-      url_avatar: req.body.url_avatar,
+      urlAvatar: req.body.urlAvatar,
     };
 
     const updateProfile = await profileRepository.update(profile);
@@ -62,9 +62,9 @@ const add: RequestHandler = async (req, res, next) => {
 
   try {
     const profile: Omit<Profile, "id"> = {
-      user_id: userId,
+      userId: userId,
       username: req.body.username,
-      url_avatar: req.body.url_avatar,
+      urlAvatar: req.body.urlAvatar,
     };
 
     const insertId = await profileRepository.create(profile);

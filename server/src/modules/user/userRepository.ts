@@ -7,7 +7,7 @@ class userRepository {
   async create(user: Omit<User, "id">) {
     const [result] = await databaseClient.execute<Result>(
       `
-      INSERT INTO user (email, password, isAdmin)
+      INSERT INTO user (email, password, is_admin)
       VALUES (?, ?, ?)
       `,
       [user.email, user.password, user.isAdmin],
@@ -22,25 +22,37 @@ class userRepository {
   async readAll() {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT id, email, isAdmin, created_at
+      SELECT id, email, is_admin, created_at
       FROM user
       `,
     );
 
-    return rows;
+    return rows.map((user) => ({
+      id: user.id,
+      email: user.email,
+      isAdmin: Boolean(user.is_admin),
+      createdAt: user.created_at,
+    }));
   }
 
   async read(id: number) {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT id, email, isAdmin, created_at
+      SELECT id, email, is_admin, created_at
       FROM user
       WHERE id = ?
       `,
       [id],
     );
 
-    return rows[0];
+    const user = rows[0];
+
+    return {
+      id: user.id,
+      email: user.email,
+      isAdmin: Boolean(user.is_admin),
+      createdAt: user.created_at,
+    };
   }
 
   // U of CRUD

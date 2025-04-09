@@ -54,14 +54,14 @@ const edit: RequestHandler = async (req, res, next) => {
   const trainingId = Number(req.params.trainingId);
 
   try {
-    const dragonTraining: Omit<DragonTraining, "training_id"> = {
+    const dragonTraining: Omit<DragonTraining, "trainingId"> = {
       id: trainingId,
-      user_id: userId,
-      profile_id: profileId,
-      dragon_id: dragonId,
-      strength_earned: req.body.strength_earned,
-      speed_earned: req.body.speed_earned,
-      stamina_earned: req.body.stamina_earned,
+      userId: userId,
+      profileId: profileId,
+      dragonId: dragonId,
+      strengthEarned: req.body.strengthEarned,
+      speedEarned: req.body.speedEarned,
+      staminaEarned: req.body.staminaEarned,
     };
 
     const updateDragonTraining =
@@ -85,13 +85,13 @@ const add: RequestHandler = async (req, res, next) => {
 
   try {
     const dragonTraining: Omit<DragonTraining, "id"> = {
-      user_id: userId,
-      profile_id: profileId,
-      dragon_id: dragonId,
-      training_id: req.body.training_id,
-      strength_earned: req.body.strength_earned,
-      speed_earned: req.body.speed_earned,
-      stamina_earned: req.body.stamina_earned,
+      userId: userId,
+      profileId: profileId,
+      dragonId: dragonId,
+      trainingId: req.body.trainingId,
+      strengthEarned: req.body.strengthEarned,
+      speedEarned: req.body.speedEarned,
+      staminaEarned: req.body.staminaEarned,
     };
 
     const insertId = await dragonTrainingRepository.create(dragonTraining);

@@ -13,7 +13,7 @@ class dragonTrainingRepository {
       FROM profile
       WHERE user_id = ? AND id = ?
       `,
-      [dragonTraining.user_id, dragonTraining.profile_id],
+      [dragonTraining.userId, dragonTraining.profileId],
     );
 
     if (profileCheck.length === 0)
@@ -25,7 +25,7 @@ class dragonTrainingRepository {
       FROM dragon
       WHERE profile_id = ? AND id = ?
       `,
-      [dragonTraining.profile_id, dragonTraining.dragon_id],
+      [dragonTraining.profileId, dragonTraining.dragonId],
     );
 
     if (dragonCheck.length === 0)
@@ -40,11 +40,11 @@ class dragonTrainingRepository {
         VALUES (?, ?, ?, ?, ?)
         `,
         [
-          dragonTraining.dragon_id,
-          dragonTraining.training_id,
-          dragonTraining.strength_earned,
-          dragonTraining.speed_earned,
-          dragonTraining.stamina_earned,
+          dragonTraining.dragonId,
+          dragonTraining.trainingId,
+          dragonTraining.strengthEarned,
+          dragonTraining.speedEarned,
+          dragonTraining.staminaEarned,
         ],
       );
 
@@ -55,11 +55,11 @@ class dragonTrainingRepository {
         WHERE profile_id = ? AND id = ?
         `,
         [
-          dragonTraining.strength_earned,
-          dragonTraining.speed_earned,
-          dragonTraining.stamina_earned,
-          dragonTraining.profile_id,
-          dragonTraining.dragon_id,
+          dragonTraining.strengthEarned,
+          dragonTraining.speedEarned,
+          dragonTraining.staminaEarned,
+          dragonTraining.profileId,
+          dragonTraining.dragonId,
         ],
       );
 
@@ -111,7 +111,7 @@ class dragonTrainingRepository {
       SELECT
         dragon_training.id,
         dragon_training.dragon_id,
-        training.training_type AS training_type,
+        training.type AS training_type,
         dragon_training.strength_earned,
         dragon_training.speed_earned,
         dragon_training.stamina_earned,
@@ -124,7 +124,15 @@ class dragonTrainingRepository {
       [profileId, dragonId],
     );
 
-    return rows;
+    return rows.map((dragonTraining) => ({
+      id: dragonTraining.id,
+      dragonId: dragonTraining.dragon_id,
+      trainingType: dragonTraining.training_type,
+      strengthEarned: dragonTraining.strength_earned,
+      speedEarned: dragonTraining.speed_earned,
+      staminaEarned: dragonTraining.stamina_earned,
+      doingAt: dragonTraining.doing_at,
+    }));
   }
 
   async read({
@@ -167,7 +175,7 @@ class dragonTrainingRepository {
       SELECT
         dragon_training.id,
         dragon_training.dragon_id,
-        training.training_type AS training_type,
+        training.type AS training_type,
         dragon_training.strength_earned,
         dragon_training.speed_earned,
         dragon_training.stamina_earned,
@@ -180,11 +188,21 @@ class dragonTrainingRepository {
       [profileId, dragonId, trainingId],
     );
 
-    return rows[0];
+    const dragonTraining = rows[0];
+
+    return {
+      id: dragonTraining.id,
+      dragonId: dragonTraining.dragon_id,
+      trainingType: dragonTraining.training_type,
+      strengthEarned: dragonTraining.strength_earned,
+      speedEarned: dragonTraining.speed_earned,
+      staminaEarned: dragonTraining.stamina_earned,
+      doingAt: dragonTraining.doing_at,
+    };
   }
 
   // U of CRUD
-  async update(dragonTraining: Omit<DragonTraining, "training_id">) {
+  async update(dragonTraining: Omit<DragonTraining, "trainingId">) {
     const connection = await databaseClient.getConnection();
 
     const [profileCheck] = await connection.query<Rows>(
@@ -193,7 +211,7 @@ class dragonTrainingRepository {
       FROM profile
       WHERE user_id = ? AND id = ?
       `,
-      [dragonTraining.user_id, dragonTraining.profile_id],
+      [dragonTraining.userId, dragonTraining.profileId],
     );
 
     if (profileCheck.length === 0)
@@ -205,7 +223,7 @@ class dragonTrainingRepository {
       FROM dragon
       WHERE profile_id = ? AND id = ?
       `,
-      [dragonTraining.profile_id, dragonTraining.dragon_id],
+      [dragonTraining.profileId, dragonTraining.dragonId],
     );
 
     if (dragonCheck.length === 0)
@@ -220,7 +238,7 @@ class dragonTrainingRepository {
         FROM dragon
         WHERE profile_id = ? AND id = ?
         `,
-        [dragonTraining.profile_id, dragonTraining.dragon_id],
+        [dragonTraining.profileId, dragonTraining.dragonId],
       );
 
       const [previousStats] = await connection.query<Rows>(
@@ -230,25 +248,21 @@ class dragonTrainingRepository {
         INNER JOIN dragon ON dragon.id = dragon_training.dragon_id
         WHERE dragon_training.id = ? AND dragon_training.dragon_id = ? AND dragon.profile_id = ?
         `,
-        [
-          dragonTraining.id,
-          dragonTraining.dragon_id,
-          dragonTraining.profile_id,
-        ],
+        [dragonTraining.id, dragonTraining.dragonId, dragonTraining.profileId],
       );
 
       const newStrength =
         dragon[0].strength -
-        previousStats[0].strength_earned +
-        dragonTraining.strength_earned;
+        previousStats[0].strengthEarned +
+        dragonTraining.strengthEarned;
       const newSpeed =
         dragon[0].speed -
-        previousStats[0].speed_earned +
-        dragonTraining.speed_earned;
+        previousStats[0].speedEarned +
+        dragonTraining.speedEarned;
       const newStamina =
         dragon[0].stamina -
-        previousStats[0].stamina_earned +
-        dragonTraining.stamina_earned;
+        previousStats[0].staminaEarned +
+        dragonTraining.staminaEarned;
 
       await connection.execute(
         `
@@ -258,12 +272,12 @@ class dragonTrainingRepository {
         WHERE dragon_training.id = ? AND dragon_training.dragon_id = ? AND dragon.profile_id = ?
         `,
         [
-          dragonTraining.strength_earned,
-          dragonTraining.speed_earned,
-          dragonTraining.stamina_earned,
+          dragonTraining.strengthEarned,
+          dragonTraining.speedEarned,
+          dragonTraining.staminaEarned,
           dragonTraining.id,
-          dragonTraining.dragon_id,
-          dragonTraining.profile_id,
+          dragonTraining.dragonId,
+          dragonTraining.profileId,
         ],
       );
 
@@ -277,8 +291,8 @@ class dragonTrainingRepository {
           newStrength,
           newSpeed,
           newStamina,
-          dragonTraining.dragon_id,
-          dragonTraining.profile_id,
+          dragonTraining.dragonId,
+          dragonTraining.profileId,
         ],
       );
 
@@ -353,9 +367,9 @@ class dragonTrainingRepository {
         [trainingId, dragonId, profileId],
       );
 
-      const newStrength = dragon[0].strength - previousStats[0].strength_earned;
-      const newSpeed = dragon[0].speed - previousStats[0].speed_earned;
-      const newStamina = dragon[0].stamina - previousStats[0].stamina_earned;
+      const newStrength = dragon[0].strength - previousStats[0].strengthEarned;
+      const newSpeed = dragon[0].speed - previousStats[0].speedEarned;
+      const newStamina = dragon[0].stamina - previousStats[0].staminaEarned;
 
       await connection.execute(
         `

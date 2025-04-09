@@ -17,14 +17,14 @@ export type ValidationCriteria = {
 export type User = {
   id: string;
   email?: string;
-  created_at?: string;
+  createdAt?: string;
   isAdmin?: boolean;
 };
 
 export type Profile = {
   id: string;
   username: string;
-  url_avatar: string;
+  urlAvatar: string;
 };
 
 export type Dragon = {
@@ -33,20 +33,20 @@ export type Dragon = {
   strength: number;
   stamina: number;
   speed: number;
-  url_baby: string;
-  url_adult: string;
-  adopted_at: string;
-  dragon_id: string;
+  urlBaby: string;
+  urlAdult: string;
+  adoptedAt: string;
+  dragonId: string;
 };
 
 export type Specie = {
   id: string;
   specie: string;
-  base_strength: number;
-  base_speed: number;
-  base_stamina: number;
-  url_baby?: string;
-  url_adult: string;
+  baseStrength: number;
+  baseSpeed: number;
+  baseStamina: number;
+  urlBaby?: string;
+  urlAdult: string;
 };
 
 export type Stat = {
@@ -137,6 +137,6 @@ export type AddSpecieModalType = {
 };
 
 export type TrainingsType = {
-  training_type: "strength" | "speed" | "stamina" | null;
+  type: "strength" | "speed" | "stamina" | null;
   id: number;
 };

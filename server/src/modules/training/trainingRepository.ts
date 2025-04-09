@@ -7,10 +7,10 @@ class trainingRepository {
   async create(training: Omit<Training, "id">) {
     const [result] = await databaseClient.execute<Result>(
       `
-      INSERT INTO training (training_type)
+      INSERT INTO training (type)
       VALUES (?)
       `,
-      [training.training_type],
+      [training.type],
     );
 
     const trainingId = result.insertId;
@@ -22,7 +22,7 @@ class trainingRepository {
   async readAll() {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT id, training_type
+      SELECT id, type
       FROM training
       `,
     );
@@ -33,7 +33,7 @@ class trainingRepository {
   async read(id: number) {
     const [rows] = await databaseClient.query<Rows>(
       `
-      SELECT id, training_type
+      SELECT id, type
       FROM training
       WHERE id = ?
       `,
@@ -48,10 +48,10 @@ class trainingRepository {
     const [result] = await databaseClient.execute<Result>(
       `
       UPDATE training
-      SET training_type = ?
+      SET type = ?
       WHERE id = ?
       `,
-      [training.training_type, training.id],
+      [training.type, training.id],
     );
 
     return result.affectedRows > 0;

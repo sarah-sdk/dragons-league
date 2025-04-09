@@ -29,7 +29,7 @@ export default function UsersPage() {
           {users.map((user) => (
             <tr key={user.id}>
               <td>{user.email}</td>
-              <td>{user.created_at ? formatDate(user.created_at) : ""}</td>
+              <td>{user.createdAt ? formatDate(user.createdAt) : ""}</td>
               <td>{user.isAdmin ? "✅" : "❌"}</td>
             </tr>
           ))}

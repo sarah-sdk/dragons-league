@@ -27,7 +27,7 @@ class UserSeeder extends AbstractSeeder {
         const userData = {
           email: user.email,
           password: hashedPassword,
-          isAdmin: user.isAdmin,
+          is_admin: user.isAdmin,
         };
 
         this.insert(userData);
