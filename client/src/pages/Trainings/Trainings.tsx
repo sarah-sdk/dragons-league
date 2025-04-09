@@ -1,9 +1,9 @@
 import { type FormEvent, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import StatDetails from "../../components/DragonDetails/StatDetails";
-import getDragonImage from "../../services/getDragonImage";
 import type { Dragon, TrainingsType } from "../../types/types";
 import "./Trainings.css";
+import NameAndPhoto from "../../components/DragonDetails/NameAndPhoto";
 import InputField from "../../components/Form/InputField";
 
 export default function Trainings() {
@@ -26,8 +26,6 @@ export default function Trainings() {
     profileId: number;
     trainings: TrainingsType[];
   };
-
-  const imageDragon = getDragonImage({ dragon });
 
   const trainingEmoji: {
     training: "speed" | "strength" | "stamina";
@@ -105,40 +103,33 @@ export default function Trainings() {
   };
 
   return (
-    <section className="trainingList">
-      <h1>Entrainez {dragon.name}</h1>
+    <article className="trainingList">
+      <NameAndPhoto dragon={dragon} />
+      <StatDetails
+        strength={dragon.strength}
+        speed={dragon.speed}
+        stamina={dragon.stamina}
+        size="16"
+        highlightedStat={selectedTraining.type}
+      />
 
-      <article>
-        <img
-          src={`${import.meta.env.VITE_API_URL}/${imageDragon}`}
-          alt={dragon.name}
-        />
-        <StatDetails
-          strength={dragon.strength}
-          speed={dragon.speed}
-          stamina={dragon.stamina}
-          size="16"
-          highlightedStat={selectedTraining.type}
-        />
-
-        <form onSubmit={handlePostTraining}>
-          {trainings.map((training) => (
-            <InputField
-              key={training.type}
-              label={
-                trainingEmoji.find((t) => t.training === training.type)
-                  ?.emoji ?? "❓"
-              }
-              type="radio"
-              name="training"
-              id={training.type ?? undefined}
-              onChange={() => handleTrain(training)}
-              className={`statButton ${getRadioClass(training.type ?? "")}`}
-            />
-          ))}
-          <button type="submit">Confirmer l'entraînement</button>
-        </form>
-      </article>
-    </section>
+      <form onSubmit={handlePostTraining}>
+        {trainings.map((training) => (
+          <InputField
+            key={training.type}
+            label={
+              trainingEmoji.find((t) => t.training === training.type)?.emoji ??
+              "❓"
+            }
+            type="radio"
+            name="training"
+            id={training.type ?? undefined}
+            onChange={() => handleTrain(training)}
+            className={`statButton ${getRadioClass(training.type ?? "")}`}
+          />
+        ))}
+        <button type="submit">Confirmer l'entraînement</button>
+      </form>
+    </article>
   );
 }

@@ -28,9 +28,9 @@ function App() {
 
   return (
     <>
-      <ToastContainer />
       {!hideNavBar && <NavBar />}
       <main>
+        <ToastContainer />
         <Outlet />
       </main>
     </>

@@ -36,11 +36,11 @@
   }
 
   .dragonDetails img {
-    grid-area: 2 / 1 / 5 / 2;
+    grid-area: 2 / 1 / 6 / 2;
   }
 
   .dragonDetails button {
-    grid-area: 5 / 1 / 6 / 3;
+    grid-area: 5 / 2 / 6 / 3;
     width: 10rem;
   }
 }
@@ -48,7 +48,8 @@
 @media screen and (min-width: 800px) {
   .dragonDetails h2,
   .dragonDetails ul,
-  .dragonDetails p {
+  .dragonDetails p,
+  .dragonDetails button {
     justify-self: flex-start;
   }
 }
