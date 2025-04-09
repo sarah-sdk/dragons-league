@@ -75,7 +75,7 @@ export default function Register() {
   };
 
   return (
-    <main className="register">
+    <section className="register">
       <img src={logo} alt="" />
       <h1>Inscription</h1>
       {error && <p className="error">{error}</p>}
@@ -132,6 +132,6 @@ export default function Register() {
 
         <button type="submit">S'inscrire</button>
       </form>
-    </main>
+    </section>
   );
 }

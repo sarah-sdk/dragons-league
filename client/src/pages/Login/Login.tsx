@@ -69,7 +69,7 @@ export default function Login() {
   };
 
   return (
-    <main className="login">
+    <section className="login">
       <img src={logo} alt="" />
       <h1>Connexion</h1>
       <p>
@@ -115,6 +115,6 @@ export default function Login() {
 
         <button type="submit">Se connecter</button>
       </form>
-    </main>
+    </section>
   );
 }

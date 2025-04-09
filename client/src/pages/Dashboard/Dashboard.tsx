@@ -12,13 +12,13 @@ export default function Dashboard() {
     }
   }, [location.pathname, navigate]);
   return (
-    <main className="dashboard">
+    <section className="dashboard">
       <h1>Dashboard</h1>
       <nav>
         <Link to="/dashboard/especes">Espèces</Link>
         <Link to="/dashboard/utilisateurs">Utilisateurs</Link>
       </nav>
       <Outlet />
-    </main>
+    </section>
   );
 }

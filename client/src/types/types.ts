@@ -49,6 +49,20 @@ export type Specie = {
   url_adult: string;
 };
 
+export type Stat = {
+  value: number;
+  size: string;
+  highlight?: boolean;
+};
+
+export type Stats = {
+  strength: number;
+  speed: number;
+  stamina: number;
+  size: string;
+  highlightedStat?: "speed" | "strength" | "stamina" | null;
+};
+
 export type AdoptionType = {
   specie: Specie;
   onClick: () => void;
@@ -73,8 +87,10 @@ export type ProfileModalType = {
 
 export type InputFieldType = {
   label: string;
-  type: "text" | "password" | "number" | "email";
+  type: "text" | "password" | "number" | "email" | "radio";
   name: string;
+  id?: string;
+  className?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   min?: number;
   max?: number;
@@ -118,4 +134,9 @@ export type AddSpecieModalType = {
   onClose: () => void;
   onSave: (createdSpecie: Omit<Specie, "id">) => void;
   onFileChange: (file: File | null, type: "baby" | "adult") => void;
+};
+
+export type TrainingsType = {
+  training_type: "strength" | "speed" | "stamina" | null;
+  id: number;
 };

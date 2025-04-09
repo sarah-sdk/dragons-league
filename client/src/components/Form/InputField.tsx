@@ -8,35 +8,55 @@ export default function InputField({
   min,
   max,
   name,
+  className,
+  id,
   value,
   onChange,
   criteria,
   showPassword,
   togglePasswordVisibility,
 }: InputFieldType) {
+  const uniqueId = id || name;
   return (
     <>
-      <label htmlFor={name}>{label}</label>
-      {type === "number" ? (
-        <input
-          type={type}
-          id={name}
-          name={name}
-          value={value}
-          onChange={onChange}
-          max={max}
-          min={min}
-          required
-        />
+      {type === "radio" ? (
+        <>
+          <input
+            type={type}
+            id={uniqueId}
+            name={name}
+            onChange={onChange}
+            required
+          />
+          <label htmlFor={uniqueId} className={className}>
+            {label}
+          </label>
+        </>
       ) : (
-        <input
-          type={type}
-          id={name}
-          name={name}
-          value={value}
-          onChange={onChange}
-          required
-        />
+        <>
+          <label htmlFor={uniqueId}>{label}</label>
+          {type === "number" ? (
+            <input
+              type={type}
+              id={uniqueId}
+              name={name}
+              value={value}
+              onChange={onChange}
+              max={max}
+              min={min}
+              required
+            />
+          ) : (
+            <input
+              type={type}
+              id={uniqueId}
+              name={name}
+              value={value}
+              onChange={onChange}
+              required
+            />
+          )}
+        </>
       )}
 
       {showPassword !== undefined && togglePasswordVisibility && (

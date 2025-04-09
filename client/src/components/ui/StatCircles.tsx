@@ -1,44 +1,32 @@
 import { v4 as uuidv4 } from "uuid";
 import "./StatCircles.css";
+import Circle from "../../assets/images/Circle";
+import CircleFill from "../../assets/images/CircleFill";
+import type { Stat } from "../../types/types";
 
-export default function StatCircles({
-  value,
-  size,
-}: { value: number; size: string }) {
+export default function StatCircles({ value, size, highlight = false }: Stat) {
   const totalCircles = 10;
-  const circles = Array.from({ length: totalCircles }, (_, i) => i < value);
+  const filledCircles = value;
+  const hasHighlight = highlight && value < totalCircles;
+  const emptyCircles = totalCircles - filledCircles - (hasHighlight ? 1 : 0);
+
+  const circles = [
+    ...Array.from({ length: filledCircles }, () => "filled"),
+    ...(hasHighlight ? ["highlight"] : []),
+    ...Array.from({ length: emptyCircles }, () => "empty"),
+  ];
 
   return (
     <div className="statCircles">
-      {circles.map((filled) => (
-        <span
-          key={uuidv4()}
-          className={`circle ${filled ? "filled" : "empty"}`}
-        >
-          {filled ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={size}
-              height={size}
-              fill="currentColor"
-              className="bi bi-circle-fill"
-              viewBox="0 0 16 16"
-            >
-              <title>Cercle plein</title>
-              <circle cx="8" cy="8" r="8" />
-            </svg>
+      {circles.map((status) => (
+        <span key={uuidv4()} className={`circle ${status}`}>
+          {status === "filled" || status === "highlight" ? (
+            <CircleFill
+              size={size}
+              color={status === "highlight" ? "green" : "currentColor"}
+            />
           ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={size}
-              height={size}
-              fill="currentColor"
-              className="bi bi-circle"
-              viewBox="0 0 16 16"
-            >
-              <title>Cercle</title>
-              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-            </svg>
+            <Circle size={size} />
           )}
         </span>
       ))}
