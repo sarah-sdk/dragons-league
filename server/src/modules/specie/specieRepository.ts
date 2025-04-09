@@ -12,11 +12,11 @@ class specieRepository {
       `,
       [
         specie.specie,
-        specie.base_strength,
-        specie.base_speed,
-        specie.base_stamina,
-        specie.url_baby,
-        specie.url_adult,
+        specie.baseStrength,
+        specie.baseSpeed,
+        specie.baseStamina,
+        specie.urlBaby,
+        specie.urlAdult,
       ],
     );
 
@@ -34,7 +34,15 @@ class specieRepository {
       `,
     );
 
-    return rows;
+    return rows.map((specie) => ({
+      id: specie.id,
+      specie: specie.specie,
+      baseStrength: specie.base_strength,
+      baseSpeed: specie.base_speed,
+      baseStamina: specie.base_stamina,
+      urlBaby: specie.url_baby,
+      urlAdult: specie.url_adult,
+    }));
   }
 
   async read(id: number) {
@@ -47,7 +55,17 @@ class specieRepository {
       [id],
     );
 
-    return rows[0];
+    const specie = rows[0];
+
+    return {
+      id: specie.id,
+      specie: specie.specie,
+      baseStrength: specie.base_strength,
+      baseSpeed: specie.base_speed,
+      baseStamina: specie.base_stamina,
+      urlBaby: specie.url_baby,
+      urlAdult: specie.url_adult,
+    };
   }
 
   // U of CRUD
@@ -60,11 +78,11 @@ class specieRepository {
       `,
       [
         specie.specie,
-        specie.base_strength,
-        specie.base_speed,
-        specie.base_stamina,
-        specie.url_baby,
-        specie.url_adult,
+        specie.baseStrength,
+        specie.baseSpeed,
+        specie.baseStamina,
+        specie.urlBaby,
+        specie.urlAdult,
         specie.id,
       ],
     );

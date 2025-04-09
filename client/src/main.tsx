@@ -1,5 +1,4 @@
 // Import necessary modules from React and React Router
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
@@ -15,6 +14,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import SpeciesPage from "./pages/Dashboard/SpeciesPage/SpeciesPage";
 import UsersPage from "./pages/Dashboard/UsersPage/UsersPage";
 import DragonDetails from "./pages/DragonDetails/DragonDetails";
+import LandingPage from "./pages/LandingPage/LandingPage";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import SelectProfile from "./pages/SelectProfile/SelectProfile";
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/mes-dragons/:dragonId/entrainements",
-        element: <Trainings />,
+        element: <ProtectedRoute element={<Trainings />} />,
         loader: loadDragonAndTrainings,
       },
       {
@@ -74,6 +74,10 @@ const router = createBrowserRouter([
           { path: "especes", element: <SpeciesPage />, loader: loadSpecies },
           { path: "utilisateurs", element: <UsersPage /> },
         ],
+      },
+      {
+        path: "/bienvenue",
+        element: <LandingPage />,
       },
       {
         path: "/connexion",
@@ -97,11 +101,7 @@ if (rootElement == null) {
 }
 
 // Render the app inside the root element
-createRoot(rootElement).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
-);
+createRoot(rootElement).render(<RouterProvider router={router} />);
 
 /**
  * Helpful Notes:

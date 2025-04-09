@@ -52,19 +52,19 @@ export default function SpeciesPage() {
     if (updatedSpecie) {
       const formData = new FormData();
       formData.append("specie", updatedSpecie.specie);
-      formData.append("base_strength", updatedSpecie.base_strength.toString());
-      formData.append("base_speed", updatedSpecie.base_speed.toString());
-      formData.append("base_stamina", updatedSpecie.base_stamina.toString());
+      formData.append("baseStrength", updatedSpecie.baseStrength.toString());
+      formData.append("baseSpeed", updatedSpecie.baseSpeed.toString());
+      formData.append("baseStamina", updatedSpecie.baseStamina.toString());
       if (babyFile) {
         formData.append("babyImage", babyFile);
       } else {
-        formData.append("babyImage", updatedSpecie.url_baby || "");
+        formData.append("babyImage", updatedSpecie.urlBaby || "");
       }
 
       if (adultFile) {
         formData.append("adultImage", adultFile);
       } else {
-        formData.append("adultImage", updatedSpecie.url_adult || "");
+        formData.append("adultImage", updatedSpecie.urlAdult || "");
       }
 
       try {
@@ -149,12 +149,9 @@ export default function SpeciesPage() {
       try {
         const formData = new FormData();
         formData.append("specie", createdSpecie.specie);
-        formData.append(
-          "base_strength",
-          createdSpecie.base_strength.toString(),
-        );
-        formData.append("base_speed", createdSpecie.base_speed.toString());
-        formData.append("base_stamina", createdSpecie.base_stamina.toString());
+        formData.append("baseStrength", createdSpecie.baseStrength.toString());
+        formData.append("baseSpeed", createdSpecie.baseSpeed.toString());
+        formData.append("baseStamina", createdSpecie.baseStamina.toString());
         if (babyFile) formData.append("babyImage", babyFile);
         if (adultFile) formData.append("adultImage", adultFile);
 

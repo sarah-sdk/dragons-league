@@ -49,7 +49,7 @@ export default function AdoptDragon() {
     if (name && specieId) {
       const newDragon = {
         name: name,
-        specie_id: specieId,
+        specieId: specieId,
       };
 
       try {
@@ -94,7 +94,7 @@ export default function AdoptDragon() {
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        specieImage={selectedSpecie?.url_adult || ""}
+        specieImage={selectedSpecie?.urlAdult || ""}
         specieName={selectedSpecie?.specie || ""}
         specieId={selectedSpecie?.id || "0"}
         onNameChange={handleNameChange}

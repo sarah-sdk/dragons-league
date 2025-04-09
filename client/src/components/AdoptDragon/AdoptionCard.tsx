@@ -7,7 +7,7 @@ export default function AdoptionCard({ specie, onClick }: AdoptionType) {
     <button type="button" className="adoptionCard" onClick={onClick}>
       <figure className="adoptionImageBtn">
         <img
-          src={`${import.meta.env.VITE_API_URL}/${specie.url_adult}`}
+          src={`${import.meta.env.VITE_API_URL}/${specie.urlAdult}`}
           alt={specie.specie}
           className="adoptionImage"
         />
@@ -17,9 +17,9 @@ export default function AdoptionCard({ specie, onClick }: AdoptionType) {
       </figure>
       <legend className="adoptionInfo">
         <StatDetails
-          strength={+specie.base_strength}
-          speed={+specie.base_speed}
-          stamina={+specie.base_stamina}
+          strength={+specie.baseStrength}
+          speed={+specie.baseSpeed}
+          stamina={+specie.baseStamina}
           size="10"
         />
       </legend>

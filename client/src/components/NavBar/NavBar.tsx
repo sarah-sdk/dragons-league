@@ -81,7 +81,7 @@ export default function NavBar() {
           {isAdmin ? <Link to="/dashboard">Dashboard</Link> : ""}
           <Link to="/mes-dragons">
             <img
-              src={`${import.meta.env.VITE_API_URL}/${profile.url_avatar}`}
+              src={`${import.meta.env.VITE_API_URL}/${profile.urlAvatar}`}
               alt={profile.username}
               className="avatar"
             />

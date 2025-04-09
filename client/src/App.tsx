@@ -9,6 +9,7 @@ function App() {
   const location = useLocation();
 
   const hideNavBar =
+    location.pathname === "/bienvenue" ||
     location.pathname === "/connexion" ||
     location.pathname === "/inscription" ||
     location.pathname === "/profils";
@@ -27,9 +28,9 @@ function App() {
 
   return (
     <>
-      <ToastContainer />
       {!hideNavBar && <NavBar />}
       <main>
+        <ToastContainer />
         <Outlet />
       </main>
     </>

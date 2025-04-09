@@ -11,7 +11,7 @@ class dragonRepository {
       FROM profile
       WHERE user_id = ? AND id = ?
       `,
-      [dragon.user_id, dragon.profile_id],
+      [dragon.userId, dragon.profileId],
     );
 
     if (profileCheck.length === 0)
@@ -27,11 +27,11 @@ class dragonRepository {
       `,
       [
         dragon.name,
-        dragon.specie_id,
-        dragon.profile_id,
-        dragon.specie_id,
-        dragon.specie_id,
-        dragon.specie_id,
+        dragon.specieId,
+        dragon.profileId,
+        dragon.specieId,
+        dragon.specieId,
+        dragon.specieId,
       ],
     );
 
@@ -74,7 +74,18 @@ class dragonRepository {
       [profileId],
     );
 
-    return rows;
+    return rows.map((dragon) => ({
+      dragonId: dragon.dragon_id,
+      profileId: dragon.profile_id,
+      specie: dragon.specie,
+      name: dragon.name,
+      adoptedAt: dragon.adopted_at,
+      strength: dragon.strength,
+      speed: dragon.speed,
+      stamina: dragon.stamina,
+      urlBaby: dragon.url_baby,
+      urlAdult: dragon.url_adult,
+    }));
   }
 
   async read({
@@ -114,18 +125,31 @@ class dragonRepository {
       [profileId, dragonId],
     );
 
-    return rows[0];
+    const dragon = rows[0];
+
+    return {
+      dragonId: dragon.dragon_id,
+      profileId: dragon.profile_id,
+      specie: dragon.specie,
+      name: dragon.name,
+      adoptedAt: dragon.adopted_at,
+      strength: dragon.strength,
+      speed: dragon.speed,
+      stamina: dragon.stamina,
+      urlBaby: dragon.url_baby,
+      urlAdult: dragon.url_adult,
+    };
   }
 
   // U of CRUD
-  async update(dragon: Omit<Dragon, "specie_id">) {
+  async update(dragon: Omit<Dragon, "specieId">) {
     const [profileCheck] = await databaseClient.query<Rows>(
       `
       SELECT id
       FROM profile
       WHERE user_id = ? AND id = ?
       `,
-      [dragon.user_id, dragon.profile_id],
+      [dragon.userId, dragon.profileId],
     );
 
     if (profileCheck.length === 0)
@@ -142,7 +166,7 @@ class dragonRepository {
         dragon.strength,
         dragon.speed,
         dragon.stamina,
-        dragon.profile_id,
+        dragon.profileId,
         dragon.id,
       ],
     );

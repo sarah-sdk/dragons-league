@@ -30,7 +30,7 @@ export default function DragonDetails() {
   }, [location]);
 
   const handleGoTraining = (dragonId: number) => {
-    localStorage.setItem("dragonId", dragon.dragon_id.toString());
+    localStorage.setItem("dragonId", dragon.dragonId.toString());
 
     navigate(`/mes-dragons/${dragonId}/entrainements`);
   };
@@ -45,7 +45,7 @@ export default function DragonDetails() {
         size="16"
       />
       <AdoptedAt dragon={dragon} />
-      <button type="button" onClick={() => handleGoTraining(+dragon.dragon_id)}>
+      <button type="button" onClick={() => handleGoTraining(+dragon.dragonId)}>
         Entraine-moi !
       </button>
     </article>

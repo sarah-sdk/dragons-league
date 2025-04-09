@@ -27,7 +27,7 @@ const register: RequestHandler = async (req, res, next) => {
     const newUser = await authRepository.create({
       email: req.body.email,
       password: hashedPassword,
-      isAdmin: req.body.isAdmin || false,
+      isAdmin: req.body.isAdmin ?? false,
     });
 
     const token = generateToken(newUser.email);

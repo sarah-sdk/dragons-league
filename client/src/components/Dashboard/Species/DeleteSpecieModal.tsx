@@ -22,11 +22,11 @@ export default function DeleteSpecieModal({
   const [formData, setFormData] = useState<Specie>({
     id: "0",
     specie: "",
-    base_strength: 0,
-    base_speed: 0,
-    base_stamina: 0,
-    url_baby: "",
-    url_adult: "",
+    baseStrength: 0,
+    baseSpeed: 0,
+    baseStamina: 0,
+    urlBaby: "",
+    urlAdult: "",
   });
 
   useEffect(() => {
@@ -68,16 +68,16 @@ export default function DeleteSpecieModal({
       <h3>Êtes-vous sûr.e de vouloir supprimer :</h3>
       <figure>
         <img
-          src={`${import.meta.env.VITE_API_URL}/${formData.url_adult}`}
+          src={`${import.meta.env.VITE_API_URL}/${formData.urlAdult}`}
           alt={formData.specie}
         />
         <h4>
           <SpecieDisplay specie={formData.specie} />
         </h4>
         <StatDetails
-          strength={formData.base_strength}
-          speed={formData.base_speed}
-          stamina={formData.base_stamina}
+          strength={formData.baseStrength}
+          speed={formData.baseSpeed}
+          stamina={formData.baseStamina}
           size="10"
         />
       </figure>

@@ -2,7 +2,7 @@ CREATE TABLE user (
   id int unsigned primary key auto_increment not null,
   email varchar(255) not null unique,
   password varchar(255) not null,
-  isAdmin BOOLEAN not null default false,
+  is_admin BOOLEAN not null default false,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null
 );
 
@@ -18,7 +18,7 @@ CREATE TABLE specie (
 
 CREATE TABLE training (
   id INT unsigned primary key auto_increment not null,
-  training_type VARCHAR(255) not null
+  type VARCHAR(255) not null
 );
 
 CREATE TABLE profile (

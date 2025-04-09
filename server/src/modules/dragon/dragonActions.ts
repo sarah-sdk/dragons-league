@@ -42,9 +42,9 @@ const edit: RequestHandler = async (req, res, next) => {
   const dragonId = Number(req.params.dragonId);
 
   try {
-    const dragon: Omit<Dragon, "specie_id"> = {
-      user_id: userId,
-      profile_id: profileId,
+    const dragon: Omit<Dragon, "specieId"> = {
+      userId: userId,
+      profileId: profileId,
       id: dragonId,
       name: req.body.name,
       strength: req.body.strength,
@@ -69,10 +69,10 @@ const add: RequestHandler = async (req, res, next) => {
 
   try {
     const dragon: Omit<Dragon, "id" | "strength" | "speed" | "stamina"> = {
-      user_id: userId,
-      profile_id: profileId,
+      userId: userId,
+      profileId: profileId,
       name: req.body.name,
-      specie_id: req.body.specie_id,
+      specieId: req.body.specieId,
     };
 
     const insertId = await dragonRepository.create(dragon);

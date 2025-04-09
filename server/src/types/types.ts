@@ -6,25 +6,25 @@ export type User = {
 };
 
 export type Profile = {
-  user_id: number;
+  userId: number;
   id: number;
   username: string;
-  url_avatar: string;
+  urlAvatar: string;
 };
 
 export type Specie = {
   id: number;
   specie: string;
-  base_strength: number;
-  base_speed: number;
-  base_stamina: number;
-  url_baby: string;
-  url_adult: string;
+  baseStrength: number;
+  baseSpeed: number;
+  baseStamina: number;
+  urlBaby: string;
+  urlAdult: string;
 };
 
 export type Training = {
   id: number;
-  training_type: string;
+  type: string;
 };
 
 export type Dragon = {
@@ -33,20 +33,20 @@ export type Dragon = {
   strength: number;
   speed: number;
   stamina: number;
-  specie_id: number;
-  profile_id: number;
-  user_id: number;
+  specieId: number;
+  profileId: number;
+  userId: number;
 };
 
 export type DragonTraining = {
   id: number;
-  user_id: number;
-  profile_id: number;
-  dragon_id: number;
-  training_id: number;
-  strength_earned: number;
-  speed_earned: number;
-  stamina_earned: number;
+  userId: number;
+  profileId: number;
+  dragonId: number;
+  trainingId: number;
+  strengthEarned: number;
+  speedEarned: number;
+  staminaEarned: number;
 };
 
 export type JwtPayload = {

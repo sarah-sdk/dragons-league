@@ -40,7 +40,7 @@ export default function SelectProfile() {
     if (username && avatar) {
       const newProfile = {
         username: username,
-        url_avatar: avatar,
+        urlAvatar: avatar,
       };
 
       try {
