@@ -52,18 +52,11 @@ export default function Trainings() {
   const handleTrain = (training: TrainingsType) => {
     setSelectedTraining(training);
 
-    setStatsEarned((prev) => ({
-      strengthEarned:
-        training.type === "strength"
-          ? prev.strengthEarned + 1
-          : prev.strengthEarned,
-      speedEarned:
-        training.type === "speed" ? prev.speedEarned + 1 : prev.speedEarned,
-      staminaEarned:
-        training.type === "stamina"
-          ? prev.staminaEarned + 1
-          : prev.staminaEarned,
-    }));
+    setStatsEarned({
+      strengthEarned: training.type === "strength" ? 1 : 0,
+      speedEarned: training.type === "speed" ? 1 : 0,
+      staminaEarned: training.type === "stamina" ? 1 : 0,
+    });
   };
 
   const handlePostTraining = async (event: FormEvent) => {

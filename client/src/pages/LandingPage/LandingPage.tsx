@@ -44,7 +44,7 @@ export default function LandingPage() {
             <button type="button">Se connecter</button>
           </Link>
           <Link to="/inscription">
-            <button type="button">S'inscire</button>
+            <button type="button">S'inscrire</button>
           </Link>
         </nav>
       </div>
