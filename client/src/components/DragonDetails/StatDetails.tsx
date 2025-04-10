@@ -11,14 +11,6 @@ export default function StatDetails({
   return (
     <ul>
       <li>
-        {"Vitesse"}
-        <StatCircles
-          value={speed}
-          size={size}
-          highlight={highlightedStat === "speed"}
-        />
-      </li>
-      <li>
         {"Endurance"}
         <StatCircles
           value={stamina}
@@ -32,6 +24,14 @@ export default function StatDetails({
           value={strength}
           size={size}
           highlight={highlightedStat === "strength"}
+        />
+      </li>
+      <li>
+        {"Vitesse"}
+        <StatCircles
+          value={speed}
+          size={size}
+          highlight={highlightedStat === "speed"}
         />
       </li>
     </ul>
